@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" targetNamespace="" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <data name="ntfyIc.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 17</value>
+  </data>
+  <data name="ntfyIc.Icon" mimetype="text/microsoft-urt/binary-serialized/base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFRTeXN0ZW0uRHJhd2luZywgVmVyc2lvbj0xLjAuMjQxMS4wLCBD
+        dWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWIwM2Y1ZjdmMTFkNTBhM2EFAQAAABNTeXN0ZW0u
+        RHJhd2luZy5JY29uAgAAAAhJY29uRGF0YQhJY29uU2l6ZQcEAhNTeXN0ZW0uRHJhd2luZy5TaXplAgAA
+        AAIAAAAJAwAAAAX/////E1N5c3RlbS5EcmF3aW5nLlNpemUCAAAABXdpZHRoBmhlaWdodAAACAgCAAAA
+        EAAAABAAAAAPAwAAAH4FAAACAAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAA
+        QAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAMDcwADwyqYA
+        1PD/ALHi/wCO1P8Aa8b/AEi4/wAlqv8AAKr/AACS3AAAerkAAGKWAABKcwAAMlAA1OP/ALHH/wCOq/8A
+        a4//AEhz/wAlV/8AAFX/AABJ3AAAPbkAADGWAAAlcwAAGVAA1NT/ALGx/wCOjv8Aa2v/AEhI/wAlJf8A
+        AAD/AAAA3AAAALkAAACWAAAAcwAAAFAA49T/AMex/wCrjv8Aj2v/AHNI/wBXJf8AVQD/AEkA3AA9ALkA
+        MQCWACUAcwAZAFAA8NT/AOKx/wDUjv8Axmv/ALhI/wCqJf8AqgD/AJIA3AB6ALkAYgCWAEoAcwAyAFAA
+        /9T/AP+x/wD/jv8A/2v/AP9I/wD/Jf8A/wD/ANwA3AC5ALkAlgCWAHMAcwBQAFAA/9TwAP+x4gD/jtQA
+        /2vGAP9IuAD/JaoA/wCqANwAkgC5AHoAlgBiAHMASgBQADIA/9TjAP+xxwD/jqsA/2uPAP9IcwD/JVcA
+        /wBVANwASQC5AD0AlgAxAHMAJQBQABkA/9TUAP+xsQD/jo4A/2trAP9ISAD/JSUA/wAAANwAAAC5AAAA
+        lgAAAHMAAABQAAAA/+PUAP/HsQD/q44A/49rAP9zSAD/VyUA/1UAANxJAAC5PQAAljEAAHMlAABQGQAA
+        //DUAP/isQD/1I4A/8ZrAP+4SAD/qiUA/6oAANySAAC5egAAlmIAAHNKAABQMgAA///UAP//sQD//44A
+        //9rAP//SAD//yUA//8AANzcAAC5uQAAlpYAAHNzAABQUAAA8P/UAOL/sQDU/44Axv9rALj/SACq/yUA
+        qv8AAJLcAAB6uQAAYpYAAEpzAAAyUAAA4//UAMf/sQCr/44Aj/9rAHP/SABX/yUAVf8AAEncAAA9uQAA
+        MZYAACVzAAAZUAAA1P/UALH/sQCO/44Aa/9rAEj/SAAl/yUAAP8AAADcAAAAuQAAAJYAAABzAAAAUAAA
+        1P/jALH/xwCO/6sAa/+PAEj/cwAl/1cAAP9VAADcSQAAuT0AAJYxAABzJQAAUBkA1P/wALH/4gCO/9QA
+        a//GAEj/uAAl/6oAAP+qAADckgAAuXoAAJZiAABzSgAAUDIA1P//ALH//wCO//8Aa///AEj//wAl//8A
+        AP//AADc3AAAubkAAJaWAABzcwAAUFAA8vLyAObm5gDa2toAzs7OAMLCwgC2trYAqqqqAJ6engCSkpIA
+        hoaGAHp6egBubm4AYmJiAFZWVgBKSkoAPj4+ADIyMgAmJiYAGhoaAA4ODgDw+/8ApKCgAICAgAAAAP8A
+        AP8AAAD//wD/AAAA/wD/AP//AAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAC4uLgAALm4uAAAAAAAAAAA
+        ubsCAAACArsAAAAAAAAAALve3Nzc3wC9AAAAAAAoKRDd3Nzc3N3d3727uAAAKCrd3NwoKNzc3N0AArgA
+        ACgR3NzcKCjc3Nzd3wK4AAAA3Nzc3Cgo3Nzc3NwAAAAAuNzc3NwoKNzc3NzcArgAALjc3Nzc3Nzc3Nzc
+        3AK4AAC40Nzc3Cgo3Nzc3N67uAAAuLjc3NwoKNzc3N27ubgAAAAAANzc3Nzc3N3QAAAAAAAAAAC40Nzc
+        3NG6uQAAAAAAAAAAuLi4AAC4uLgAAAAAAAAAAAAAAAAAAAAAAAAAAPGP///gB///4Af//4AB//8AAP//
+        AAD//wAA//+AAf//AAD//wAA//8AAP//AAD//4AB///gB///4Af///GP//8L
+</value>
+  </data>
+  <data name="contextMenu1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>124, 17</value>
+  </data>
+  <data name="$this.Name">
+    <value>Form1</value>
+  </data>
+  <resheader name="ResMimeType">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="Version">
+    <value>1.0.0.0</value>
+  </resheader>
+  <resheader name="Reader">
+    <value>System.Resources.ResXResourceReader</value>
+  </resheader>
+  <resheader name="Writer">
+    <value>System.Resources.ResXResourceWriter</value>
+  </resheader>
+</root>

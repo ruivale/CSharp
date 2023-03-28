@@ -1,0 +1,151 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Introduction to Memento Pattern</title>
+<meta name="Keywords" content="Memento Pattern and its Implementation in C#">
+<meta name="DESCRIPTION" content="This article explains about Memento Pattern and its Implementation in C#">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="24 Feb 2009 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="25 Feb 2009 02:03:15 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Sateesh Kumar">
+<link rel="stylesheet" type="text/css" href="MementoPattern.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="MementoPattern.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="MementoPattern.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="MementoPattern.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="MementoPattern.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="MementoPattern.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MementoPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="MementoPattern.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Introduction to Memento Pattern</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Sateesh Kumar</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">February 24, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This article explains about Memento Pattern and its Implementation in C#</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"></font><p align="justify"></p><p align="left"><font size="2"><font face="Verdana" size="2">In
+this article, I am going to discuss about Memento pattern and its
+implementation in C#. Memento pattern is a design pattern that will
+allow us to restore an object to its previous state. It's like roll
+backing the operations done on an object and restoring its values to
+previous state. Suppose, we had done three operations on an object,
+which had changed its internal state like properties. Now, we want the
+object need to be restored to a state, it was before second operation
+on it. By using this pattern, we can easily restore an object to its
+previous state with minimal lines of coding. This pattern logs the
+internal state of an object without violating encapsulation and
+restores it back, when we require it.<br><br>Participants in this Pattern: </font></font></p>
+<ul>
+<font size="2"><font face="Verdana" size="2"><li>
+<div align="left">Memento: This is the object which will store the internal state of Originator. </div>
+</li><li>
+<div align="left">Originator: This is the one going to log the current internal state of an object. </div>
+</li><li>
+<div align="left">CareTaker: This is the one going to safely keep memento's previous state for restoring back later.</div></li></font></font></ul>
+<p align="left"><font size="2"><font face="Verdana" size="2">Let's
+start its implementation in C#. Create a new console application and
+name it as MementoSample Now, add the below code to Program.cs<br><br>First, we are defining Memento as shown below:<br><br><span style="font-size: 10pt; color: green;">&nbsp;&nbsp;&nbsp; //Memento<br></span><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">class</span> <span style="color: rgb(43, 145, 175);">EmployeeMemento<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">string</span> _empName;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">string</span> _empID;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">double</span> _sal;<br>&nbsp;&nbsp; <span style="color: blue;">public</span> EmployeeMemento(<span style="color: blue;">string</span> empName, <span style="color: blue;">string</span> empID, <span style="color: blue;">double</span> salary)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">this</span>._empName = empName;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">this</span>._empID = empID;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span style="color: blue;">this</span>._sal = salary;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">string</span> EmpName<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _empName; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _empName = <span style="color: blue;">value</span>; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">string</span> EmpID<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _empID; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _empID = <span style="color: blue;">value</span>; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">double</span> Salary<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _sal; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _sal = <span style="color: blue;">value</span>; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br></span><br>This is the definition of our DTO class. Now, we will define Originator as shown below:<br><br><span style="font-size: 10pt; color: green;">&nbsp;&nbsp;&nbsp; //Originator<br></span><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">class</span> <span style="color: rgb(43, 145, 175);">Originator<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">//Start of structure same as Memento[EmployeeMemento]<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">string</span> _empName;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">string</span> _empID;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: blue;">double</span> _sal;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">string</span> EmpName<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _empName; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: blue;">set</span> { _empName = <span style="color: blue;">value</span>;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">string</span> EmpID<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _empID; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _empID = <span style="color: blue;">value</span>;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">double</span> Salary<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _sal; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _sal = <span style="color: blue;">value</span>;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">//End of structure same as Memento[EmployeeMemento] <br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">//Restore state <br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: blue;">void</span> RestoreState(<span style="color: rgb(43, 145, 175);">EmployeeMemento</span> empMemento)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Restoring State"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">this</span>.EmpID = empMemento.EmpID;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">this</span>.EmpName = empMemento.EmpName;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">this</span>.Salary = empMemento.Salary;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: rgb(43, 145, 175);">EmployeeMemento</span> SaveState()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Saving State"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">return</span> <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">EmployeeMemento</span>(_empName, _empID, _sal);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br></span><br>This class is used to save/restore state. Now, we will define Caretaker class as shown below:<br><br><span style="font-size: 10pt; color: green;">&nbsp;&nbsp;&nbsp; //CareTaker<br></span><span style="font-size: 10pt;">&nbsp;&nbsp;&nbsp; <span style="color: blue;">class</span> <span style="color: rgb(43, 145, 175);">Caretaker<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">private</span> <span style="color: rgb(43, 145, 175);">EmployeeMemento</span> _empInfo;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">public</span> <span style="color: rgb(43, 145, 175);">EmployeeMemento</span> EmpMemento<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">set</span> { _empInfo = <span style="color: blue;">value</span>; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">get</span> { <span style="color: blue;">return</span> _empInfo; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br></span><br>Now, we are done with all definitions. We will test it out by adding below code to Main method:<br><br><span style="font-size: 10pt; color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static</span><span style="font-size: 10pt;"> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(43, 145, 175);">Originator</span> org = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">Originator</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.EmpID = <span style="color: rgb(163, 21, 21);">"100"</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.EmpName = <span style="color: rgb(163, 21, 21);">"test"</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.Salary = 2000;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Initial Emp Name:"</span> + org.EmpName);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Initial Emp ID:"</span> + org.EmpID);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Initial Emp Salary:"</span> + org.Salary);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">""</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Caretaker</span> taker = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">Caretaker</span>();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; taker.EmpMemento = org.SaveState();</span></font></font></p>
+<p class="MsoNormal" align="left"><span style="font-size: 10pt;"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">//Now,alter the state.<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.EmpID = <span style="color: rgb(163, 21, 21);">"101"</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.EmpName = <span style="color: rgb(163, 21, 21);">"test1"</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.Salary = 3000;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Updated Emp Name:"</span> + org.EmpName);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Updated Emp ID:"</span> + org.EmpID);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Updated Emp Salary:"</span> + org.Salary);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">""</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">//Now,do rollback.<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; org.RestoreState(taker.EmpMemento);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Rollbacked Emp Name:"</span> + org.EmpName);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Rollbacked Emp ID:"</span> + org.EmpID);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Rollbacked Emp Salary:"</span> + org.Salary);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">""</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: rgb(43, 145, 175);">Console</span>.ReadLine();<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font></font></span><font size="2"><font face="Verdana" size="2"><br><br>Run the application, the output will be as shown below:<br><br><img alt="" src="MementoPattern.aspx_files/image1.gif" align="baseline" border="0" hspace="0"><br><br>I will outline the steps for implementing this pattern: </font></font></p>
+<ul>
+<font size="2"><font face="Verdana" size="2"><li>
+<div align="left">First, create your DTO [Memento] class. </div>
+</li><li>
+<div align="left">Than, create Originator class with structure similar
+to Memento, and one method to save the state and other method to
+restore the state. </div>
+</li><li>
+<div align="left">Now, create a CareTaker class for storing the
+internal state of the Memento. This class acts as storage for object's
+internal state.</div></li></font></font></ul>
+<p align="left"><font size="2"><font face="Verdana" size="2">We can
+still enhance this pattern to store multiple states of an object by
+using a generic list for storing the internal state of an object. <br><br>I am ending the things here. I am attaching source code for reference. I hope this article will be helpful for all.</font></font></p>
+<font size="2"></font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

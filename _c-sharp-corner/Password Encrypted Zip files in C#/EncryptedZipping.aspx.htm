@@ -1,0 +1,171 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Password Encrypted Zip files in C# </title>
+<meta name="Keywords" content="ZIP PK Encryption Java C#">
+<meta name="DESCRIPTION" content="This article contains the source code for creating Zip files in C# that are password protected using PKWare encryption. ">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="15 Sep 2008 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="25 Oct 2008 10:52:43 GMT">
+<meta name="Search.UserRating" content="100%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="neillharper">
+<link rel="stylesheet" type="text/css" href="EncryptedZipping.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="EncryptedZipping.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="EncryptedZipping.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="EncryptedZipping.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="EncryptedZipping.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="EncryptedZipping.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EncryptedZipping.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="EncryptedZipping.aspx_files/vibitt_200903021918.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Password Encrypted Zip files in C# </span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">neill harper</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">October 27, 2008</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This article contains the source code for creating Zip files in C# that are password protected using PKWare encryption. </span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p><font face="Verdana" size="2">This article provides the source code for creating zip files in C# and Java.<br><br>There are only really two main classes on interest:<br><br><strong>ZIP File:</strong> This object represents a ZIP file, which can contain one or more other files (i.e. text files, jpegs anything (I think...).<br><br><strong>File Entry: </strong>This
+object represents a file stored inside a ZIP File. The File Entry can
+be stored as is, compressed, as is encrypted, compressed encrypted.
+This is controlled by the constructor called to create the File Entry.<br><br><strong>Examples:<br></strong><br><em>Creating a ZIP file with one file in it, using Stored (i.e. no compression) and no password i.e. not encrypted.</em><br><br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Collections.Generic;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Text;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> ZipFramework;</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a ZipFile object that will ultimately be saved at <a href="file:///D://myfirstZip.zip">D:\\myfirstZip.zip</a><br></span><span style="font-size: 10pt; font-family: Verdana;"><br>ZIPFile zip = <span style="color: blue;">new</span> ZIPFile(<span style="color: maroon;">"D:\\myfirstZip.zip"</span>);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a FileEntry object that represents the file <a href="file:///D://text.txt">D:\\text.txt</a><br>// the file will NOT be compressed or have a password</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">FileEntry file = <span style="color: blue;">new</span> FileEntry(<span style="color: maroon;">"<a href="file:///D://text.txt%22,Method.Stored">D:\\text.txt"</a></span><a href="file:///D://text.txt%22,Method.Stored">,Method.Stored</a>);<br></span><span style="font-size: 10pt; color: green; font-family: Verdana;"><br>//Add the FileEntry object to the ZIPFile object<br></span><span style="font-size: 10pt; font-family: Verdana;"><br>zip.AddFile(file);<br></span><span style="font-size: 10pt; color: green; font-family: Verdana;"><br>//Finally actually create the Zip file<br></span><span style="font-size: 10pt; font-family: Verdana;"><br>zip.CreateZIP();</span><span style="font-size: 10pt; color: rgb(51, 51, 51); font-family: Verdana;">&nbsp;<br></span><font face="Verdana" size="2"><br><em>Creating a ZIP file with one file in it, using Deflate compression without a password.</em><br><br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Collections.Generic;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Text;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> ZipFramework;</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a ZipFile object that will ultimately be saved at D:\\myfirstZip.zip</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">ZIPFile zip = <span style="color: blue;">new</span> ZIPFile(<span style="color: maroon;">"D:\\myfirstZip.zip"</span>);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a FileEntry object that represents the file <a href="file:///D://text.txt">D:\\text.txt</a><br>// the file will be compressed using the deflate algorithm (note this is the only algorithm the library supports) </span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">FileEntry file = <span style="color: blue;">new</span> FileEntry(<span style="color: maroon;">"D:\\text.txt"</span>,Method.Deflated);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Add the FileEntry object to the ZIPFile object</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">zip.AddFile(file);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">//Finally actually create the Zip file<br><br>zip.CreateZIP();<br></span><font face="Verdana" size="2"><br>Final example:<br><br><em>Creating a ZIP file with one file in it, using deflate compression and encrypted with a password</em> <br><br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Collections.Generic;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> System.Text;<br></span><span style="font-size: 10pt; color: blue; font-family: Verdana;">using</span><span style="font-size: 10pt; font-family: Verdana;"> ZipFramework;</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a ZipFile object that will ultimately be saved at D:\\myfirstZip.zip</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">ZIPFile zip = <span style="color: blue;">new</span> ZIPFile(<span style="color: maroon;">"D:\\myfirstZip.zip"</span>);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Creates a FileEntry object that represents the file <a href="file:///D://text.txt">D:\\text.txt</a><br>//
+the file will be compressed using the deflate algorithm (note this is
+the only algorithm the library supports) and the file will also be
+encrypted with the supplied password.</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">FileEntry file = <span style="color: blue;">new</span> FileEntry(<span style="color: maroon;">"D:\\text.txt"</span>, <span style="color: maroon;">"HARPER"</span>,Method.Deflated);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Add the FileEntry object to the ZIPFile object</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">zip.AddFile(file);</span></p>
+<p class="MsoNormal"><span style="font-size: 10pt; color: green; font-family: Verdana;">//Finally actually create the Zip file</span></p>
+<p><span style="font-size: 10pt; font-family: Verdana;">zip.CreateZIP();</span><span style="font-size: 10pt; color: rgb(51, 51, 51); font-family: Verdana;"><br><br></span><font face="Verdana" size="2"><u><b>Note</b></u>
+the Add File (file) method can be called multiple times to add as many
+file to the ZIP File as you like. Those files can have different
+compression methods and passwords to other files. <br><br>You can see
+from the source that the C# version is a lot easier to write/code than
+the Java version as it uses properties instead of getter and setter
+methods (yes I know the CLR uses getters and setters in the
+background!! but that's hidden from me in c# yeah!!)<br><br>Also Java
+does not support unsigned data types, which to be honest was a bit of a
+pain... in places I have just used the signed equivalents (this is
+pretty dangerous) and in others I have used the signed version up i.e.
+UInt16 (2 byte) in java is replaced with long (4 bytes). This meant a
+lot of &amp; 0xFFFF etc style bit masking... apart from that the two
+libraries are pretty similar.<br><br>I don't know why but the C#
+version performs much (really loads) better than the java version when
+encryption is involved. Encrypting a 16meg file on the C# version takes
+2-3 Seconds, the same file on the Java version takes 2-3 minutes. <br><br>I
+really don't know why this is and haven't been able to improve the
+performance of the Java version... I'd really welcome feed back on that
+(surely C# can't really be that much faster, can it???)<br><br>I'd
+really like it, if you took the source code (C#) to pieces, show me all
+of the school boy errors I've made and help me make the C# version even
+faster, also feel free to enhance, ie. add support of unzipping etc..<br><br>One
+area where I think real improvements can be made is in the deflate and
+encryption. You will see in the source that FileEntry keeps the
+compressed version in temporary files, could this be done in memory
+(even for big files) or is there a fancy memory file buffer in C# that
+I don't know of. <br><br>Large parts of the CRC (Cyclic Redundancy
+Check) are implemented using the java.util.zip.CRC32 class (yes even in
+the C# version, luckily Microsoft implements this as part of its J#
+support) You can get access to many java classes in .Net by adding
+vjslib as a reference to your project. (Note CRC is the only java class
+I use the rest is in C#)<br><br>Anyway I hope you enjoy using and improving this source as much as I enjoyed writing it.<br>Finally for more info on the Zip standard see <a href="http://www.pkware.com/documents/casestudies/APPNOTE.TXT">http://www.pkware.com/documents/casestudies/APPNOTE.TXT</a></font></p>
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

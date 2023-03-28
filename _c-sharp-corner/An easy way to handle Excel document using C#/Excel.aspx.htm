@@ -1,0 +1,143 @@
+<html><head>
+
+
+
+
+
+
+
+<title>An easy way to handle Excel document using C#</title>
+<meta name="Keywords" content="Excel reading,Writing">
+<meta name="DESCRIPTION" content="In this article, we are going to see an easy way to handle Excel file.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="09 Mar 2009 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="10 Mar 2009 08:45:43 GMT">
+<meta name="Search.UserRating" content="80%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="vimal kandasamy">
+<link rel="stylesheet" type="text/css" href="Excel.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="Excel.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="Excel.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="Excel.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="Excel.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="Excel.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="Excel.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="Excel.aspx_files/vibitt_200903021918.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">An easy way to handle Excel document using C#</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">vimal kandasamy</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">March 09, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">In this article, we are going to see an easy way to handle Excel file.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p align="left"><font face="Verdana" size="2">Generally,
+we are in need to generate reports while handling financial or any
+other data. The statistics or Reports must be available for
+downloading. And reports must be in file format which is very easy to
+understand. So generally, we choose Excel file type to generate Report.<br><br>In this Article, We are going to see an easy way of handling an Excel file using <b>StreamWriter &amp; StreamReader.<br></b><br><b>Creation of an Excel Document<br></b><br>We
+can easily create an Excel document using StreamWriter class. We must
+specify the type of Encoding in the creation of file. And while writing
+we have to separate data in excel file using tab.<br><br>This tab will arrange data into cells correctly. So when we open, it will show you a perfect Excel document.<br><br>Ex:<br><br>We are just creating an excel file with customer details.<br><br></font><font size="2"><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] id ={ <span style="color: maroon;">"001"</span>, <span style="color: maroon;">"002"</span> };</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] name ={ <span style="color: maroon;">"abc"</span>, <span style="color: maroon;">"edf"</span> };</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] address ={ <span style="color: maroon;">"311,3rd street"</span>, <span style="color: maroon;">"26,NH Road"</span> };</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">StreamWriter</span><span style="font-size: 10pt; font-family: Verdana;"> sw = <span style="color: blue;">new</span> <span style="color: teal;">StreamWriter</span>(<span style="color: maroon;">"filename.xls"</span>, <span style="color: blue;">false</span>, <span style="color: teal;">Encoding</span>.ASCII);</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">sw.WriteLine(<span style="color: maroon;">"CustomerID"</span>+<span style="color: maroon;">"\t"</span>+<span style="color: maroon;">"Name"</span> +<span style="color: maroon;">"\t"</span>+ <span style="color: maroon;">"Address"</span> );</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">for</span><span style="font-size: 10pt; font-family: Verdana;"> (<span style="color: blue;">int</span> i = 0; i &lt; id.Length; i++)</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">sw.WriteLine(id[i] +<span style="color: maroon;">"\t"</span>+ name[i] +<span style="color: maroon;">"\t"</span>+ address[i]);</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">sw.Close();</span></font></p><font size="2"></font>
+<p align="left"><font face="Verdana" size="2"><b>Comment for each line</b><br><br>//String Array creation "Customer id details"<br>// String Array creation "Customer name details"<br>// String Array creation "Customer address details"<br>//stream writer object creation. In this, we pass encoding type as Encoding.ASCII <br>// write the Headers of table i.e. Column Heading of Report <br>//for loop. It will run till array length <br>// we writes data into file. Here tab separate each cells. <br>//close file stream.<br><br>In
+the WriteLine statement, we can write our data by composing a string
+with tab separator. Arrays [id, name &amp; address] containing data
+which are retrieved from database.<br><br><b>Output</b><br><br><img src="Excel.aspx_files/excel1.gif" border="0" height="267" width="493"><br><br>If
+you are trying to save this Excel file it will ask a question as
+specified below because of Tab delimited i.e. we separate our columns
+by tab.<br><br><img src="Excel.aspx_files/excel2.gif" border="0" height="599" width="453"><br><br>"Do you want to keep the workbook in this format?"<br><br>You
+have to choose yes, to keep this format. And then, save your file. If
+you choose a different format, then you can't read it through your C#
+application.<br><br><b>Reading an Excel Document</b><br><br>Using
+StreamReader, we can easily read the Excel Document which is created by
+us. It is possible, only if we keep that format [tab delimited].
+Otherwise, we can't read an Excel Document using StreamReader.<br><br>We just read the lines and split data using same tab. after that, we can handle those data.<br><br>Ex:<br><br>we going to read same Excel file.</font></p><font size="2">
+<p align="left"><span style="font-size: 10pt; color: teal; font-family: Verdana;">StreamReader</span><span style="font-size: 10pt; font-family: Verdana;"> sr = <span style="color: blue;">new</span> <span style="color: teal;">StreamReader</span>(file);</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">int</span><span style="font-size: 10pt; font-family: Verdana;"> count = 0;<span style="color: blue;">int</span> rows = 0;</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">while</span><span style="font-size: 10pt; font-family: Verdana;"> (!sr.EndOfStream)</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">{</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;"> s = sr.ReadLine();</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">rows++;</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">}</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">sr.Close();</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">sr = <span style="color: blue;">new</span> <span style="color: teal;">StreamReader</span>(file);</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] id = <span style="color: blue;">new</span> <span style="color: teal;">String</span>[rows];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] name = <span style="color: blue;">new</span> <span style="color: teal;">String</span>[rows];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[] address = <span style="color: blue;">new</span> <span style="color: teal;">String</span>[rows];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: blue; font-family: Verdana;">while</span><span style="font-size: 10pt; font-family: Verdana;"> (!sr.EndOfStream)</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">{</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;"> s = sr.ReadLine();</span><font face="Verdana"> <br></font><span style="font-size: 10pt; color: teal; font-family: Verdana;">String</span><span style="font-size: 10pt; font-family: Verdana;">[]&nbsp;column = s.Split(<span style="color: maroon;">'\t'</span>);</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">id[count] = column[0];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">name[count] = column[1];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">address[count] = column[2];</span><font face="Verdana"> <br></font><span style="font-size: 10pt; font-family: Verdana;">count++;</span><font face="Verdana"> </font><span style="font-size: 10pt; font-family: Verdana;"><br>}</span><font face="Verdana"> </font><span style="font-size: 10pt; font-family: Verdana;"><br>sr.Close();</span></p></font>
+<p align="left"><font face="Verdana" size="2"><b>Comment for each Line</b><br><br>//Stream Reader Object creation <br>//count and rows variables are created and assigned with 0<br>3 to 7 <br><br>//This
+while loop is used to find out the no of rows in excel file. It runs
+till EndOfStream. After end of while rows variable contains no of rows
+available in that file.<br><br>&nbsp;//Close file stream.<br><br>//again assign file Stream <br>//String Array creation "Customer id details" <br>// String Array creation "Customer name details" <br>// String Array creation "Customer address details"<br>//while loop starts. and runs till EndOfStream <br>//while loop begins <br>//read a line and store it in a String <br>//Split the string using tabs and stores it in a string array "column". <br>//store data in id array <br>//store data in name array <br>//store data in address array <br>//increase&nbsp;row count <br>//end of loop <br>close file stream<br><br><br>I know, this is a well known way for programmers to handle excel files. But I hope it will help the beginners of C#.<br><br>After
+generating excel file using this format [tab delimited], you should not
+save it as Excel file format again. You must keep the format to read it
+back through C#.<br><br>Try this code for your applications. It may help you.</font></p>
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

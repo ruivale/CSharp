@@ -1,0 +1,194 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Introduction to Memorization Pattern</title>
+<meta name="Keywords" content="Memorization Pattern, pattern, ">
+<meta name="DESCRIPTION" content="This article explains about implementation of Memorization Pattern in C#.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="13 Feb 2009 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="13 Feb 2009 04:18:52 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Sateesh Kumar">
+<link rel="stylesheet" type="text/css" href="MemorizationPattern.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="MemorizationPattern.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="MemorizationPattern.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="MemorizationPattern.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="MemorizationPattern.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="MemorizationPattern.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="MemorizationPattern.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="MemorizationPattern.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Introduction to Memorization Pattern</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Sateesh Kumar</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">February 13, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This article explains about implementation of Memorization Pattern in C#.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p>In this article, I am
+going to discuss about Memorization pattern. This pattern is very
+helpful to improve performance of the methods that are having complex
+logic. I will explain about this pattern followed by an example. Most
+of us use to write some methods that will do complex calculations
+taking considerable amount of time. Some of these methods might return
+same result for a given set of parameter's values. So, we can cache
+those results along with the input values. Next time, if we call that
+method with same parameter's values, instead of computing the result;
+it will return from the cached data.</p>
+<p>The main theme behind this pattern is to store/cache the results of
+previous computations so that they can be quickly retrieved without
+repeated effort.&nbsp; I am going to explain this pattern with a simple
+sum of 'n' method.</p>
+<p><strong>Scenarios applicable for using this Pattern:</strong></p>
+<ul>
+<li>If your method is returning constant result for a set of inputs all the time.</li>
+<li>If your method is having complex logic consuming lot of resources and time.</li>
+<li>If your method is of recursive nature with constant output for a set of inputs.</li></ul>
+<p><strong>Benefits of using this Pattern:</strong></p>
+<ul>
+<li>Performance can be improved for time consuming methods.</li>
+<li>Saves utilization of limited resources like memory, CPU time etc.</li></ul>
+<p><strong>Implementation:</strong></p>
+<p>Create a new console application and name it as MemoizationSample. Now, add the code to program.cs as shown below:</p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp; </span><span style="color: blue;">class</span> <span style="color: rgb(43, 145, 175);">Program<o:p></o:p></span></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">static</span> <span style="color: rgb(43, 145, 175);">Hashtable</span> prevResults = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">Hashtable</span>();<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp; </span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">int</span> n = 0;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">try<o:p></o:p></span></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">do<o:p></o:p></span></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Enter n value"</span>);<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>n = <span style="color: rgb(43, 145, 175);">Convert</span>.ToInt32(<span style="color: rgb(43, 145, 175);">Console</span>.ReadLine());<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">int</span> sum = SumofNumbers(n);<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"Sum of n Numbers: "</span> + sum.ToString());<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>} <span style="color: blue;">while</span> (n!= -1);<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">catch</span> { }<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">private</span> <span style="color: blue;">static</span> <span style="color: blue;">int</span> SumofNumbers(<span style="color: blue;">int</span> n)<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: blue;">if</span> (prevResults.Contains(n))<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: rgb(43, 145, 175);">Console</span>.WriteLine(<span style="color: rgb(163, 21, 21);">"From Cache"</span>);<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">return</span> <span style="color: rgb(43, 145, 175);">Convert</span>.ToInt32(prevResults[n].ToString());<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">int</span> temp=0;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">for</span> (<span style="color: blue;">int</span> i = 1; i &lt;= n; i++)<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>temp += i;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>prevResults.Add(n, temp);<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="color: blue;">return</span> temp;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>}<br></span><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style="">&nbsp;&nbsp;&nbsp; </span>}</span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"></span><br>In
+above code, whenever we call SumofNumbers method , we are storing the
+result of it in a HashTable along with the input value. So, next time
+if we call this method with same input, instead of computing it again
+it will return from the HashTable.</p>
+<p>Run the application. The output will be as shown below:</p>
+<p><img alt="" src="MemorizationPattern.aspx_files/1.gif" align="baseline" border="0" hspace="0">&nbsp;</p>
+<p>We can use this pattern in methods that will retrieve constant data
+from the database like zip code, SSN for a given input [like state,
+person name] etc.</p>
+<p><strong>Drawbacks of this Pattern:</strong></p>
+<ul>
+<li>Consumes time to check whether the result exists or not for a set of inputs in HashTable.</li>
+<li>Applicable for methods that returns only constant output for a set of inputs all the time.</li></ul>
+<p><strong>Suggestion:</strong></p>
+<p>It will be very helpful, if this pattern is implemented as a C#
+language feature by Microsoft team by just adding an attribute like
+[CacheResult] for methods returning constant results all the time. By
+this way, we can reduce the code for creating/checking results in
+HashTable manually. </p>
+<p>I am ending up the things here. I am attaching source code for reference. I hope this article will be helpful for all.</p>
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

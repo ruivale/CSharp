@@ -1,0 +1,201 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Multithreading with C#</title>
+<meta name="Keywords" content="Multithreading with C#">
+<meta name="DESCRIPTION" content="This article gives you an introduction to write multithreaded applications with c# and some basic ways for creating threads">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="20 Feb 2009 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="25 Feb 2009 03:00:09 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Udeshika Horanagama">
+<link rel="stylesheet" type="text/css" href="0.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="0.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="0.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="0.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="0.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="0.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="0.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="0.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Multithreading with C#</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Udeshika Horanagama</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">February 20, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This article gives you an introduction to write multithreaded applications with c# and some basic ways for creating threads</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"></font><p align="justify"></p><p align="left"><font size="2"><font face="Verdana" size="2"><b>Introduction</b><br><br>This
+article provides you a starting point for writing concurrent programs
+using threads in c# (every c# thread is typically delegates to the
+operating system). Threads allow you to develop more efficient
+applications synchronizing through the shared memory. And this article
+aims to wards the experienced programmers in c#. Other languages such
+as VB.net are using the same concept.<br><br><b>Why we should not use threads in our applications?<br></b><br>Creating and destroying a thread is costly process it takes processor time. Several things must be performed while creating</font></font></p>
+<ol>
+<font size="2"><font face="Verdana" size="2"><li>
+<div align="left">Operating system must go in to kernel mode.</div></li>
+<li>
+<div align="left">Other threads must notify the new thread is created.</div>
+</li><li>
+<div align="left">Operating system must leave the kernel mode. Etc...</div></li></font></font></ol>
+<p align="left"><font size="2"><font face="Verdana" size="2">If you want to know about the kernel mode refer to <a href="http://www.codinghorror.com/blog/archives/001029.html">http://www.codinghorror.com/blog/archives/001029.html</a> <br><br>From the developers point of view</font></font></p>
+<ol>
+<font size="2"><font face="Verdana" size="2"><li>
+<div align="left">Multithreading applications are hard to debug.</div></li>
+<li>
+<div align="left">And makes the application more complex.</div></li></font></font></ol>
+<p align="left"><font size="2"><font face="Verdana" size="2">Somehow it's up to developer to take challenge over the choice<br><br><b>Then why should we use threads?<br></b><br>So if this is such a costly process then why should we are using the threads...<br><br>Answer
+is within last couple of years processors had a rapid development
+especially on its speed. Nowadays a processor in the market is with a
+speed around 3GHz - 4GHz.when processor comes up to this level
+processor vendors such as Intel, AMD used to notified that processor
+can't be speeds up more and more with the environment they should use.
+Then they used to think about parallel processing, here's the point
+Hyper-threading technology comes in to action. Later they improved it
+to Dual Core then in to Core 2 Duo... I'm not going describe all those
+CPU architectures by here, and it's not what I except by this article
+as well. So my point is to "why should we use threads in our
+applications" and the answer is to use the maximum performance and of
+the above processors (advantage of parallel processing) we have to use
+the threads with our C# applications.<br><br><b>Using threads with C# application</b><br><br>There are several ways that we can use threads .net framework applications.<br><br>First
+I'll describe you how to use a dedicated thread within our application
+and later I'll describe you about using Thread pool and thread
+synchronization techniques as well. And I hope you have some knowledge
+of working with delegates at least why we are using delegates in C#.
+You can learn basics about delegates from here<br><a href="http://msdn.microsoft.com/en-us/library/ms173171%28VS.80%29.aspx">http://msdn.microsoft.com/en-us/library/ms173171(VS.80).aspx</a> <br><br><b>Example: Using dedicated threads<br></b><br><b>C# code<br></b><br><span style="color: blue;">class</span> <span style="color: teal;">Program<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// create thread start delegate instance - contains the method to execute by the thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">ThreadStart</span> ts = <span style="color: blue;">new</span> <span style="color: teal;">ThreadStart</span>(run);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// create new thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span> thrd = <span style="color: blue;">new</span> <span style="color: teal;">Thread</span>(ts);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// start thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.Start();</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// makes the main thread sleep - let sub thread to run<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span> (<span style="color: blue;">int</span> t = 10; t &gt; 0; t--)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Main Thread value is :"</span> + t);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm main Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.ReadLine();</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// this method executed by a separate thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> run()<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span> (<span style="color: blue;">int</span> i = 0; i &lt; 10; i++)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Sub Thread value is : "</span> + i);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm Sub Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp; }<br><br><b>VB.net code<br></b><br><span style="color: blue;">Module</span> Module1</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Sub</span> Main()</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">'create thread start delegate instance - contains the method to execute by the thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Dim</span> ts <span style="color: blue;">As</span> ThreadStart = <span style="color: blue;">New</span> ThreadStart(<span style="color: blue;">AddressOf</span> run)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">' create new thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Dim</span> t <span style="color: blue;">As</span> Thread<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t = <span style="color: blue;">New</span> Thread(ts)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">' start thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t.Start()</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">' makes the main thread sleep - let sub thread to run<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.Sleep(1000)</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">For</span> i <span style="color: blue;">As</span> <span style="color: blue;">Integer</span> = 10 <span style="color: blue;">To</span> 0 <span style="color: blue;">Step</span> -1<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(<span style="color: maroon;">"Main thread value is"</span> + i.ToString())<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thread.Sleep(1000)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Next</span> i</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm main Thread"</span>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.ReadKey()</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp; <span style="color: blue;">End</span> <span style="color: blue;">Sub</span></font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp; <span style="color: green;">' this method executed by a separate thread<br></span>&nbsp;&nbsp;&nbsp; <span style="color: blue;">Sub</span> run()</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">For</span> i <span style="color: blue;">As</span> <span style="color: blue;">Integer</span> = 0 <span style="color: blue;">To</span> 10<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(<span style="color: maroon;">"Sub thread value is"</span> + i.ToString())<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;Thread.Sleep(1000)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">Next</span> i<br>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Console.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm Sub Thread"</span>)<br>&nbsp;&nbsp; <span style="color: blue;">End</span> <span style="color: blue;">Sub</span></font></font></p>
+<p class="MsoNormal" align="left"><span style="color: blue;"><font size="2"><font face="Verdana" size="2">&nbsp;End</font></font></span><font size="2"><font face="Verdana" size="2"> <span style="color: blue;">Module</span><br><br>In the above code I have used a separate thread to execute my run method. When code executes you can see the output<br><br><img src="0.aspx_files/multi.gif" border="0" height="290" width="575"><br><br>Sub thread increases the value within its run method and the main thread decreases its value one after the other.<br><br>Here's the part we have created a new thread and assigned job to done.<br><br><span style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// create thread start delegate instance - contains the method to
+execute by the thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">ThreadStart</span> ts = <span style="color: blue;">new</span> <span style="color: teal;">ThreadStart</span>(run);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// create new thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span> thrd = <span style="color: blue;">new</span> <span style="color: teal;">Thread</span>(ts);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// start thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.Start();<br><br>In here the thread start delegate is optional and we can directly create the thread like this as well<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// create new thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span> thrd = <span style="color: blue;">new</span> <span style="color: teal;">Thread</span>(run);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// start thread<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.Start();<br><br><b>Note:</b> This is C# language shortcut and does not available with VB.net.<br><br><b>Make the thread a background thread<br></b><br>This
+thread remains runing even the main thread finishes it's job, to
+finalize all the threads when main thread dies you have to set the
+IsBackground property to true.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: green;">// create new thread with ParameterizedThreadStart delegate instance<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span> thrd = <span style="color: blue;">new</span> <span style="color: teal;">Thread</span>(run);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// make the thread background<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.IsBackground = <span style="color: blue;">true</span>;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// start thread with passing the parameters need<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.Start();<br><br><b>Passing parameters to the threads<br></b><br>If
+you want to pass any parameters to the method which is used to execute
+by the new thread then you can use the ParamerizedThreadStart delegate
+instead of the ThreadStart delegate.<br><br><b>Example:</b> Using ParameterizedThreadStart to invoke methods with parameters<br><br>ParameterizedThreadStart which we used to execute our method by a separate thread looks like this<br><br><span style="color: blue;">public</span> <span style="color: blue;">delegate</span> <span style="color: blue;">void</span> <span style="color: teal;">ParameterizedThreadStart</span>(<span style="color: blue;">object</span> obj);<br><br>So we have to change our run method like this (matches with the ParameterizedThreadStart)<br><br><span style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* this method executed by a separate thread<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * this sholud be match with the ParameterizedThreadStart<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * (parameters must be passed as an object) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> run(<span style="color: blue;">object</span> args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// cast our parameter <br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">int</span> j = (<span style="color: blue;">int</span>)args;</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span> (<span style="color: blue;">int</span> i = 0; i &lt; j; i++)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Sub Thread value is : "</span> + i);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm Sub Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br><br>Executing part is like this (please read the comments)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// create new thread with ParameterizedThreadStart delegate instance<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span> thrd = <span style="color: blue;">new</span> <span style="color: teal;">Thread</span>(<span style="color: blue;">new</span> <span style="color: teal;">ParameterizedThreadStart</span>(run));<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// start thread with passing the parameters need<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; thrd.Start(10);<br><br><b>Assigning Thread pool class to get the job done<br></b><br>By
+using the threadpool class we can assign our work to done by a separate
+thread easily and this is the way recommended using whenever possible.<br><br><b>Example:</b> Using Threadpool class<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// assign thread pool thread to do the job<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">ThreadPool</span>.QueueUserWorkItem(run);<br><br>If
+you want to pass any parameters to the method executing by the thread
+you can pass them as a second argument.like this for our run method
+with object parameter.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// assign thread pool thread to do the job<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">ThreadPool</span>.QueueUserWorkItem(run,10);<br><br><b>Complete code</b><br><br><span style="color: blue;">class</span> <span style="color: teal;">Program<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// assign thread pool thread to do the job<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">ThreadPool</span>.QueueUserWorkItem(run,10);</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// makes the main thread sleep - let sub thread to run<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span> (<span style="color: blue;">int</span> t = 10; t &gt; 0; t--)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Main Thread value is :"</span> + t);<br>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: teal;">Thread</span>.Sleep(1000);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm main Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.ReadLine();</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">/* this method executed by a separate thread<br></span><span style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * this sholud be match with the WaitCallback<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * (parameters must be passed as an object) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> run(<span style="color: blue;">object</span> args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// cast our parameter <br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">int</span> j = (<span style="color: blue;">int</span>)args;</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">for</span> (<span style="color: blue;">int</span> i = 0; i &lt; j; i++)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Sub Thread value is : "</span> + i);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm Sub Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br><br><br><b>Periodic operations from threads<br></b><br>If you want to perform any method call in a perodic order then you can use the Timer class.<br><br><b>Note </b>:
+There are three timer classes availbale with .net framework class
+library one is in System namespace next is in System.Windows.Forms
+namespace and the last is in System.Threading namespace all of them are
+providing similar functinalties so please don't confuse them
+together,I'm talking here is about the System.Threading.Timer class<br><br><b>Example:</b> Using Timer class<br><br><span style="color: blue;">class</span> <span style="color: teal;">Program<br></span>&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> Main(<span style="color: blue;">string</span>[] args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// assign thread timer to do the job<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; System.Threading.<span style="color: teal;">Timer</span> thrdTimer = <span style="color: blue;">new</span> <span style="color: teal;">Timer</span>(run, 10, 0, 1000);</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// makes the main thread sleep - let sub thread to run<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Thread</span>.Sleep(1000);</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Good Bye!!!I'm main Thread"</span>);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.ReadLine();</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</font></font></p>
+<p class="MsoNormal" align="left"><font size="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">/* this method executed by a separate thread<br></span><span style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * this sholud be match with the </span><span style="color: teal;">TimerCallback<br></span><span style="color: green;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * (parameters must be passed as an object) <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */<br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">static</span> <span style="color: blue;">void</span> run(<span style="color: blue;">object</span> args)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// cast our parameter <br></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: blue;">int</span> j = (<span style="color: blue;">int</span>)args;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: teal;">Console</span>.WriteLine(<span style="color: maroon;">"Hi I'm executing by timer you passed "</span> + j);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>&nbsp;&nbsp;&nbsp; }<br><br>Here
+is the line we are assiging new timer to do the job,last parameter is
+the period to stay(in miliseconds) within the callbacks (here I have
+passed the 1000).<br><br>&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <span style="color: green;">// assign thread timer to do the job<br></span>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; System.Threading.<span style="color: teal;">Timer</span> thrdTimer = <span style="color: blue;">new</span> System.Threading<span style="color: teal;">.Timer</span>(run, 10, 0, 1000);<br><br>See and how much .net framework class library had made the developer life easier.<br><br>Here's the output by the above code<br><br><img src="0.aspx_files/multi2.gif" border="0" height="293" width="585"><br><br><br>You can see our run method is called perodically after every 1 second...<br><br>Here
+I gave you the first step of using multithreading with c#,later I'll
+describe you about the thread synchronization. Especially with the
+parrellel processing architechures we have to much concern about our
+mutithreading applications.<br><br>Better Coding<br>Cheers</font></font></p>
+<font size="2"></font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

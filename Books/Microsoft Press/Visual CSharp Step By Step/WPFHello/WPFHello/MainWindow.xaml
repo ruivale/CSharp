@@ -1,0 +1,12 @@
+﻿<Window x:Class="WPFHello.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hello" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="213" d:DesignWidth="383" SizeToContent="WidthAndHeight">
+    <Grid Height="168" Width="359">
+        <Label Content="Please enter your name:" Height="38" HorizontalAlignment="Left" Margin="23,22,0,0" Name="labelUserName" VerticalAlignment="Top" Width="230" FontSize="20" />
+        <TextBox Height="38" HorizontalAlignment="Left" Margin="23,66,0,0" Name="textBoxUserName" VerticalAlignment="Top" Width="230" />
+        <Button Content="OK" Height="23" HorizontalAlignment="Left" Margin="259,124,0,0" Name="buttonOK" VerticalAlignment="Top" Width="75" Click="buttonOK_Click" />
+        <Button Content="Exit" Height="23" HorizontalAlignment="Right" Margin="0,124,106,0" Name="buttonExit" VerticalAlignment="Top" Width="75" Click="button1_Click" />
+        <Button Content="Calc" Height="23" HorizontalAlignment="Left" Margin="97,124,0,0" Name="buttonCalc" VerticalAlignment="Top" Width="75" Click="buttonCalc_Click" />
+    </Grid>
+</Window>

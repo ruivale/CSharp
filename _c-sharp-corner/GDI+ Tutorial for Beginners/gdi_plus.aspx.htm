@@ -1,0 +1,479 @@
+<html><head>
+
+
+
+
+
+
+
+<title>GDI+ Tutorial for Beginners</title>
+<meta name="Keywords" content=".NET, C#, DrawImage, Drawing Text, DrawPath, DrawPolygon, Event Handler, GDI Objects, GDI+, Graphics, Graphics Class, System.Design., System.Drawing, System.Drawing2D, System.Imaging, System.Internal, System.Printing, System.Text, Tutorials, VS.NET">
+<meta name="DESCRIPTION" content="GDI+ is next evolution of GDI. In Visual Studio .NET, Microsoft has taken care of most of the GDI problems and have made it easy to use.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="26 Dec 2000 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="08 Feb 2006 04:34:46 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Mahesh Chand">
+<link rel="stylesheet" type="text/css" href="gdi_plus.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="gdi_plus.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="gdi_plus.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="gdi_plus.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="gdi_plus.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="gdi_plus.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="gdi_plus.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="gdi_plus.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">GDI+ Tutorial for Beginners</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Mahesh Chand</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">December 26, 2000</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">GDI+
+is next evolution of GDI. In Visual Studio .NET, Microsoft has taken
+care of most of the GDI problems and have made it easy to use.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"></font><p align="justify"></p><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">GDI+
+is next evolution of GDI. Using GDI objects in earlier versions of
+Visual Studio was a pain. In Visual Studio .NET, Microsoft has taken
+care of most of the GDI problems and have made it easy to use.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">GDI+ resides in <strong>System.Drawing.dll</strong> assembly. All GDI+ classes are reside in the <strong>System.Drawing</strong>, <strong>System.Text</strong>, <strong>System.Printing</strong>, <strong>System.Internal</strong> , <strong>System.Imaging</strong>, <strong>System.Drawing2D</strong> and <strong>System.Design</strong> namespaces. </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The
+first class we must discuss is the Graphics class. After the Graphics
+class, I will discuss other useful GDI+ classes and structures such as
+Pen, Brush, and Rectangle. The final part of this tutorial are some
+examples in C#.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>The Graphics Class</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The <strong>Graphics</strong>
+class encapsulates GDI+ drawing surfaces. Before drawing any object
+(for example circle, or rectangle) we have to create a surface using
+Graphics class. Generally we use Paint event of a Form to get the
+reference of the graphics. Another way is to override <strong>OnPaint</strong> method. </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Here is how you get a reference of the Graphics object:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">private</font></font> <font color="#0000ff">void</font> form1_Paint(<font color="#0000ff">object</font><font size="3"><font size="2"> sender, PaintEventArgs e) <br></font><font size="2">{ <br></font><font size="2">Graphics g = e.Graphics;<br></font><font size="2">}</font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">OR:&nbsp;&nbsp; </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font><font size="3"><font size="2"> OnPaint(PaintEventArgs e) <br></font><font size="2">{<br></font><font size="2">Graphics g = e.Graphics;<br></font><font size="2">}</font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">Once
+you have the Graphics reference, you can call any of this class's
+members to draw various objects. Here are some of Graphics class's
+methods:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">DrawArc</font></td>
+<td><font face="Verdana" size="2">Draws an arc from the specified ellipse. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawBezier</font></td>
+<td><font face="Verdana" size="2">Draws a cubic bezier curve.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawBeziers</font></td>
+<td><font face="Verdana" size="2">Draws a series of cubic Bezier curves. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawClosedCurve</font></td>
+<td><font face="Verdana" size="2">Draws a closed curve defined by an array of points.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawCurve</font></td>
+<td><font face="Verdana" size="2">Draws a curve defined by an array of points.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawEllipse</font></td>
+<td><font face="Verdana" size="2">Draws an ellipse.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawImage</font></td>
+<td><font face="Verdana" size="2">Draws an image.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawLine</font></td>
+<td><font face="Verdana" size="2">Draws a line.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawPath</font></td>
+<td><font face="Verdana" size="2">Draws the lines and curves defined by a GraphicsPath. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawPie</font></td>
+<td><font face="Verdana" size="2">Draws the outline of a pie section.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawPolygon</font></td>
+<td><font face="Verdana" size="2">Draws the outline of a polygon.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawRectangle</font></td>
+<td><font face="Verdana" size="2">Draws the outline of a rectangle.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">DrawString</font></td>
+<td><font face="Verdana" size="2">Draws a string.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillEllipse</font></td>
+<td><font face="Verdana" size="2">Fills the interior of an ellipse defined by a bounding rectangle. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillPath</font></td>
+<td><font face="Verdana" size="2">Fills the interior of a path. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillPie</font></td>
+<td><font face="Verdana" size="2">Fills the interior of a pie section.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillPolygon </font></td>
+<td><font size="2"><font face="Verdana">Fills the interior of a polygon defined by an array of points. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillRectangle</font></td>
+<td><font size="2"><font face="Verdana">Fills the interior of a rectangle with a Brush. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillRectangles</font></td>
+<td><font size="2"><font face="Verdana">Fills the interiors of a series of rectangles with a Brush. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FillRegion </font></td>
+<td><font face="Verdana" size="2">Fills the interior of a Region.</font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">In
+.NET, GDI+ functionality resides in the System.Drawing.dll. Before you
+start using GDI+ classes, you must add reference to the
+System.Drawing.dll and import System.Drawing namespace. If you are
+using Visual Studio .NET for your development, you can add reference to
+the GDI+ library using following: </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Creating
+this project is simple. Create a Windows application and add reference
+to the System.Drawing.dll using Project-&gt;Add Reference menu item.
+See Figure 1.</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GraphicsUsingGDIMGImg1.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Figure 1. Adding reference to System.Drawing.dll</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">After that add these two lines. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">using</font></font> System.Drawing;<br><font color="#0000ff">using</font><font size="3"><font size="2"> System.Drawing.Drawing2D;</font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">Note: If you create a Windows application using VS.NET, you only need write only one line.</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font><p><font color="#0000ff" size="3"><font size="2">using</font></font><font size="3"><font size="2"> System.Drawing.Drawing2D;</font></font></p><font size="3"></font></font>
+</font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">After that add a Form_Paint event handler using the Properties Window. See Figure 2.</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GraphicsUsingGDIMGImg2.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Figure 2. Adding Form_Paint event handler.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Note: You can also add Form paint event handler manually described above.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Graphics Objects</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">After creating a <strong>Graphics</strong> object, you can use it draw lines, fill shapes, draw text and so on. The major objects are:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">Brush</font></td>
+<td><font size="2"><font face="Verdana">Used to fill enclosed surfaces with patterns,colors, or bitmaps. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Pen</font></td>
+<td><font size="2"><font face="Verdana">Used to draw lines and polygons, including rectangles, arcs, and pies </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Font</font></td>
+<td><font size="2"><font face="Verdana">Used to describe the font to be used to render text </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Color</font></td>
+<td><font face="Verdana"><font size="2">Used to describe the color used to render a particular object. In GDI+ color can be alpha blended</font> </font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Pen Class</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">A
+pen draws a line of specified width and style. You always use Pen
+constructor to create a pen. The constructor initializes a new instance
+of the <strong>Pen</strong> <strong>class</strong>. You can initialize it with a color or brush.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Pen</strong> class with the specified color.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">public</font></font> Pen(Color);</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Pen</strong> class with the specified Brush.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff">public</font> Pen(Brush); </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Pen</strong> class with the specified Brush and width.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff">public</font> Pen(Brush, <font color="#0000ff">float</font>); </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Pen</strong> class with the specified Color and Width.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff">public</font> Pen(Color, <font color="#0000ff">float</font>); </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Here is one example:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">
+<p>Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue ); or Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue, 100 ); </p></font>
+</font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Some of its most commonly used properties are:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">Alignment</font></td>
+<td><font face="Verdana" size="2">Gets or sets the alignment for objects drawn with this Pen. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Brush</font></td>
+<td><font size="2"><font face="Verdana">Gets or sets the Brush that determines attributes of this Pen. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Color</font></td>
+<td><font size="2"><font face="Verdana">Gets or sets the color of this Pen. </font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Width</font></td>
+<td><font face="Verdana"><font size="2">Gets or sets the width of this Pen.</font> </font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Color Structure</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">A Color structure represents an ARGB color. Here are ARGB properties of it:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">A</font></td>
+<td><font face="Verdana" size="2">Gets the alpha component value for this <strong>Color</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">B</font></td>
+<td><font face="Verdana" size="2">Gets the blue component value for this <strong>Color</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">G</font></td>
+<td><font face="Verdana" size="2">Gets the green component value for this <strong>Color</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">R </font></td>
+<td><font face="Verdana"><font size="2">Gets the red component value for this <strong>Color</strong>.</font></font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">You
+can call the Color members. Each color name (say Blue) is a member of
+the Color structure. Here is how to use a Color structure:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font><p><font size="3"></font><font size="2">Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue );</font><font size="3"> </font></p><font size="3"></font></font>
+</font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Font Class</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The <strong>Font class</strong> defines a particular format for text such as font type, size, and style attributes. You use font constructor to create a font.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Font</strong> class with the specified attributes.</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font><p><font color="#0000ff" size="3"><font size="2">public</font></font> Font(<font color="#0000ff">string</font>, <font color="#0000ff">float</font>);</p></font>
+</font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Initializes a new instance of the <strong>Font class</strong> from the specified existing <strong>Font</strong> and <strong>FontStyle</strong>.</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">public</font></font><font size="3"><font size="2"> Font(Font, FontStyle);</font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">Where FontStyle is an enumeration and here are its members:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr bgcolor="#808080">
+<td><font face="Verdana" size="2"><strong>Member Name </strong></font></td>
+<td><font face="Verdana" size="2"><strong>Description</strong></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Bold</font></td>
+<td><font size="2"><font face="Verdana">Bold text.</font></font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Italic </font></td>
+<td><font face="Verdana" size="2">Italic text. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Regular</font></td>
+<td><font face="Verdana" size="2">Normal text.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Strikeout</font></td>
+<td><font face="Verdana" size="2">Text with a line through the middle.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Underline</font></td>
+<td><font face="Verdana" size="2">Underlined text.</font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Here is one example:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"><font size="2">Graphics g ; <br></font></font><font size="2">Font font = <font color="#0000ff">new</font> Font("Times New Roman", 26);</font><font size="3"> </font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">Some of its most commonly used properties are:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">Bold</font></td>
+<td><font face="Verdana" size="2">Gets a value indicating whether this <strong>Font</strong> is bold.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">FontFamily</font></td>
+<td><font face="Verdana" size="2">Gets the FontFamily of this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Height</font></td>
+<td><font face="Verdana" size="2">Gets the height of this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Italic</font></td>
+<td><font face="Verdana" size="2">Gets a value indicating whether this <strong>Font</strong> is Italic.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Name</font></td>
+<td><font face="Verdana" size="2">Gets the face name of this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Size</font></td>
+<td><font face="Verdana" size="2">Gets the size of this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">SizeInPoints</font></td>
+<td><font face="Verdana" size="2">Gets the size, in points, of this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Strikeout</font></td>
+<td><font face="Verdana" size="2">Gets a value indicating whether this <strong>Font</strong> is strikeout (has a line through it). </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Style</font></td>
+<td><font face="Verdana" size="2">Gets style information for this <strong>Font</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Underline</font></td>
+<td><font face="Verdana" size="2">Gets a value indicating whether this <strong>Font</strong> is underlined. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Unit</font></td>
+<td><font face="Verdana" size="2">Gets the unit of measure for this <strong>Font</strong>.</font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Brush Class</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The <strong>Brush</strong>
+class&nbsp; is an abstract base class and cannot be instantiated. We
+always use its derived classes to instantiate a brush object, such as
+SolidBrush, TextureBrush, RectangleGradientBrush, and
+LinearGradientBrush.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Here is one example:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font><font size="2">LinearGradientBrush lBrush = <font color="#0000ff">new</font> LinearGradientBrush(rect, Color.Red, Color.Yellow, </font>LinearGradientMode.BackwardDiagonal); </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">OR</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Brush brsh = <font color="#0000ff">new</font><font size="3"><font size="2"> SolidBrush(Color.Red), 40, 40, 140, 140);</font> </font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+SolidBrush class defines&nbsp; a brush made up of a single color.
+Brushes are used to fill graphics shapes such as rectangles, ellipses,
+pies, polygons, and paths.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The TextureBrush encapsulates a Brush that uses an fills the interior of a shape with an image.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The <em>LinearGradiantBrush</em> encapsulates both two-color gradients and custom multi-color gradients.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Rectangle Structure</strong> </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">public</font></font> Rectangle(Point, Size); or <font color="#0000ff">public</font> Rectangle(<font color="#0000ff">int</font>, <font color="#0000ff">int</font>, <font color="#0000ff">int</font>, <font color="#0000ff">int</font><font size="3"><font size="2">);</font> </font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+Rectangle structure is used to draw a rectangle on WinForms. Besides
+its constructor, the Rectangle structure has following members:</font></font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr>
+<td><font face="Verdana" size="2">Bottom</font></td>
+<td><font face="Verdana" size="2">Gets the y-coordinate of the lower-right corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Height</font></td>
+<td><font face="Verdana" size="2">Gets or sets the width of the rectangular region defined by this <strong>Rectangle</strong>. </font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">IsEmpty</font></td>
+<td><font face="Verdana" size="2">Tests whether this <strong>Rectangle</strong> has a Width or a Height of 0.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Left</font></td>
+<td><font face="Verdana" size="2">Gets the x-coordinate of the upper-left corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Location</font></td>
+<td><font face="Verdana" size="2">Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Right</font></td>
+<td><font face="Verdana" size="2">Gets the x-coordinate of the lower-right corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Size</font></td>
+<td><font face="Verdana" size="2">Gets or sets the size of this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Top</font></td>
+<td><font face="Verdana" size="2">Gets the y-coordinate of the upper-left corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Width</font></td>
+<td><font face="Verdana" size="2">Gets or sets the width of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">X </font></td>
+<td><font face="Verdana" size="2">Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr>
+<tr>
+<td><font face="Verdana" size="2">Y</font></td>
+<td><font face="Verdana" size="2">Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this <strong>Rectangle</strong>.</font></td></tr></tbody></table>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Its constructor initializes a new instance of the Rectangle class. Here is the definition:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">public</font></font> Rectangle(Point, Size); or <font color="#0000ff">public</font> Rectangle(<font color="#0000ff">int</font>, <font color="#0000ff">int</font>, <font color="#0000ff">int</font>, <font color="#0000ff">int</font><font size="3"><font size="2">);</font> </font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>The Point Structure</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">This
+structure is similar to the POINT structure in C++. It represents an
+ordered pair of x and y coordinates that define a point in a
+two-dimensional plane. The member x represents the x coordinates and y
+represents the y coordinates of the plane.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Here is how to instantiate a point structure:</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font><font size="2">Point pt1 = <font color="#0000ff">new</font> Point( 30, 30); <br></font>Point pt2 = <font color="#0000ff">new</font><font size="3"><font size="2"> Point( 110, 100);</font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Some sample Examples:</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Drawing a rectangle</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">You
+can override OnPaint event of your form to draw an rectangle. The
+LinearGradientBrush encapsulates a brush and linear gradient. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe) <br>{ <br>Graphics g = pe.Graphics ; <br>Rectangle rect = <font color="#0000ff">new</font> Rectangle(50, 30, 100, 100); <br>LinearGradientBrush lBrush = <font color="#0000ff">new</font><font size="3"><font size="2"> LinearGradientBrush(rect, Color.Red, Color.Yellow, </font><font size="2">LinearGradientMode.BackwardDiagonal); <br></font><font size="2">g.FillRectangle(lBrush, rect); <br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">The output of the above code looks like Figure 3.</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg4.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Figure 3. Drawing a rectangle.</font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Drawing an Arc</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>DrawArc</strong> function draws an arc.&nbsp;This function takes four arguments. </font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">First is the Pen. You create a pen by using the <strong>Pen</strong>
+class. The Pen constructor takes at least one argument, the color or
+the brush of the pen. Second argument width of the pen or brush is
+optional. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font><p><font size="3"></font><font size="2">Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue ); or Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue, 100 );</font><font size="3"></font></p><font size="3"></font></font>
+</font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">The
+second argument is a rectangle. You can create a rectangle by using
+Rectangle structure. The Rectangle constructor takes four int type
+arguments and they are left and right corners of the rectangle. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font><font size="2">Rectangle rect = <font color="#0000ff">new</font> Rectangle(50, 50, 200, 100); <br></font><font color="#0000ff">protected</font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe)<br>{<br>Graphics g = pe.Graphics ;<br>Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue );<br>Rectangle rect = <font color="#0000ff">new</font><font size="3"><font size="2"> Rectangle(50, 50, 200, 100);<br></font><font size="2">g.DrawArc( pn, rect, 12, 84 );<br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">The output looks like this:</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg5.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Drawing a Line</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">DrawLine
+function of the Graphics class draws a line. It takes three parameters,
+a pen, and two Point class parameters, starting and ending points.
+Point class&nbsp; constructor takes x, y arguments.</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe) <br>{ <br>Graphics g = pe.Graphics ; <br>Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue ); <br><font color="#008000">// Rectangle rect = new Rectangle(50, 50, 200, 100); <br></font>Point pt1 = <font color="#0000ff">new</font> Point( 30, 30); <br>Point pt2 = <font color="#0000ff">new</font><font size="3"><font size="2"> Point( 110, 100); <br></font><font size="2">g.DrawLine( pn, pt1, pt2 ); <br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">The output looks like this:</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg6.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Drawing an Ellipse</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">An
+ellipse( or a circle)&nbsp; can be drawn by using DrawEllipse method.
+This method takes only two parameters, Pen and rectangle.</font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe) <br>{ <br>Graphics g = pe.Graphics ; <br>Pen pn = <font color="#0000ff">new</font> Pen( Color.Blue, 100 ); <br>Rectangle rect = <font color="#0000ff">new</font><font size="3"><font size="2"> Rectangle(50, 50, 200, 100); <br></font><font size="2">g.DrawEllipse( pn, rect ); <br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font></font><font face="Verdana, Arial, Helvetica, sans-serif">The output looks like this:</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg7.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>The FillPath</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">Drawing bazier curves is little more complex than other objects. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe)<br>{<br>Graphics g = pe.Graphics;<br>g.FillRectangle(<font color="#0000ff">new</font> SolidBrush(Color.White), ClientRectangle);<br>GraphicsPath path = <font color="#0000ff">new</font> GraphicsPath(<font color="#0000ff">new</font> Point[] {<br><font color="#0000ff">new</font> Point(40, 140), <font color="#0000ff">new</font> Point(275, 200),<br><font color="#0000ff">new</font> Point(105, 225), <font color="#0000ff">new</font> Point(190, 300),<br><font color="#0000ff">new</font> Point(50, 350), <font color="#0000ff">new</font> Point(20, 180), },<br><font color="#0000ff">new</font> <font color="#0000ff">byte</font>[] {<br>(<font color="#0000ff">byte</font>)PathPointType.Start,<br>(<font color="#0000ff">byte</font>)PathPointType.Bezier,<br>(<font color="#0000ff">byte</font>)PathPointType.Bezier,<br>(<font color="#0000ff">byte</font>)PathPointType.Bezier,<br>(<font color="#0000ff">byte</font>)PathPointType.Line,<br>(<font color="#0000ff">byte</font>)PathPointType.Line,<br>});<br>PathGradientBrush pgb = <font color="#0000ff">new</font> PathGradientBrush(path);<br>pgb.SurroundColors = <font color="#0000ff">new</font><font size="3"><font size="2"> Color[] { Color.Green,Color.Yellow,Color.Red, Color.Blue,<br></font><font size="2">Color.Orange, Color.White, };<br></font><font size="2">g.FillPath(pgb, path);<br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font><font face="Verdana, Arial, Helvetica, sans-serif">The output looks like this:</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg8.jpg" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><strong>Drawing Text and Strings</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">You
+can override OnPaint event of your form to draw an rectangle. The
+LinearGradientBrush encapsulates a brush and linear gradient. </font></font></p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3">
+</font></font></font><p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="3"><font size="2">protected</font></font> <font color="#0000ff">override</font> <font color="#0000ff">void</font> OnPaint(PaintEventArgs pe)<br>{<br>Font fnt = <font color="#0000ff">new</font> Font("Verdana", 16);<br>Graphics g = pe.Graphics;<br>g.DrawString("GDI+ World", fnt, <font color="#0000ff">new</font><font size="3"><font size="2"> SolidBrush(Color.Red), 14,10);<br></font><font size="2">} </font></font></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><font size="3"></font></font><font face="Verdana, Arial, Helvetica, sans-serif">The output looks like this:</font></font></p>
+<p><font size="2"><img alt="" src="gdi_plus.aspx_files/GDITut4BegMCBImg9.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"><strong>References:</strong></font></font></p>
+<p><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">MSDN and .NET samples. </font></font></p>
+
+<font size="2"></font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

@@ -1,0 +1,259 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Getting country names from system</title>
+<meta name="Keywords" content="Country Names,CultureInfo,CultureInfo Class,RegionInfo,RegionInfo Class,System.Globalization">
+<meta name="DESCRIPTION" content="This article show how to get country names from system using .NET 3.5.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="12 Mar 2009 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="12 Mar 2009 12:38:29 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Diptimaya Patra">
+<link rel="stylesheet" type="text/css" href="1.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="1.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="1.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="1.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="1.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="1.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="1.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="1.aspx_files/vibitt_200903021918.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Getting country names from system</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Diptimaya Patra</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">March 12, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This article show how to get country names from system using .NET 3.5.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"></font><p align="justify"></p><p><font size="2"><strong>Introduction</strong></font></p>
+<p><font size="2">The&nbsp; System.Globalization namespace contains
+classes that define culture-related information, including the
+language, the country/region, the calendars in use, the format patterns
+for dates, currency, and numbers, and the sort order for strings.</font></p>
+<p><font size="2">The following table displays the classes available in System.Globalization namespace.</font></p>
+<p>
+</p><table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="60%">
+<tbody>
+<tr bgcolor="#808080">
+<td><font color="#ffffff" size="2"><strong>Class&nbsp;</strong></font></td>
+<td><font color="#ffffff" size="2"><strong>Description</strong></font></td></tr>
+<tr>
+<td><font size="2">Calendar</font></td>
+<td><font size="2">Represents time in divisions, such as weeks, months, and years.</font></td></tr>
+<tr>
+<td><font size="2">CompareInfo</font></td>
+<td><font size="2">Implements a set of methods for culture-sensitive string comparisons.</font></td></tr>
+<tr>
+<td><font size="2">CultureInfo</font></td>
+<td><font size="2">Represents information about a specific culture
+including the names of the culture, the writing system, and the
+calendar used, as well as access to culture-specific objects that
+provide methods for common operations, such as formatting dates and
+sorting strings.</font></td></tr>
+<tr>
+<td><font size="2">DateTimeFormatInfo</font></td>
+<td><font size="2">Defines how DateTime values are formatted and displayed, depending on the culture.</font></td></tr>
+<tr>
+<td><font size="2">DayLightTime</font></td>
+<td><font size="2">Defines the period of daylight-saving time.</font></td></tr>
+<tr>
+<td><font size="2">GregorianCalendar</font></td>
+<td><font size="2">Represents the Gregorian calendar.</font></td></tr>
+<tr>
+<td><font size="2">HebrewCalendar</font></td>
+<td><font size="2">Represents the Hebrew calendar.</font></td></tr>
+<tr>
+<td><font size="2">HijriCalendar</font></td>
+<td><font size="2">Represents the Hijri calendar.</font></td></tr>
+<tr>
+<td><font size="2">JapaneseCalendar</font></td>
+<td><font size="2">Represents the Japanese calendar.</font></td></tr>
+<tr>
+<td><font size="2">JulianCalendar</font></td>
+<td><font size="2">Represents the Julian calendar.</font></td></tr>
+<tr>
+<td><font size="2">KoreanCalendar</font></td>
+<td><font size="2">Represents the Korean calendar.</font></td></tr>
+<tr>
+<td><font size="2">NumberFormatInfo</font></td>
+<td><font size="2">Defines how numeric values are formatted and displayed, depending on the culture.</font></td></tr>
+<tr>
+<td><font size="2">RegionInfo</font></td>
+<td><font size="2">Contains information about the country/region.</font></td></tr>
+<tr>
+<td><font size="2">SortKey</font></td>
+<td><font size="2">Maps strings to their sort keys.</font></td></tr>
+<tr>
+<td><font size="2">StringInfo</font></td>
+<td><font size="2">Provides functionality to split a string into text elements and to iterate through those text elements.</font></td></tr>
+<tr>
+<td><font size="2">TaiwanCalendar</font></td>
+<td><font size="2">Represents the Taiwan Calendar.</font></td></tr>
+<tr>
+<td><font size="2">TextElementEnumerator</font></td>
+<td><font size="2">Enumerates the text elements of a string.</font></td></tr>
+<tr>
+<td><font size="2">TextInfo</font></td>
+<td><font size="2">Defines properties and behaviors, such as casing, that are specific to a writing system.</font></td></tr>
+<tr>
+<td><font size="2">ThaiBuddhistCalendar</font></td>
+<td><font size="2">Represents the Thai Buddhist calendar</font></td></tr></tbody></table>
+<p><font size="2">Table 1.1 Classes available in System.Globalization</font></p>
+<p><font size="2"><strong>CultureInfo Class</strong></font></p>
+<p><font size="2">It represents information about a specific culture
+including the names of the culture, the writing system, and the
+calendar used, as well as access to culture-specific objects that
+provide methods for common operations, such as formatting dates and
+sorting strings. </font></p>
+<p><font size="2">The CultureInfo class holds culture-specific
+information, such as the associated language, sublanguage,
+country/region, calendar, and cultural conventions. This class also
+provides access to culture-specific instances of DateTimeFormatInfo,
+NumberFormatInfo, CompareInfo, and TextInfo. These objects contain the
+information required for culture-specific operations, such as casing,
+formatting dates and numbers, and comparing strings.</font></p>
+<p><font size="2"><strong>RegionInfo Class</strong>&nbsp;&nbsp; </font></p>
+<p><font size="2">In contrast to CultureInfo, RegionInfo does not
+represent preferences of the user and does not depend on the user's
+language or culture. </font></p>
+<p><font size="2">The RegionInfo name is one of the two-letter codes
+defined in ISO 3166 for country/region. Case is not significant;
+however, the Name, the TwoLetterISORegionName, and the
+ThreeLetterISORegionName properties return the appropriate code in
+uppercase.</font></p>
+<p><font size="2"><strong>Our Goal</strong></font></p>
+<p><font size="2">Our goal is to add country names to the DropDownList
+control in our web page. We have used the following code in page load
+event of the web page.</font></p>
+<p><font size="2">We have used the following classes</font></p>
+<ol>
+<font size="2"><li>RegionInfo Class 
+</li><li>List from System.Collections 
+</li><li>CultureInfo class using GetCulture() method 
+</li><li>CultureTypes class suing SpecificCultures property 
+</li><li>LCID property of CultureInfo 
+</li><li>IEnumerable interface of System.Collections 
+</li><li>Lambda Expression technique to findout distinct country names 
+</li><li>DisplayName property of RegionInfo class</li></font></ol>
+<p><font size="2"><strong>Steps followed</strong></font></p>
+<ol>
+<font size="2"><li>First of all to use the above classes and
+interfaces; include the namespaces such as System.Collections and
+System.Globalization. </li><li>Create an object of RegionInfo class where define the format. 
+</li><li>Create a list object where the country names can be stored. 
+</li><li>Using foreach add country names to the list. Note that we are
+extracting the country names from the available languages from the
+system. So country names are added more than once based on the number
+of languages available in the country. </li><li>To find out distinct country names we have used IEnumerable
+interface where we can use the Distinct() method and store unique
+country names. </li><li>Finally add the country names to the DropDownList from the IEnumerable.</li></font></ol>
+<p><font size="2">Here is the code for getting country names from system.</font></p>
+<p class="MsoNormal" style="margin: 0in 0in 10pt;"><span style="font-size: 10pt; color: blue; line-height: 115%; font-family: 'Verdana','sans-serif';"><font size="2">using</font></span><span style="font-size: 10pt; line-height: 115%; font-family: 'Verdana','sans-serif';"><font size="2"> System.Globalization;<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 10pt;"><span style="font-size: 10pt; color: blue; line-height: 115%; font-family: 'Verdana','sans-serif';"><font size="2">using</font></span><span style="font-size: 10pt; line-height: 115%; font-family: 'Verdana','sans-serif';"><font size="2"> System.Collection;<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; color: rgb(43, 145, 175); font-family: 'Verdana','sans-serif';"><font size="2">RegionInfo</font></span><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><font size="2"> country = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">RegionInfo</span>(<span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">CultureInfo</span>(<span style="color: rgb(163, 21, 21);">"en-US"</span>, <span style="color: blue;">false</span>).LCID);<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: rgb(43, 145, 175);"><font size="2">List</font></span><font size="2">&lt;<span style="color: blue;">string</span>&gt; countryNames = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">List</span>&lt;<span style="color: blue;">string</span>&gt;();<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: green;"><font size="2">//To get the Country Names from the CultureInfo installed in windows<o:p></o:p></font></span></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: blue;"><font size="2">foreach</font></span><font size="2"> (<span style="color: rgb(43, 145, 175);">CultureInfo</span> cul <span style="color: blue;">in</span> <span style="color: rgb(43, 145, 175);">CultureInfo</span>.GetCultures(<span style="color: rgb(43, 145, 175);">CultureTypes</span>.SpecificCultures))<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><font size="2">{<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><font size="2">country = <span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">RegionInfo</span>(<span style="color: blue;">new</span> <span style="color: rgb(43, 145, 175);">CultureInfo</span>(cul.Name, <span style="color: blue;">false</span>).LCID);<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><font size="2">countryNames.Add(country.DisplayName.ToString());<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><font size="2">}<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><o:p></o:p></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: green;"><font size="2">//Assigning all Country names to IEnumerable<o:p></o:p></font></span></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: rgb(43, 145, 175);"><font size="2">IEnumerable</font></span><font size="2">&lt;<span style="color: blue;">string</span>&gt; nameAdded = countryNames.OrderBy(names =&gt;names).Distinct();<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><span style="color: blue;"><font size="2">if</font></span><font size="2"> (!IsPostBack)<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><font size="2">{<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><span style="color: blue;"><font size="2">foreach</font></span><font size="2"> (<span style="color: blue;">string</span> item <span style="color: blue;">in</span> nameAdded)<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><font size="2">{<o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><font size="2">ddlCountry.Items.Add(item); <span style="color: green;">//Adding items to DropDownList</span><o:p></o:p></font></span></p>
+<p class="MsoNormal" style="margin: 0in 0in 0pt; line-height: normal;"><span style="font-size: 10pt; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font></span><font size="2">}<o:p></o:p></font></span></p>
+<p><span style="font-size: 10pt; line-height: 115%; font-family: 'Verdana','sans-serif';"><span style=""><font size="2">&nbsp;</font></span><font size="2">}</font></span></p>
+<font size="2"></font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

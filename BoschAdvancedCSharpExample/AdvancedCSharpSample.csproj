@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7CD52E70-0833-464D-ABF0-28425ECEBB4C}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>AdvancedCSharpSample</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AdvancedCSharpSample</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <ManifestCertificateThumbprint>821277D9BC8AF3F7A297BF01A973E7CD59190AD8</ManifestCertificateThumbprint>
+    <ManifestKeyFile>AdvancedCSharpSample_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>D:\temp\ent-ftp-home\Bosch\MyAdvancedCSharpExample\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <ApplicationRevision>21</ApplicationRevision>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bosch.VideoSDK.AudioLib">
+      <Name>Bosch.VideoSDK.AudioLib</Name>
+      <HintPath>C:\Program Files\Bosch\Video SDK\Redistributables\Interop\Bosch.VideoSDK.AudioLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Bosch.VideoSDK.AxCameoLib">
+      <Name>Bosch.VideoSDK.AxCAMEOLib</Name>
+      <HintPath>C:\Program Files\Bosch\Video SDK\Redistributables\Interop\Bosch.VideoSDK.AxCAMEOLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Bosch.VideoSDK.CameoLib">
+      <Name>bosch.videosdk.cameolib</Name>
+      <HintPath>C:\Program Files\Bosch\Video SDK\Redistributables\Interop\bosch.videosdk.cameolib.dll</HintPath>
+    </Reference>
+    <Reference Include="Bosch.VideoSDK.GCALib">
+      <Name>Bosch.VideoSDK.GCALib</Name>
+      <HintPath>C:\Program Files\Bosch\Video SDK\Redistributables\Interop\Bosch.VideoSDK.GCALib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlarmInputNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AudioInputNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AudioOutputNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CameraControllerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="COMObjectWrapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DetectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DigitalZoomForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtendedTreeNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LiveVideoProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MediaDatabaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MediaFileNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MediaSessionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlaybackControllersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RelayNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SelectAudioInputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectTrackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartRecordingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VcaConfigDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoChannelConnectMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VideoInputNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VideoOutputForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoOutputNode.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="AdvancedCSharpSample_TemporaryKey.pfx" />
+    <None Include="app.config" />
+    <Content Include="App.ico" />
+    <EmbeddedResource Include="CameraControllerForm.resx">
+      <DependentUpon>CameraControllerForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetectForm.resx">
+      <DependentUpon>DetectForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceProperties.resx">
+      <DependentUpon>DeviceProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DigitalZoomForm.resx">
+      <DependentUpon>DigitalZoomForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LiveVideoProperties.resx">
+      <DependentUpon>LiveVideoProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MediaDatabaseForm.resx">
+      <DependentUpon>MediaDatabaseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MediaSessionForm.resx">
+      <DependentUpon>MediaSessionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaybackControllersForm.resx">
+      <DependentUpon>PlaybackControllersForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectAudioInputForm.resx">
+      <DependentUpon>SelectAudioInputForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectTrackForm.resx">
+      <DependentUpon>SelectTrackForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StartRecordingForm.resx">
+      <DependentUpon>StartRecordingForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VcaConfigDialog.resx">
+      <DependentUpon>VcaConfigDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoOutputForm.resx">
+      <DependentUpon>VideoOutputForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

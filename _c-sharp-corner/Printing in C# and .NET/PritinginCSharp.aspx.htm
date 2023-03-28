@@ -1,0 +1,153 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Printing in C# and .NET </title>
+<meta name="Keywords" content="C#, component, GDI+, print dialog, Print Preview, Printing, Printing in C#, PrintPage event, PrintPreviewDialog, SolidBrush, System.Drawing.Printing">
+<meta name="DESCRIPTION" content="This sample shows you how to print a text box contents in C# and .NET.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="26 Jan 2000 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="04 Jan 2006 07:43:59 GMT">
+<meta name="Search.UserRating" content="100%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Mike Gold">
+<link rel="stylesheet" type="text/css" href="PritinginCSharp.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="PritinginCSharp.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="PritinginCSharp.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="PritinginCSharp.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="PritinginCSharp.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="PritinginCSharp.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="PritinginCSharp.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="PritinginCSharp.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Printing in C# and .NET </span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Mike Gold</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">January 26, 2000</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This sample shows you how to print a text box contents in C# and .NET.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"><font face="Verdana, Arial, Helvetica, sans-serif">
+</font></p><p dir="ltr" style="margin-right: 0px;"><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="PritinginCSharp.aspx_files/TextEditor.gif" align="baseline" border="0" hspace="0"></font></p>
+<p dir="ltr" style="margin-right: 0px;"><font face="Verdana, Arial, Helvetica, sans-serif">Components,
+components, components.&nbsp;Using components is the difference between
+writing an application in one week vs. an application in a few
+hours.&nbsp;Printing is all carried out through components included in
+the toolbox.&nbsp;The main component that talks to the printer is the
+PrintDocument component.&nbsp;To use this component, just call the
+Print function and intercept the PrintPage event.&nbsp;Below are the
+routines that do this:<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> PrintFile_Click (</font><font color="#0000ff" size="2">object</font><font size="2"> sender, System.EventArgs e)<br>{<br>printDialog1.Document = ThePrintDocument;<br></font><font color="#0000ff" size="2">string</font><font size="2"> strText = </font><font color="#0000ff" size="2">this</font><font size="2">.richTextBox1.Text;<br>myReader = </font><font color="#0000ff" size="2">new</font><font size="2"> StringReader(strText);<br></font><font color="#0000ff" size="2">if</font><font size="2"> (printDialog1.ShowDialog() == DialogResult.OK)<br>{<br></font><font color="#0000ff" size="2">this</font><font size="2">.ThePrintDocument.Print();<br>}<br>}<br></font><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> ThePrintDocument_PrintPage (</font><font color="#0000ff" size="2">object</font><font size="2"> sender,System.Drawing.Printing.PrintPageEventArgs ev)<br>{<br></font><font color="#0000ff" size="2">float</font><font size="2"> linesPerPage = 0;<br></font><font color="#0000ff" size="2">float</font><font size="2"> yPosition = 0;<br></font><font color="#0000ff" size="2">int</font><font size="2"> count = 0;<br></font><font color="#0000ff" size="2">float</font><font size="2"> leftMargin = ev.MarginBounds.Left;<br></font><font color="#0000ff" size="2">float</font><font size="2"> topMargin = ev.MarginBounds.Top;<br></font><font color="#0000ff" size="2">string</font><font size="2"> line = </font><font color="#0000ff" size="2">null</font><font size="2">;<br>Font printFont = </font><font color="#0000ff" size="2">this</font><font size="2">.richTextBox1.Font;<br>SolidBrush myBrush = </font><font color="#0000ff" size="2">new</font><font size="2"> SolidBrush(Color.Black);<br></font><font color="#008000" size="2">// Work out the number of lines per page, using the MarginBounds.<br></font><font size="2">linesPerPage = ev.MarginBounds.Height / printFont.GetHeight(ev.Graphics);<br></font><font color="#008000" size="2">// Iterate over the string using the StringReader, printing each line.<br></font><font color="#0000ff" size="2">while</font><font size="2">(count &lt; linesPerPage &amp;&amp; ((line=myReader.ReadLine()) != </font><font color="#0000ff" size="2">null</font><font size="2">))<br>{<br></font><font color="#008000" size="2">// calculate the next line position based on&nbsp;</font><font color="#008000" size="2">the height of the font according to the printing device<br></font><font size="2">yPosition = topMargin + (count * printFont.GetHeight(ev.Graphics));<br></font><font color="#008000" size="2">// draw the next line in the rich edit control<br></font><font size="2">ev.Graphics.DrawString(line, printFont, myBrush, leftMargin, yPosition, </font><font color="#0000ff" size="2">new </font><font size="2">StringFormat());<br>count++;<br>}<br></font><font color="#008000" size="2">// If there are more lines, print another page.<br></font><font color="#0000ff" size="2">if</font><font size="2"> (line != </font><font color="#0000ff" size="2">null</font><font size="2">)<br>ev.HasMorePages = </font><font color="#0000ff" size="2">true</font><font size="2">;<br></font><font color="#0000ff" size="2">else<br></font><font size="2">ev.HasMorePages = </font><font color="#0000ff" size="2">false</font><font size="2">;<br>myBrush.Dispose();<br>}<br><br></font></font><font face="Verdana, Arial, Helvetica, sans-serif">PrintFile_Click
+is called from the Print Menu.&nbsp;This routine first assigns the
+PrintDialog component to the document being printed.&nbsp;The dialog is
+shown using ShowDialog so the user can set their print settings and to
+decide whether to print or not.&nbsp;After ThePrintDocument.Print is
+called, the printing process begins. The PrintPage event is
+automatically called by the system to print the desired page
+information.&nbsp;The PrintPageEventArgs ev contains the Device
+Contexts ev.Graphics to use for drawing to the Printer.&nbsp;In this
+example we read each line of text from the rich text edit control using
+a StringReader.&nbsp;The StringReader class gives us the ability to
+treat a string like a stream and take advantage of the ReadLine
+function of the StringReader for reading each line out of the text edit
+control.&nbsp;We can calculate the position of the lines based on
+margins and the height of the font.&nbsp;It's interesting to note, that
+in order to predict the font height for the printer, we pass it the
+Device context of the printer in the GetHeight function
+(printFont.GetHeight(ev.Graphics())).&nbsp;This is because the font
+height on the screen pixels is different than the font height in
+printer pixels.&nbsp;The PrintPageEventArg attribute HasMorePages is
+continually set so that the PrintPage Event is triggered if their are
+more lines in the textbox than the current page can hold .<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>Print Preview<br><br></strong></font><font face="Verdana, Arial, Helvetica, sans-serif">PrintPreview behaves a heck of a lot like Print as seen below:<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> PreviewFile_Click (</font><font color="#0000ff" size="2">object</font><font size="2"> sender, System.EventArgs e)<br>{<br></font><font color="#0000ff" size="2">try<br></font><font size="2">{<br></font><font color="#0000ff" size="2">string</font><font size="2"> strText = </font><font color="#0000ff" size="2">this</font><font size="2">.richTextBox1.Text; </font><font color="#008000" size="2">// read string from editor window<br></font><font size="2">myReader = </font><font color="#0000ff" size="2">new</font><font size="2"> StringReader(strText);<br>PrintPreviewDialog printPreviewDialog1 = </font><font color="#0000ff" size="2">new</font><font size="2"> PrintPreviewDialog(); </font><font color="#008000" size="2">// instantiate new print preview dialog<br></font><font size="2">printPreviewDialog1.Document = </font><font color="#0000ff" size="2">this</font><font size="2">.ThePrintDocument ;<br>printPreviewDialog1.BorderStyle = FormBorderStyle.Fixed3D ;<br>printPreviewDialog1.ShowDialog(); </font><font color="#008000" size="2">// Show the print preview dialog, uses print page event to draw preview screen<br></font><font size="2">}<br></font><font color="#0000ff" size="2">catch</font><font size="2">(Exception exp)<br>{<br>System.Console.WriteLine(exp.Message.ToString());<br>}<br>}<br><br></font></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+PrintPreview component also triggers the PrintPage event, but instead
+of outputting to the printer it outputs to the Print Preview Screen.<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>Other Editor Functions<br><br></strong></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+Open and Save menu items use streams to read and write the
+files.&nbsp;The persistence of files is discussed in other articles on
+this site.&nbsp;See Using ListView in C#.&nbsp; In future articles we
+will add find/replace functionality to this text editor to make it a
+bit more powerful.</font></p>
+
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

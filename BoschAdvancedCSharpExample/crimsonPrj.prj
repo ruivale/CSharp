@@ -1,0 +1,42 @@
+<project version="Crimson Editor 3.60">
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AdvancedCSharpSample.csproj" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AdvancedCSharpSample.csproj.user" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AlarmInputNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AssemblyInfo.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AudioInputNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\AudioOutputNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\CameraControllerForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\COMObjectWrapper.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\DetectForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\DeviceProperties.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\DeviceTreeNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\DigitalZoomForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\ExtendedTreeNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\LiveVideoProperties.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MainForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MediaDatabaseForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MediaFileNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MediaSessionForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\PlaybackControllersForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\RelayNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\SelectAudioInputForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\SelectTrackForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\StartRecordingForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VcaConfigDialog.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VideoChannelConnectMenuItem.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VideoInputNode.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VideoOutputForm.cs" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VideoOutputNode.cs" />
+</project>
+
+<workspace version="Crimson Editor 3.60">
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MediaDatabaseForm.cs" linenum="1569" placement="0:1:-1:-1:-4:-23:220:220:1003:808" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MainForm.cs" linenum="1265" placement="0:1:-1:-1:-4:-23:44:44:827:632" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\DeviceTreeNode.cs" linenum="39" placement="0:1:-1:-1:-4:-23:66:66:849:654" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\PlaybackControllersForm.cs" linenum="1" placement="0:1:-1:-1:-4:-23:198:198:1129:786" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\SelectTrackForm.cs" linenum="163" placement="0:1:-1:-1:-4:-23:242:242:1173:830" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\StartRecordingForm.cs" linenum="1" placement="0:1:-1:-1:-4:-23:264:264:1195:852" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\MediaFileNode.cs" linenum="1" placement="0:1:-1:-1:-4:-23:0:0:739:599" />
+	<localfile path="D:\temp\ent-ftp-home\Bosch\BoschFromProgramFiles\Bosch\VideoSDK\Sample Applications\Advanced\C Sharp\VideoOutputForm.cs" linenum="344" placement="2:3:-1:-1:-4:-23:176:176:981:624" />
+</workspace>
+

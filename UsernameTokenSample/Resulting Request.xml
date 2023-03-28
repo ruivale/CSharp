@@ -1,0 +1,20 @@
+﻿<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+            xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <s:Header>
+    <VsDebuggerCausalityData xmlns="http://schemas.microsoft.com/vstudio/diagnostics/servicemodelsink">uIDPo0mbisweRIFJtYBC5RiORdgAAAAAzVhOyR6MK0us7mG/gP9Zx/fcb82jWFFDmWIdOhiVAQwACQAA</VsDebuggerCausalityData>
+    <o:Security s:mustUnderstand="1"
+                xmlns:o="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <wsse:UsernameToken wsu:Id="5ea8fbcd-a758-43f4-bd8b-f63e069dc068"
+                          xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
+                          xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+        <wsse:Username>User1</wsse:Username>
+        <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">lU0aDh7vjAPw2zzXNGH4FDea3sM=</wsse:Password>
+        <wsse:Nonce>uqdiu2vrRIirPVaE/7mbmA==</wsse:Nonce>
+        <wsu:Created>2010-06-18T15:01:45Z</wsu:Created>
+      </wsse:UsernameToken>
+    </o:Security>
+  </s:Header>
+  <s:Body>
+    <Echo xmlns="http://tempuri.org/"/>
+  </s:Body>
+</s:Envelope>

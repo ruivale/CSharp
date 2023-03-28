@@ -1,0 +1,265 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Creating C# Class Library (DLL) Using Visual Studio .NET</title>
+<meta name="Keywords" content=".NET, C#, Class Library, Creating C# Class Library, DLL, Visual Studio .NET">
+<meta name="DESCRIPTION" content="This tutorial explains how to create a C# class library(dll) and call it from a C# console client application.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="09 Dec 2000 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="31 Aug 2006 02:20:55 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Mahesh Chand">
+<link rel="stylesheet" type="text/css" href="dll%20_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="dll%20_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="dll%20_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="dll%20_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="dll%20_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="dll%20_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><link href="dll%20_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="dll%20_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Creating C# Class Library (DLL) Using Visual Studio .NET</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Mahesh Chand</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">December 09, 2000</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This tutorial explains how to create a C# class library(dll) and call it from a C# console client application.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"></font><p align="justify"><font size="2">Creating a
+DLL using Visual C# is piece of cake. Believe me its much easier than
+VC++. I have divided this tutorial in two parts. 1. Building a Class
+Library, and 2. Building a client application to test the DLL. </font></p><p><font size="2"><font color="#000000" face="Verdana" size="3"><b>Part 1: Creating a Class Library (DLL)</b></font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">Create an Empty Class Library Project</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">Select <b>File-&gt;New-&gt;Project-&gt;Visual C# Projects-&gt;Class Library.</b> Select your project name and appropriate directory using Browse button and click OK. See Figure 1.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img alt="" src="dll%20_files/pr12.gif" align="baseline" border="0" hspace="0"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 1.</font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">Project and Its files</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">The <b>Solution Explorer </b>adds two C# classes to your project. First is <b>AssemblyInfo.cs</b> and second is <b>Class1.cs.&nbsp; </b>We don't care about AssemblyInfo. We will be concentrating on Class1.cs. See Figure 2.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_011.gif" border="0" height="378" width="332"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 2.</font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">The mcMath Namespace</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">When you double click
+on Class1.cs, you see a namespace mcMath. We will be referencing this
+namespace in our clients to access this class library.</font></font></p><font size="2"><font color="#0000ff" size="2">
+</font></font><p><font size="2"><font color="#0000ff" size="2"><font face="Verdana, Arial, Helvetica, sans-serif">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System;<br></font><font color="#0000ff" size="2"><br>namespace</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> mcMath <br>{ <br></font><font color="#808080" size="2"><br>///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Summary description for Class1. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">class</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> Class1 <br>{ <br></font><font color="#0000ff" size="2"><br>public</font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> Class1() <br>{ <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// TODO: Add constructor logic here <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// <br></font><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">} <br>} <br>}</font> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Now build this project
+to make sure every thing is going OK. After building this project, you
+will see mcMath.dll in your project's bin/debug directory.&nbsp;</font></font></p>
+<p><font size="2"><b><font color="#003366" face="Verdana" size="2"><font color="#000000">Adding Methods</font>&nbsp;</font></b></font></p>
+<p><font size="2"><font color="#000000" face="Verdana" size="2">Open
+ClassView from your View menu. Right now it displays only Class1 with
+no methods and properties. Lets add one method and one property. See
+Figure 3.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_004.gif" border="0" height="378" width="332"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 3.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Right click on <b>Class1-&gt;Add-&gt;Add Method...&nbsp;&nbsp;</b>See Figure 4.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_013.gif" border="0" height="378" width="378"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 4.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">C# Method Wizard pops
+up. Add your method name, access type, return type, parameters, and
+even comments.&nbsp; Use Add and Remove buttons to add and remove
+parameters from the parameter list respectively. I add one test method
+called mcTestMethod with no parameters. See Figure 5.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_005.gif" border="0" height="430" width="615"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 5.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">I am adding one more method <b>long Add( long val1, long val2 ). </b>This method adds two numbers and returns the sum. Click Finish button when you're done. See Figure 6.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_010.gif" border="0" height="430" width="615"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 6.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">The above action adds two method to the class and methods look like following listing:</font></font></p>
+<dl>
+<dd><font size="2"><font face="Verdana" size="2"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;summary&gt;</font> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> //This is a test method</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;/summary&gt;</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#0000ff">public</font> <font color="#0000ff">void</font> mcTestMethod()</font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">{</font>&nbsp;</font><font size="2">&nbsp; </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">} </font></font>
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff"><br>public long</font> Add(<font color="#0000ff">long</font> val1, <font color="#0000ff">long</font> val2) </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">{</font>&nbsp;</font><font size="2">&nbsp; </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">}</font></font></font></dd></dl>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">Adding Properties</font></b></font></p>
+<p><font size="2"><font color="#000000" face="Verdana" size="2">Open C# Property Wizard in same manner as you did in the case of method and add a property to your class. See Figure 7.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_012.gif" border="0" height="430" width="615"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 7.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">This action launches C#
+Property Wizard. Here you can type your property name, type and access.
+You also have options to choose from get only, set only or get and set
+both. You can even select if a property is static or virtual. I add a
+property Extra with public access and bool type and get/set option set.
+See Figure 8.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_012.gif" border="0" height="430" width="615"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 8.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">After adding a method and a property, our class looks like Figure 9 in Class View after expanding the class node.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_009.gif" border="0" height="378" width="332"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 9.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">If you look your Class1 class carefully, Wizards have added two functions to your class.&nbsp;</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;summary&gt;</font> <br></font><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> //This is a test property</font></font></font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;/summary&gt;</font></font></font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana"><font color="#0000ff">public</font> <font color="#0000ff">bool</font> Extra</font></font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana">{ <br></font></font><font color="#0000ff" face="Verdana" size="2">get</font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana">{</font> <br></font><font size="2"><font face="Verdana"><font color="#0000ff">return</font> <font color="#0000ff">true</font>;</font></font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana">} <br></font></font><font color="#0000ff" face="Verdana" size="2">set</font><font face="Verdana" size="2"> <br></font><font size="2"><font face="Verdana">{</font> <br></font><font size="2"><font face="Verdana">}</font> <br></font><font size="2"><font face="Verdana">}</font></font></font></p>
+<p><font size="2"><b><font color="#003366" face="Verdana" size="2"><font color="#000000">Adding Code to the Class</font>&nbsp;</font></b></font></p>
+<p><font size="2"><font color="#000000" face="Verdana" size="2">Add this code ( <b>bold</b> ) to the methods and property now. And now I want to change my <b>Class1</b> to <b>mcMathComp</b>
+because Class1 is quite confusing and it will create problem when you
+will use this class in a client application. Make sure you change class
+name and its constructor both.</font></font></p>
+<p><font size="2"><font color="#000000" face="Verdana" size="2">Note: I'm not adding any code to mcTestMethod, You can add any thing if you want.</font></font></p><font size="2"><font color="#0000ff" size="2">
+</font></font><p><font size="2"><font color="#0000ff" size="2"><font face="Verdana, Arial, Helvetica, sans-serif">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System; <br></font><font color="#0000ff" size="2"><br>namespace</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> mcMath <br>{ <br></font><font color="#808080" size="2"><br>///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Summary description for Class1. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">class</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> mcMathComp <br>{<br></font><font color="#0000ff" size="2">private</font><font size="2"> </font><font color="#0000ff" size="2">bool</font><font size="2"> bTest = </font><font color="#0000ff" size="2">false</font></font><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif">; </font></font></font></p>
+<p><font size="2"><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></font></p>
+<p><font size="2"><font size="2"></font><font color="#0000ff" face="Verdana, Arial, Helvetica, sans-serif" size="2">public</font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> mcMathComp() <br>{ <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// TODO: Add constructor logic here <br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">} <br></font><font color="#808080" size="2"><br>///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> //This is a test method <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">void</font></font><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"> mcTestMethod() <br>{ } </font></font></font></p>
+<p><font size="2"><font size="2"></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">long</font><font size="2"> Add(</font><font color="#0000ff" size="2">long</font><font size="2"> val1, </font><font color="#0000ff" size="2">long</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> val2) <br>{ <br></font><font color="#0000ff" size="2">return</font></font><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"> val1 + val2; <br>} </font></font></font></p>
+<p><font size="2"><font size="2"></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> //This is a test property <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">bool</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> Extra <br>{ <br></font><font color="#0000ff" size="2">get</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> <br>{ <br></font><font color="#0000ff" size="2">return</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> bTest; <br>} <br></font><font color="#0000ff" size="2">set</font></font><font size="2"><font face="Verdana, Arial, Helvetica, sans-serif"> <br>{ <br>bTest = Extra ; <br>} <br>} <br>} <br>}</font></font></font></p>
+<p><font size="2"><font size="2"></font><b><font color="#000000" face="Verdana" size="2">Build the DLL</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">Now build the DLL and see bin\debug directory of your project. You will see your DLL. Piece of cake? Huh? :).&nbsp;</font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="3">Part 2: Building a Client Application</font></b></font></p>
+<p><font size="2"><font color="#000000" face="Verdana" size="2">Calling
+methods and properties of a DLL from a C# client is also an easy task.
+Just follow these few simple steps and see how easy is to create and
+use a DLL in C#.</font></font></p>
+<p><font size="2"><b><font color="#003366" face="Verdana" size="2"><font color="#000000">Create a Console Application</font>&nbsp;</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">Select <b>File-&gt;New-&gt;Project-&gt;Visual C# Projects-&gt;Console Application.</b> I will test my DLL from this console application. See Figure 10.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_003.gif" border="0" height="387" width="531"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 10. </font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">Add Reference of the Namespace</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">Now next step is to add reference to the library. You can use Add Reference menu option to add a reference. Go to <b>Project-&gt;Add reference</b>. See Figure 11. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_002.gif" border="0" height="412" width="372"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 11.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Now on this page, click Browse button to browse your library. See Figure 12.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_015.gif" border="0"></font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 12.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Browse for your DLL, which we created in part 1 of this tutorial and click Ok. See Figure 13. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_007.gif" border="0" height="386" width="601"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 13.</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Add Reference Wizard will add reference of your library to the current project. See Figure 14. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_006.gif" border="0" height="439" width="566"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 14. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">After adding reference to mcMath library, you can see it as an available namespace references. See Figure 15. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_008.gif" border="0" height="378" width="332"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 15.</font></font></p>
+<p><font size="2"><b><font color="#000000" face="Verdana" size="2">Call mcMath Namespace, Create Object of mcMathComp and call its methods and properties.</font></b></font></p>
+<p><font size="2"><font face="Verdana" size="2">You are only one step away to call methods and properties of your component. You follow these steps:</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">1. Use namespace </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Add<b> </b><i>using mcMath</i> in the beginning for your project. </font></font></p>
+<dl>
+<dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff">using</font> mcMath;</font></font></dd></dl>
+<p><font size="2"><font face="Verdana" size="2">2. Create an Object of mcMathComp</font></font></p>
+<p><font size="2"><font face="Verdana">mcMathComp cls = <font color="#0000ff" size="2">new</font> mcMathComp();</font></font></p>
+<p><font size="2"><font face="Verdana" size="2">3. Call Methods and Properties</font><font face="Verdana" size="2"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Now you can call the
+mcMathComp class method and properties as you can see I call Add method
+and return result in lRes and print out result on the console.</font></font></p><font size="2"><font face="Verdana" size="2">
+</font></font><dl>
+<dd><font size="2"><font face="Verdana" size="2"><font face="Verdana" size="2">mcMathComp cls = <font color="#0000ff" size="2">new</font> mcMathComp(); </font>
+</font></font></dd><dd><font size="2"><font face="Verdana" size="2"><font face="Verdana" size="2"><font color="#0000ff">long</font> lRes = cls.Add( 23, 40 );</font> 
+</font></font></dd><dd><font size="2"><font face="Verdana" size="2"><font face="Verdana" size="2">cls.Extra = <font color="#0000ff" size="2">false</font>;<font size="2"><br>Console.WriteLine(lRes.ToString());</font></font></font></font></dd></dl>
+<p><font size="2"><font face="Verdana" size="2"></font><font face="Verdana" size="2">Now you can print out the result. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">The entire project is listed in the following Listing:</font></font></p>
+<dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff">using</font> System;</font> 
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff">using</font> mcMath;</font> 
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; namespace</font> mcClient </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">{ </font></font>
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;summary&gt;</font> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> Summary description for Class1.</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;/summary&gt;</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#0000ff"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; class</font> Class1</font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">{ </font></font>
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#808080"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ///</font><font color="#008000"> </font><font color="#808080">&lt;summary&gt;</font> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> The main entry point for the application.</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#808080">///</font><font color="#008000"> </font><font color="#808080">&lt;/summary&gt;</font></font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">[STAThread]</font> </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana"><font color="#0000ff">static</font> <font color="#0000ff">void</font> Main(<font color="#0000ff">string</font>[] args)</font></font><font face="Verdana" size="2"> </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">{ </font></font>
+</font></dd><dd><font size="2"><font face="Verdana" size="2">mcMathComp cls = <font color="#0000ff">new</font> mcMathComp();</font> 
+</font></dd><dd><font size="2"><font face="Verdana" size="2"><font color="#0000ff">long</font> lRes = cls.Add( 23, 40 );</font> 
+</font></dd><dd><font size="2"><font face="Verdana" size="2">cls.Extra = <font color="#0000ff">false</font>; </font><font size="2"></font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">Console.WriteLine(lRes.ToString());</font> </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">}</font> </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">}</font> </font>
+</font></dd><dd><font size="2"><font size="2"><font face="Verdana">}</font></font> 
+</font><p><font size="2"><font face="Verdana" size="2">Now build and run the project. The output looks like Figure 16. </font></font></p>
+<p><font size="2"><font face="Verdana" size="2"><img src="dll%20_files/pr12_014.gif" border="0" height="203" width="444"> </font></font></p>
+<p><font size="2"><font face="Verdana" size="2">Figure 16.</font></font></p></dd>
+
+<font size="2"></font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

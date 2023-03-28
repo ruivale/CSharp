@@ -1,0 +1,160 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Creating a Windows Service in C#</title>
+<meta name="Keywords" content=".NET,C#,Windows Service,Windows Services in C#,Creating a Windows Services,FileAccess.Write,FileMode,FileStream,Flush,OnStart,OnStop,Seek,StreamWriter,System.ComponentModel,System.Configuration,System.ServiceProcess.ServiceBase[] ServicesToRun,Tutorials,Windows Services.">
+<meta name="DESCRIPTION" content="Windows Services is a new name for NT Services in .NET. This tutorial steps you through creating a Windows Service and how to install and start it. ">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="23 Jan 2001 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="10 May 2007 08:51:32 GMT">
+<meta name="Search.UserRating" content="60%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Mahesh Chand">
+<link rel="stylesheet" type="text/css" href="window_service.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="window_service.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="window_service.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="window_service.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="window_service.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="window_service.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="window_service.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="window_service.aspx_files/vibitt_200902161617.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Creating a Windows Service in C#</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Mahesh Chand</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">January 23, 2001</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">Windows
+Services is a new name for NT Services in .NET. This tutorial steps you
+through creating a Windows Service and how to install and start it. </span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p><font face="Verdana, Arial, Helvetica, sans-serif"><strong>NOTE:</strong> The project name in this sample code is <strong>mcWebService</strong> which is a spelling mistake. I meant to put <strong>mcWinService</strong>. And now I don't want to change all the screen shots and code all over again. I hope it won't confuse you :). </font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">Ok, its time for
+one more tutorial. This times pick is Windows Services. Creating
+Windows Services is not a big deal using C# and Visual Studio. Just
+follow few simple steps and you are all set to run and test your first
+Windows Service.</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">Windows Services
+is new name for NT Services you used to develop in previous versions of
+Visual Studio. This tutorial walks you through how to create and use
+your Windows Services. This Service writes some text to a text file
+when stop and start the service. The base idea is taken from MSDN but
+its more elaborated. You can modify it according to your needs.</font></p>
+<p><strong><font face="Verdana, Arial, Helvetica, sans-serif">Step 1. Create Skeleton of the Service</font></strong></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">To create a new
+Window Service, pick Windows Service option from your Visual C#
+Projects, give your service a name, and click OK.</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="window_service.aspx_files/win_service10.jpg" align="baseline" border="0" hspace="0"></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">The result look like this. The Wizard adds WebService1.cs class to your project.</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="window_service.aspx_files/win_service11.jpg" align="baseline" border="0" hspace="0"></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">Set your <strong>ServiceName</strong>
+to your own name so it would be easier to recognize your service during
+testing OR you can set this property programmatically using this line
+this.ServiceName = "mcWinService";</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">This is the name you will be looking for later :).</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="window_service.aspx_files/window12.jpg" align="baseline" border="0" hspace="0"></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">The default code of WebService1.cs added by the Wizard looks like here</font></p><font color="#0000ff" size="2">
+</font><p><font color="#0000ff" size="2"><font face="Verdana, Arial, Helvetica, sans-serif">namespace</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> mcWebService <br>{ <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Collections; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Core; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.ComponentModel; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Configuration; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Data; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Web.Services; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.Diagnostics; <br></font><font color="#0000ff" size="2">using</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.ServiceProcess; <br></font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">class</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> WinService1 : System.ServiceProcess.ServiceBase <br>{ <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Required designer variable. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">private</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.ComponentModel.Container components; <br></font><font color="#0000ff" size="2">public</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> WinService1() <br>{ <br></font><font color="#008000" size="2">// This call is required by the WinForms Component Designer. </font><font size="2">InitializeComponent(); </font></font><font color="#008000" size="2"><br><font face="Verdana, Arial, Helvetica, sans-serif">// TODO: Add any initialization after the InitComponent call <br></font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2">} <br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2">// The main entry point for the process <br></font><font color="#0000ff" size="2">static</font><font size="2"> </font><font color="#0000ff" size="2">void</font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> Main() <br>{ <br>System.ServiceProcess.ServiceBase[] ServicesToRun; <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// More than one user Service may run within the same process. To add <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// another service to this process, change the following line to <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">/ create a second service object. For example, <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// ServicesToRun = New System.ServiceProcess.ServiceBase[] {new WinService1(), new <br>ySecondUserService()}; <br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2">// <br></font><font size="2">ServicesToRun = </font><font color="#0000ff" size="2">new</font><font size="2"> System.ServiceProcess.ServiceBase[] { </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> WinService1() }; <br>System.ServiceProcess.ServiceBase.Run(ServicesToRun); <br>} <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Required method for Designer support - do not modify <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> the contents of this method with the code editor. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">private</font><font size="2"> </font><font color="#0000ff" size="2">void</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> InitializeComponent() <br>{ <br>components = </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> System.ComponentModel.Container(); <br></font><font color="#0000ff" size="2">this</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">.ServiceName = "WinService1"; <br>} <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Set things in motion so your service can do its work. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">override</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> OnStart(</font><font color="#0000ff" size="2">string</font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2">[] args) <br>{ <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// TODO: Add code here to start your service. <br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">} <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Stop this service. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">override</font><font size="2"> </font><font color="#0000ff" size="2">void</font></font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> OnStop() <br>{ <br></font><font color="#008000" face="Verdana, Arial, Helvetica, sans-serif" size="2">// TODO: Add code here to perform any tear-down necessary to stop your service. <br></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">} <br>} <br>}&nbsp;<br></font><br><strong>Step 2. Add functionality to your service</strong></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">As you saw
+WebService1.cs, there are two overridden functions OnStart and OnStop.
+The OnStart function executes when you start your service and the
+OnStop function gets execute when you stop a service. I write some text
+to a text file when you start and stop the service. </font></p><font color="#0000ff" size="2">
+</font><p><font color="#0000ff" size="2"><font face="Verdana, Arial, Helvetica, sans-serif">protected</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> </font><font color="#0000ff" size="2">override</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> OnStart(</font><font color="#0000ff" size="2">string</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">[] args) <br>{ <br>FileStream fs = </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> FileStream(@"c:\temp\mcWindowsService.txt" , <br>FileMode.OpenOrCreate, FileAccess.Write); <br>StreamWriter m_streamWriter = </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> StreamWriter(fs); <br>m_streamWriter.BaseStream.Seek(0, SeekOrigin.End); <br>m_streamWriter.WriteLine(" mcWindowsService: Service Started \n"); <br>m_streamWriter.Flush();<br>m_streamWriter.Close(); <br>} <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#808080" size="2">///</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> Stop this service. <br></font><font color="#808080" size="2">///</font><font color="#008000" size="2"> </font><font color="#808080" size="2">&lt;/summary&gt;</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font color="#008000" size="2"> <br></font><font color="#0000ff" size="2">protected</font><font size="2"> </font><font color="#0000ff" size="2">override</font><font size="2"> </font><font color="#0000ff" size="2">void</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> OnStop() <br>{ <br>FileStream fs = </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> FileStream(@"c:\temp\mcWindowsService.txt" , <br>FileMode.OpenOrCreate, FileAccess.Write); <br>StreamWriter m_streamWriter = </font><font color="#0000ff" size="2">new</font></font><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2"> StreamWriter(fs); <br>m_streamWriter.BaseStream.Seek(0, SeekOrigin.End); <br>m_streamWriter.WriteLine(" mcWindowsService: Service Stopped \n"); m_streamWriter.Flush();<br>m_streamWriter.Close(); <br>}&nbsp;<br>&nbsp;<br></font><strong>Step 3: Install and Run the Service</strong><br><br>Build of this application makes one exe, mcWinService.exe. You need to call installutil to <br>egister this service from command line. <br>installutil C:\mcWebService\bin\Debug\mcWebService.exe<br>You use /u option to uninstall the service. <br>installutil /u C:\mcWebService\bin\Debug\mcWebService.exe<br>Run the application</font></p>
+<p><strong><font face="Verdana, Arial, Helvetica, sans-serif">Step 4: Start and Stop the Service</font></strong></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">You need to go to
+the Computer Management to Start to start and stop the service. You can
+use Manage menu item by right clicking on My Computer.&nbsp; </font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="window_service.aspx_files/window13.gif" align="baseline" border="0" hspace="0"></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">Under <strong>Services and Applications</strong>, you will see the service <strong>mcWinService</strong>. Start and Stop menu item starts and stops the service.</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><img alt="" src="window_service.aspx_files/window14.jpg" align="baseline" border="0" hspace="0"></font></p>
+<p><strong><font face="Verdana, Arial, Helvetica, sans-serif">Step 5: Test the Service</font></strong></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">Go to your temp directory and see if text file is there with contents or not. </font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">That's it.</font></p>
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

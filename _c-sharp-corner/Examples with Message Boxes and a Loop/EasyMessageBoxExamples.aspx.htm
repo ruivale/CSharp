@@ -1,0 +1,142 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Examples with Message Boxes and a Loop</title>
+<meta name="Keywords" content="Loops,Message box,Windows Form Application">
+<meta name="DESCRIPTION" content="An example of how to use simple message boxes and a simple loop. Its good for beginers learning how to program realy simple applications ">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="29 Dec 2008 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="10 Mar 2009 02:46:09 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="brandon">
+<link rel="stylesheet" type="text/css" href="EasyMessageBoxExamples.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="EasyMessageBoxExamples.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="EasyMessageBoxExamples.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="EasyMessageBoxExamples.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="EasyMessageBoxExamples.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="EasyMessageBoxExamples.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="EasyMessageBoxExamples.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style><link rel="stylesheet" href="EasyMessageBoxExamples.aspx_files/vibitt_200903021918.css" id="vib_css" type="text/css">
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Examples with Message Boxes and a Loop</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">brandon </a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">March 10, 2009</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">An
+example of how to use simple message boxes and a simple loop. Its good
+for beginers learning how to program realy simple applications </span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p><font style="background-color: rgb(0, 0, 102);" color="#ffcc00"></font>&nbsp;</p>
+<p><font style="background-color: rgb(255, 255, 255);" color="#000033">This
+is a simple&nbsp; example for Windows Form Application. I programmed it
+to display a small form in the center of the screen like this.</font></p>
+<p><img alt="" src="EasyMessageBoxExamples.aspx_files/example3.JPG" align="baseline" border="0" hspace="0"></p>
+<p><font style="background-color: rgb(255, 255, 255);" color="#000033">Which
+makes it look like a updater of sorts for a corporation which if you
+click on the install button it uses a loop to redisplay a message box
+like this.&nbsp; </font></p>
+<p><img alt="" src="EasyMessageBoxExamples.aspx_files/example.JPG" align="baseline" border="0" hspace="0"></p>
+<p>I used the simple infinite loop:&nbsp; <font size="2"></font></p>
+<p><font size="2"></font><font color="#0000ff" size="2">private</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> button1_Click(</font><font color="#0000ff" size="2">object</font><font size="2"> sender, </font><font color="#2b91af" size="2">EventArgs</font><font size="2"> e)</font></p>
+<p><font size="2">{</font></p>
+<p><font size="2"></font><font color="#0000ff" size="2">while</font><font size="2"> (</font><font color="#0000ff" size="2">true</font><font size="2">) { </font><font color="#2b91af" size="2">MessageBox</font><font size="2">.Show(</font><font color="#a31515" size="2">"
+Sorry the file: Application Archiving and Error Help is invalid!\n\n We
+suggest that you contact Microsoft and report this serious error!"</font><font size="2">); }</font></p>
+<p></p>
+<p><font size="2">}</font></p>
+<p><font size="2">&nbsp;</font></p>
+<p><font size="2">A warning to you that is an infinite loop meaning if
+you run that in any thing but the C# debugger you'll have to close it
+by Pressing and holding Ctrl. + Alt. + Delete, and when the Task
+Manager shows up, you select the process called NPDR Corp.exe and end
+it.</font></p>
+<p><font size="2">I recommend reading <strong><em>Head First C#</em></strong>&nbsp;</font></p>
+<p><font size="2">&nbsp;</font></p><font size="2"></font>
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

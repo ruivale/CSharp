@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!-- 
+This is a Nant build file. See http://nant.sourceforge.net for more
+info. 
+-->
+<project name="XmlRpcCS" default="all">
+    <property name="debug" value="true"/>
+    <property name="version" value="1.1"/>
+
+    <target name="all" depends="server,client,soc,expose" description="Builds the DLL, client and server"/>
+
+    <target name="server" depends="library" description="Builds the server">
+	<csc target="exe" output="server.exe" debug="${debug}">
+	    <references basedir=".">
+		       <includes name="${nant.project.name}.dll"/>
+	    </references>
+            <sources basedir=".">
+                <includes name="src/sample/SampleServer.cs"/>               
+            </sources>
+	</csc>    
+    </target>
+
+    <target name="client" depends="library" description="Builds the client">
+	<csc target="exe" output="client.exe" debug="${debug}">
+	    <references basedir=".">
+		       <includes name="${nant.project.name}.dll"/>
+	    </references>
+            <sources basedir=".">
+                <includes name="src/sample/SampleClient.cs"/>               
+            </sources>
+	</csc>    
+    </target>
+
+    <target name="expose" depends="library" description="Builds the client">
+	<csc target="exe" output="expose.exe" debug="${debug}">
+	    <references basedir=".">
+		       <includes name="${nant.project.name}.dll"/>
+	    </references>
+            <sources basedir=".">
+                <includes name="src/sample/SampleServerWithExpose.cs"/>               
+            </sources>
+	</csc>    
+    </target>
+
+    <target name="soc" depends="library" description="Builds the client">
+	<csc target="exe" output="soc.exe" debug="${debug}">
+	    <references basedir=".">
+		       <includes name="${nant.project.name}.dll"/>
+	    </references>
+            <sources basedir=".">
+                <includes name="src/sample/SystemObjectClient.cs"/>               
+            </sources>
+	</csc>    
+    </target>
+
+    <target name="library" description="Builds the DLL.">
+	<csc target="library" output="${nant.project.name}.dll" debug="${debug}">
+            <sources basedir=".">
+                <includes name="src/nwc/**/*.cs"/>               
+            </sources>
+	</csc>    
+    </target>
+
+    <target name="clean" description="cleans up everything">
+        <delete failonerror="false">
+		<fileset basedir=".">
+		   <includes name="client.*"/>
+		   <includes name="soc.*"/>
+		   <includes name="server.*"/>
+		   <includes name="expose.*"/>
+		   <includes name="${nant.project.name}.*"/>
+	        </fileset>
+	</delete>
+    </target>
+
+    <target name="package" description="Package for distribution"
+		   depends="clean">
+	<zip verbose="true" zipfile="../${nant.project.name}-${version}.zip">
+	    <fileset basedir="..">
+	          <includes name="${nant.project.name}/**"/>
+	    </fileset>
+	</zip>
+    </target>
+
+</project>

@@ -1,0 +1,261 @@
+<html><head>
+
+
+
+
+
+
+
+<title>Line Numbering Utility in C# and Java</title>
+<meta name="Keywords" content=".Net, C#, JAVA, Line numbering utility, namespace, StreamReader, StringBuilder, using, utility">
+<meta name="DESCRIPTION" content="This is the first of the series of programs I wish to write to help myself get a handle on C#.">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Search.PublishDate" content="08 May 2001 12:00:00 GMT">
+<meta name="Search.RevisedDate" content="17 Dec 2005 04:20:54 GMT">
+<meta name="Search.UserRating" content="0%">
+<meta name="CODE_LANGUAGE" content="C#">
+<meta name="MS.LOCALE" content="en-US">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Author" content="Ashish Banerjee">
+<link rel="stylesheet" type="text/css" href="LineNumberingUtilityinCSnJava.aspx_files/Default.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Blue" href="LineNumberingUtilityinCSnJava.aspx_files/Blue.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Orange" href="LineNumberingUtilityinCSnJava.aspx_files/Orange.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Green" href="LineNumberingUtilityinCSnJava.aspx_files/Green.css"><link rel="alternate stylesheet" type="text/css" media="screen" title="Red" href="LineNumberingUtilityinCSnJava.aspx_files/Red.css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico">
+    <!--<script language="javascript" src="JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="../JavaScripts/styleswitch.js"></script>-->
+    <!--<script language="javascript" src="JavaScripts/SubCategories.js"></script>-->
+    <link rel="Stylesheet" type="text/css" href="LineNumberingUtilityinCSnJava.aspx_files/CalendarControl.css"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><link href="LineNumberingUtilityinCSnJava.aspx_files/WebResource.css" type="text/css" rel="stylesheet"><title>
+
+</title><style type="text/css">
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_0 { background-color:white;visibility:hidden;display:none;position:absolute;left:0px;top:0px; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_1 { text-decoration:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_2 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_3 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_4 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_5 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_6 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_7 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_8 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_9 {  }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_10 { border-style:none; }
+	.ctl00_ContentPlaceHolder1_LeftArticleControl1_SectionMenu1_ctl00_11 {  }
+
+</style>
+<script language="javascript">
+ function printWindow()
+{
+window.parent.close(); var printReadyEle = document.getElementById("printContent");
+var shtml = '<HTML>\n<HEAD>\n';
+if (document.getElementsByTagName != null)
+{
+var sheadTags = document.getElementsByTagName("head");
+if (sheadTags.length > 0)
+shtml += sheadTags[0].innerHTML;
+}
+shtml += '</HEAD>\n<BODY>\n';
+if (printReadyEle != null)
+{
+shtml += '<form name = frmform1>';
+shtml += printReadyEle.innerHTML;
+}
+shtml += '\n</form>\n</BODY>\n</HTML>';
+var printWin1 = window.open();
+printWin1.document.open();
+printWin1.document.write(shtml);
+printWin1.document.close();
+printWin1.print();
+}
+</script>
+</head><body>
+<form name="frmform">
+<div id="printContent">
+<table class="grayBG" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td>Source : Mindcracker Network (<a href="http://www.c-sharpcorner.com/" class="specific">www.c-sharpcorner.com</a>) <input value="Print" class="CommonTextBoxStyle" onclick="printWindow();" type="button"> </td>
+</tr>
+</tbody></table>
+<table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="tblArticleHeadingBG">
+
+                <span class="ArticleMainHeading">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelHeading" style="display: inline-block; width: 100%;">Line Numbering Utility in C# and Java</span>
+                </span>
+                <br>
+                <span class="ArticleDate">By&nbsp; <span class="AuthorName">
+                    <a id="ctl00_ContentPlaceHolder1_ArticleHeader1_LinkButtonAuthorName" class="LinkNormalStyle" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$ArticleHeader1$LinkButtonAuthorName','')">Ashish Banerjee</a>&nbsp;</span><span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDate">May 08, 2001</span></span>
+                <br>
+                <p align="justify">
+                    <span id="ctl00_ContentPlaceHolder1_ArticleHeader1_LabelDescription" class="FontSize8pt" style="display: inline-block; width: 90%;">This is the first of the series of programs I wish to write to help myself get a handle on C#.</span></p>
+            
+</td>
+</tr>
+</tbody></table>
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr class="grayBG">
+<td>&nbsp;</td>
+
+</tr>
+</tbody></table>
+<table class="ArticlePublisherBackgroundWhite" align="center" border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody><tr>
+<td>
+<br><font size="2"><p align="justify"></p><p><font face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="3">Objective</font><br><br></strong>To compare and contrast C# and Java, using a Unix style utility for numbering source codes. <br><br><strong><font size="3">Target Audience</font><br><br></strong>Java programmers wanting to familiarize with C#. <br><br><strong><font size="3">Summary</font><br><br></strong>This
+is the first of the series of programs I wish to write to help myself
+get a handle on C#. This series should also help my peer Java
+programmers to get a few insights of C#.<br><br><strong><font size="3">Overview</font><br><br></strong>The
+LineNum&nbsp; is a line numbering utility I wrote to help me add line
+numbers in source codes, accompanying the articles I plan to write. The
+Java version of this utility is poratble across diffrent operating
+systems like Linux and Solaris. Though C# and the .NET framework are
+theoritically platform independent, but as of now I do not know how to
+run it on Linux or Solaris. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+line numbered source codes of Java and C# are provided in Appendix A
+and B, respectively. You might want to spend some time, at this point,
+to glance through the source codes. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">Some
+of the diffrences you will note is that the method names in C#,
+conventionally begin with an upper case. It is not illegal in C# to
+begin a method name with lower case, neither it is illegal in Java to
+begin a method name with uppercase character. These are however, matter
+of conventions. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">C# have many new syntax and semantic structures, these I have avoided to use in this example. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">I have not used get and set syntax of C# to define properties to keep the code comparison simple.<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>Design<br><br></strong>The
+LineNum is a simple Unix sytle utility. It has a fine grain structure,
+that is, the classes and methods have&nbsp; been isolated
+functionality, even to the extent that some methods are one line long.
+The fine grain designs often sacrifice speed efficiencies in favour of
+reusability and source readibility. <br><br>This utility has a two
+pass design. The first pass calculates the number of lines, hence the
+maximum padding zeros required. The second pass prints the zero padded
+line numbered&nbsp; input source files, to the standard output device. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>Diffrences &amp; Similes<br><br></strong>To
+aid comparison between Java and C# versions of the program, I have kept
+the design, algorithm, and as far as possible, the method names
+similar. <br><br>The C# is more object oriented, in the sense that you
+can even use methods in atomic types like integers, see line number 72
+of the LineNum.cs listing in Appendix B. the string is an alias for
+System.String of C# API. Java also provides a special treatment to
+String objects.To accomodate strings, the Java language designers even
+flouted their own rule of not allowing operator overloading. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+diffrences between LineNum.java and LineNum.cs are few and suttle.
+Given below are the names and line numbers of the classes used in
+implementing the utility.<br><br>
+<table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr bgcolor="#808080">
+<td><strong><font size="2">Class Name</font></strong></td>
+<td><strong><font size="2">C# Lines</font></strong></td>
+<td><strong><font size="2">Java Lines</font></strong></td>
+<td><strong><font size="2">Notes </font></strong></td></tr>
+<tr>
+<td><font size="2">LineNum </font></td>
+<td><font size="2">54 to 84</font></td>
+<td><font size="2">56 to 85 </font></td>
+<td><font size="2">The Main util class, having all static methods.</font></td></tr>
+<tr>
+<td><font size="2">Padder </font></td>
+<td><font size="2">86 to 108</font></td>
+<td><font size="2">90 to 110</font></td>
+<td><font size="2">Helper Class to pad zero to line numbers.</font></td></tr>
+<tr>
+<td><font size="2">LineCount </font></td>
+<td><font size="2">110 to 129</font></td>
+<td><font size="2">115 to 134</font></td>
+<td><font size="2">Helper Class to find maximum lines in the file.</font></td></tr></tbody></table><br></font><font face="Verdana, Arial, Helvetica, sans-serif">The method maps between Java and C#, used in the LineNum utility,&nbsp; are given below.<br><br>
+<table style="border-collapse: collapse;" bordercolordark="#808080" bordercolorlight="#ffffff" bgcolor="#c0c0c0" border="1" bordercolor="#808080" width="100%">
+<tbody>
+<tr bgcolor="#808080">
+<td><strong><font size="2">Java Methods</font></strong></td>
+<td><strong><font size="2">C# Methods</font></strong></td>
+<td><strong><font size="2">Notes </font></strong></td></tr>
+<tr>
+<td><font size="2">System.exit</font></td>
+<td><font size="2">Environment.Exit </font></td>
+<td><font size="2">Static method to exit the programs with a return value.</font></td></tr>
+<tr>
+<td><font size="2">BufferedReader </font></td>
+<td><font size="2">StreamReader </font></td>
+<td><font size="2">A reader class containing ReadLine method.</font></td></tr>
+<tr>
+<td><font size="2">StringBuffer </font></td>
+<td><font size="2">StringBuilder</font></td>
+<td><font size="2">String builder class</font></td></tr>
+<tr>
+<td><font size="2">System.out.println </font></td>
+<td><font size="2">System.Console.WriteLine </font></td>
+<td><font size="2">printf subset of 'C' method.</font></td></tr>
+<tr>
+<td><font size="2">import </font></td>
+<td><font size="2">using </font></td>
+<td><font size="2">syntax for including packages or namespaces.</font></td></tr>
+<tr>
+<td><font size="2">package </font></td>
+<td><font size="2">namespace </font></td>
+<td><font size="2">disambiguates the classes and separates them.</font></td></tr>
+<tr>
+<td><font size="2">"hello".length()</font></td>
+<td><font size="2">&nbsp;"hello".Length</font></td>
+<td><font size="2">String method length is implemented as property in C#</font></td></tr></tbody></table><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="3">Conclusion</font><br><br></strong>C#
+are Java are similar; Yet, as of now, Java has number of advantages
+over C#. The first is the portability and availability of Java on most
+of the popular platforms. However, C# has all the advantages of Visual
+J++, and may be useful for Java programmers to view it as next
+generation J++. <br><br>C# also have some cool syntax and semantics
+introduced. And as noted above, it is more object oriented in treatment
+of basic types by char and int. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">However,
+in spite of the claim by Microsoft that C# is a direct descendent of
+C++, I feel it is more closer to Java than C++, since Java too was
+derived from C++. The most missed features of C++ in Java are missing
+in C# too. Namely the features of multiple inheritance and generic
+typing called templates are missing in C#. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">Just
+a thought that the '#' character of C# could have been inspired by
+shifting the second '+' symbol of J++ a little down and telescoping it
+with the first '+' symbol!<br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong><font size="3">Appendix</font><br><br></strong>Sorry
+for lack of comments in the source codes. However, I tried to keep the
+method names&nbsp; friendly. I also apologize for the rather longish
+license, can't help it. <br><br><strong>Disclaimer<br><br></strong>The
+source codes listed here are for explaining and analyzing the
+underlying designs only. No warranty claims are made by the author,
+they may contain bugs or by using them commercially you might be
+violating copyrights or patents. You may use the ideas and codes
+presented here at your own risk. <br><br><strong>Appendix A<br></strong><br>This
+appendix lists the source code of LineNum.java. I wrote this Unix style
+utility for generating line numbers for the source codes to be included
+in programmer's introspection articles and peer review studies. <br>The source code listings exhibited here, including this one, make use of this utility to generate line numbers. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+file LineNum.java contains three classes, the first one is the class
+LineNum [lines: 56 to 86] itself. It is a two pass line numbering
+utility. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">It
+is a utility design pattern class, containing all static methods. The
+design is finely granuled in terms of functionality, that is each
+logical function is isolated either in a static method or an
+independent helper class. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">The
+static method main [lines: 59 to 70] , of the LineNum class, is called
+by the loader, which in turn opens the source input file to generate
+the line numbered output, in the example given below it numbers it's
+own source code! <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">Using
+the helper class LineCount [lines: 115 to 134] and the static method
+maxPadCount [lines: 74 to 75], the utility calculates the maximum
+padding required. Thereafter, in the second pass, it uses the static
+method numGen [lines: 78 to 85] to generate the line numbered text to
+standard output. The numGen static method uses the helper class Padder
+[lines: 90 to 110] to generate the zero padded line numbers. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>To Compile<br><br></strong></font><font face="Verdana, Arial, Helvetica, sans-serif">javac LineNum.java<br><br><strong>To Execute<br><br></strong>java LineNum LineNum.java &gt; out.txt<br><br>Listing of LineNum.java follows: <br><br><font size="2"></font></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif"><font size="2">001 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">002 *<br>003 * @author Ashish Banerjee , 5-may-2001<br>004 </font><font color="#808080" size="2">*/</font><font size="2"> <br>005 </font><font color="#008000" size="2">/*<br>006 (c) Osprey Software Technology P. Ltd., 2001, All rights reserved.<br>007 http://www.ospreyindia.com<br>008 <br>===========================================================================<br>009 The Osprey Open Source Software License, Version 1.1<br>010 (Adapted from Apache Software License, V 1.1 [http://www.apache.org])<br>011 <br>===========================================================================<br>012 <br>013 Redistribution and use in source and binary forms, with or without modifica-<br>014 tion, are permitted provided that the following conditions are met:<br>015 <br>016 1. Redistributions of source code must retain the above copyright notice,<br>017 this list of conditions and the following disclaimer.<br>018 <br>019 2. Redistributions in binary form must reproduce the above copyright notice,<br>020 this list of conditions and the following disclaimer in the documentation<br>021 and/or other materials provided with the distribution.<br>022 <br>023 3. The end-user documentation included with the redistribution, if any, must<br>024 include the following acknowledgment: "This product includes software<br>025 developed by the Osprey Software Technology P. Ltd. http://www.ospreyindia.com/)."<br>026 Alternately, this acknowledgment may appear in the software itself, if<br>027 and wherever such third-party acknowledgments normally appear.<br>028 <br>029 4. The names "Osprey" and "Osprey Software Technology" must not be used to<br>030 endorse or promote products derived from this software without prior<br>031 written permission. For written permission, please contact<br>032 mail@ospreyindia.com.<br>033 <br>034 5. Products derived from this software may not be called "Osprey", nor may<br>035 "Osprey" appear in their name, without prior written permission of the<br>036 Osprey Software Technology.<br>037 <br>038 THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,<br>039 INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND<br>040 FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE<br>041 OSPREY SOFTWARE TECHNOLOGY OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,<br>042 INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLU-<br>043 DING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS<br>044 OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON<br>045 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>046 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF<br>047 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. <br>048 */<br></font><font size="2">049 <br>050 <font color="#0000ff" size="2">import </font>java.io.*;<br>051 <br>052 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">053 * Util class with all static methods, it generates line numbers to source<br>054 * files.<br>055 </font><font color="#808080" size="2">*/<br></font><font size="2">056 </font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">class</font><font size="2"> LineNum {<br>057 </font><font color="#0000ff" size="2">private</font><font size="2"> LineNum() {} </font><font color="#008000" size="2">// no instance allowd<br></font><font size="2">058 <br>059 </font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">static</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> main(String args[]) <font color="#0000ff" size="2">throws </font>Exception {<br>060 </font><font color="#0000ff" size="2">if</font><font size="2">(args.length != 1) {<br>061 System.</font><font color="#000000" size="2">out</font><font size="2">.println("java LineNum &lt;java-src-file&gt;");<br>062 System.exit(1);<br>063 }<br>064 LineCount cnt = </font><font color="#0000ff" size="2">new</font><font size="2"> LineCount(args[0]);<br>065 </font><font color="#0000ff" size="2">int</font><font size="2"> max = maxPadCount(cnt.getLines());<br>066 <br>067 BufferedReader rdr = </font><font color="#0000ff" size="2">new</font><font size="2"> BufferedReader(</font><font color="#0000ff" size="2">new</font><font size="2"> FileReader(args[0]));<br>068 numGen(max, rdr);<br>069 rdr.close();<br>070 }<br>071 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">072 * @return maximum padding digits<br>073 </font><font color="#808080" size="2">*/<br></font><font size="2">074 </font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">static</font><font size="2"> </font><font color="#0000ff" size="2">int</font><font size="2"> maxPadCount(</font><font color="#0000ff" size="2">int</font><font size="2"> lines) {<br>075 </font><font color="#0000ff" size="2">return</font><font size="2"> String.valueOf(lines).length();<br>076 }<br>077 </font><font color="#808080" size="2">/**</font><font color="#008000" size="2"> generates line numbers and outputs to standard out (stdio)</font><font color="#808080" size="2">*/<br></font><font size="2">078 </font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">static</font><font size="2"> </font><font color="#0000ff" size="2">void</font><font size="2"> numGen(</font><font color="#0000ff" size="2">int</font><font size="2"> max,BufferedReader inr) <font color="#0000ff" size="2">throws </font>IOException {<br>079 String ln;<br>080 Padder pad = </font><font color="#0000ff" size="2">new</font><font size="2"> Padder('0', max);<br>081 </font><font color="#0000ff" size="2">int</font><font size="2"> cnt = 0;<br>082 </font><font color="#0000ff" size="2">while</font><font size="2">((ln = inr.readLine()) != </font><font color="#0000ff" size="2">null</font><font size="2">)<br>083 System.</font><font color="#0000ff" size="2">out</font><font size="2">.println((pad.pad(++cnt)+" "+ln));<br>084 }<br>085 }<br>086 <br>087 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">088 * Simple util class to pad zero.<br>089 </font><font color="#808080" size="2">*/<br></font><font size="2">090 </font><font color="#0000ff" size="2">class</font><font size="2"> Padder {<br>091 </font><font color="#0000ff" size="2">public</font><font size="2"> Padder(</font><font color="#0000ff" size="2">char</font><font size="2"> padChar, </font><font color="#0000ff" size="2">int</font><font size="2"> maxPad) {<br>092 </font><font color="#0000ff" size="2">this</font><font size="2">.maxPad = maxPad;<br>093 StringBuffer buf = </font><font color="#0000ff" size="2">new</font><font size="2"> StringBuffer(maxPad);<br>094 </font><font color="#0000ff" size="2">for</font><font size="2">(</font><font color="#0000ff" size="2">int</font><font size="2"> i=0; i &lt; maxPad;i++)<br>095 buf.append(padChar);<br>096 pads = buf.toString();<br>097 }<br>098 </font><font color="#0000ff" size="2">public</font><font size="2"> String pad(</font><font color="#0000ff" size="2">int</font><font size="2"> inp) {<br>099 </font><font color="#0000ff" size="2">return</font><font size="2"> pad(String.valueOf(inp));<br>100 }<br>101 </font><font color="#0000ff" size="2">public</font><font size="2"> String pad(String inp) {<br>102 String ret = inp;<br>103 </font><font color="#0000ff" size="2">if</font><font size="2">((inp != </font><font color="#0000ff" size="2">null</font><font size="2">) &amp;&amp; (inp.length() &lt; maxPad))<br>104 ret = pads.substring(0,(maxPad - inp.length())) + inp; <br>105 <br>106 </font><font color="#0000ff" size="2">return</font><font size="2"> ret;<br>107 }<br>108 </font><font color="#0000ff" size="2">private</font><font size="2"> </font><font color="#0000ff" size="2">int</font><font size="2"> maxPad;<br>109 </font><font color="#0000ff" size="2">private</font><font size="2"> String pads;<br>110 }<br>111 <br>112 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">113 * Opens the file and gets max lines<br>114 </font><font color="#808080" size="2">*/<br></font><font size="2">115 </font><font color="#0000ff" size="2">class</font><font size="2"> LineCount {<br>116 </font><font color="#0000ff" size="2">public</font><font size="2"> LineCount(String fileName) {<br>117 fname = fileName;<br>118 }<br>119 </font><font color="#808080" size="2">/**<br></font><font color="#008000" size="2">120 * @return the number of lines in the file.<br>121 </font><font color="#808080" size="2">*/<br></font><font size="2">122 </font><font color="#0000ff" size="2">public</font><font size="2"> </font><font color="#0000ff" size="2">int</font><font size="2"> getLines() <font color="#0000ff" size="2">throws </font>IOException {<br>123 BufferedReader rdr = </font><font color="#0000ff" size="2">new</font><font size="2"> BufferedReader(</font><font color="#0000ff" size="2">new</font><font size="2"> FileReader(fname));<br>124 </font><font color="#0000ff" size="2">int</font><font size="2"> ret = 0;<br>125 </font><font color="#0000ff" size="2">while</font><font size="2">(rdr.readLine() != </font><font color="#0000ff" size="2">null</font><font size="2">)<br>126 ret++;<br>127 rdr.close();<br>128 <br>129 </font><font color="#0000ff" size="2">return</font><font size="2"> ret;<br>130 }<br>131 <br>132 </font><font color="#0000ff" size="2">private</font><font size="2"> String fname;<br>133 <br>134 }<br><br></font></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>Appendix B<br><br></strong>Please refer to the LineNum.java for explainantion of the source code. <br>I
+have .NET SDK installed in one of my computers at home, which has
+Windows 98 system. I prefer to use the console prompt to compile, this
+creates lesser confusion in my mind while using Linux for Java. As of
+now, I do not know of a&nbsp; C# compiler being available on Linux or
+Solaris. Java however works on all the three OS, I work on! <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif">Be
+sure to execute corvars.bat before using the Microsoft C# compiler,
+called csc.exe. Both these programs are located in the bin directory of
+the .NET SDK. <br><br></font><font face="Verdana, Arial, Helvetica, sans-serif"><strong>To Compile&nbsp;<br><br></strong></font><font face="Verdana, Arial, Helvetica, sans-serif">csc LineNum.cs<br><br>The above command compiles the LineNum.cs and produces an executable file called LineNum.exe<br><br><strong>To Execute<br><br></strong>LineNum LineNum.cs &gt; out.txt<br><br>The out.txt file will contain the line numbered source file.<br><br>The Listing of LineNum.cs follows: <br><br></font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif">001 <font color="#808080">/**<br></font><font color="#008000">002 *<br>003 * @author Ashish Banerjee , 5-may-2001<br>004 </font><font color="#808080">*/</font> <br>005 <font color="#008000">/*<br>006 (c) Osprey Software Technology P. Ltd., 2001, All rights reserved.<br>007 http://www.ospreyindia.com<br>008 <br>===========================================================================<br>009 The Osprey Open Source Software License, Version 1.1<br>010 (Adapted from Apache Software License, V 1.1 [http://www.apache.org])<br>011 <br>===========================================================================<br>012 <br>013 Redistribution and use in source and binary forms, with or without modifica-<br>014 tion, are permitted provided that the following conditions are met:<br>015 <br>016 1. Redistributions of source code must retain the above copyright notice,<br>017 this list of conditions and the following disclaimer.<br>018 <br>019 2. Redistributions in binary form must reproduce the above copyright notice,<br>020 this list of conditions and the following disclaimer in the documentation<br>021 and/or other materials provided with the distribution.<br>022 <br>023 3. The end-user documentation included with the redistribution, if any, must<br>024 include the following acknowledgment: "This product includes software<br>025 developed by the Osprey Software Technology P. Ltd. (http://www.ospreyindia.com/)."<br>026 Alternately, this acknowledgment may appear in the software itself, if<br>027 and wherever such third-party acknowledgments normally appear.<br>028 <br>029 4. The names "Osprey" and "Osprey Software Technology" must not be used to<br>030 endorse or promote products derived from this software without prior<br>031 written permission. For written permission, please contact<br>032 mail@ospreyindia.com.<br>033 <br>034 5. Products derived from this software may not be called "Osprey", nor may<br>035 "Osprey" appear in their name, without prior written permission of the<br>036 Osprey Software Technology.<br>037 <br>038 THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,<br>039 INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND<br>040 FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE<br>041 OSPREY SOFTWARE TECHNOLOGY OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,<br>042 INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLU-<br>043 DING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS<br>044 OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON<br>045 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT<br>046 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF<br>047 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. <br>048 */<br></font>049 <font color="#0000ff">using</font> System;<br>050 <font color="#0000ff">using</font> System.IO;<br>051 <font color="#0000ff">using</font> System.Text;<br>052 <br>053 <font color="#0000ff">namespace</font> com.ospreyindia.util {<br>054 <font color="#0000ff">public</font> <font color="#0000ff">class</font> LineNum {<br>055 <font color="#0000ff">private</font> LineNum() {} <font color="#008000">// no instance allowd<br></font>056 <br>057 <font color="#0000ff">public</font> <font color="#0000ff">static</font> <font color="#0000ff">void</font> Main(<font color="#0000ff">string</font>[] args) {<br>058 <font color="#0000ff">if</font>(args.Length != 1) {<br>059 Console.WriteLine("LineNum &lt;C# source file&gt;"); <br>060 Environment.Exit(1);<br>061 }<br>062 LineCount cnt = <font color="#0000ff">new</font> LineCount(args[0]);<br>063 <font color="#0000ff">int</font> max = MaxPadCount(cnt.GetLines());<br>064 <br>065 StreamReader rdr = <font color="#0000ff">new</font> StreamReader(<font color="#0000ff">new</font> FileStream(args[0], FileMode.Open));<br>066 NumGen(max, rdr);<br>067 rdr.Close();<br>068 <br>069 <br>070 } <font color="#008000">// END Main<br></font>071 <font color="#0000ff">public</font> <font color="#0000ff">static</font> <font color="#0000ff">int</font> MaxPadCount(<font color="#0000ff">int</font> lines) {<br>072 <font color="#0000ff">return</font> lines.ToString().Length;<br>073 }<br>074 <font color="#808080">/**</font><font color="#008000"> generates line numbers and outputs to standard out (stdio)</font><font color="#808080">*/<br></font>075 <font color="#0000ff">public</font> <font color="#0000ff">static</font> <font color="#0000ff">void</font> NumGen(<font color="#0000ff">int</font> max, StreamReader inr) {<br>076 <font color="#0000ff">string</font> ln;<br>077 Padder pad = <font color="#0000ff">new</font> Padder('0', max);<br>078 <font color="#0000ff">int</font> cnt = 0;<br>079 <font color="#0000ff">while</font>((ln = inr.ReadLine()) != <font color="#0000ff">null</font>)<br>080 Console.WriteLine((pad.Pad(++cnt)+" "+ln));<br>081 }<br>082 <br>083 <br>084 } <font color="#008000">// END class LineNum<br></font>085 <br>086 <font color="#0000ff">public</font> <font color="#0000ff">class</font> Padder {<br>087 <font color="#0000ff">public</font> Padder(<font color="#0000ff">char</font> padChar, <font color="#0000ff">int</font> maxPad) {<br>088 <font color="#0000ff">this</font>.maxPad = maxPad;<br>089 StringBuilder buf = <font color="#0000ff">new</font> StringBuilder(maxPad);<br>090 <font color="#0000ff">for</font>(<font color="#0000ff">int</font> i=0; i &lt; maxPad;i++)<br>091 buf.Append(padChar);<br>092 <br>093 pads = buf.ToString();<br>094 }<br>095 <font color="#0000ff">public</font> <font color="#0000ff">string</font> Pad(<font color="#0000ff">int</font> inp) {<br>096 <font color="#0000ff">return</font> Pad(inp.ToString());<br>097 }<br>098 <font color="#0000ff">public</font> <font color="#0000ff">string</font> Pad(<font color="#0000ff">string</font> inp) {<br>099 <font color="#0000ff">string</font> ret = inp; <br>100 <font color="#0000ff">if</font>((inp != <font color="#0000ff">null</font>) &amp;&amp; (inp.Length &lt; maxPad)) {<br>101 ret = pads.Substring(0,(maxPad - inp.Length)) + inp;<br>102 }<br>103 <br>104 <font color="#0000ff">return</font> ret;<br>105 }<br>106 <font color="#0000ff">private</font> <font color="#0000ff">int</font> maxPad;<br>107 <font color="#0000ff">private</font> <font color="#0000ff">string</font> pads;<br>108 } <font color="#008000">// END class Padder<br></font>109 <br>110 <font color="#0000ff">public</font> <font color="#0000ff">class</font> LineCount {<br>111 <font color="#0000ff">public</font> LineCount(<font color="#0000ff">string</font> fileName) {<br>112 fname = fileName;<br>113 }<br>114 <br>115 <font color="#0000ff">public</font> <font color="#0000ff">int</font> GetLines() {<br>116 StreamReader rdr = <font color="#0000ff">new</font> StreamReader(<font color="#0000ff">new</font> FileStream<br>fname,FileMode.Open));<br>117 <font color="#0000ff">int</font> ret = 0;<br>118 <font color="#0000ff">while</font>(rdr.ReadLine() != <font color="#0000ff">null</font>)<br>119 ret++;<br>120 rdr.Close();<br>121 <br>122 <font color="#0000ff">return</font> ret;<br>123 }<br>124 <br>125 <font color="#0000ff">private</font> String fname;<br>126 <br>127 } <font color="#008000">// END class LineCount<br></font>128 <br>129 } <font color="#008000">// END namespace</font></font></p><font face="Verdana, Arial, Helvetica, sans-serif"></font>
+
+</font>
+</td>
+</tr>
+</tbody></table>
+
+
+<table cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td class="grayBG">Thank you for using Mindcracker Network</td>
+</tr>
+</tbody></table>
+
+</div>
+</form>
+</body></html>

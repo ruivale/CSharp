@@ -1,0 +1,8 @@
+Uninstalling assembly 'D:\dotNET\Projects\AutoHibernate\bin\Release\AutoHibernate.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = D:\dotNET\Projects\AutoHibernate\bin\Release\AutoHibernate.exe
+   logfile = D:\dotNET\Projects\AutoHibernate\bin\Release\AutoHibernate.InstallLog
+Removing EventLog source File and System Watcher.
+Service File and System Watcher is being removed from the system...
+Service File and System Watcher was successfully removed from the system.
