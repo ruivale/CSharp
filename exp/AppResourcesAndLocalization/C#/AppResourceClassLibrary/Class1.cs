@@ -16,6 +16,7 @@ namespace AppResourceClassLibrary
             {
                 String name;
                 GetLibraryName("string1", out name);
+				
                 return name;
             } 
         }
@@ -26,6 +27,7 @@ namespace AppResourceClassLibrary
             {
                 resourceLoader = ResourceLoader.GetForCurrentView("AppResourceClassLibrary/Resources");
             }
+			
             resourceValue = resourceLoader.GetString(resourceName);
         }
 

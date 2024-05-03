@@ -39,17 +39,19 @@ namespace AccessingRemoteShares
 
 
                 Console.WriteLine("\nFiles: ");
+				
                 foreach (string s in strFiles)
                 {
                     Console.WriteLine(s);
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine("\n"+ex.Message+"\n");
             }
+			
             Console.WriteLine("\nPress ENTER to exit: ");
+			
             string strRead = Console.ReadLine();
 
         }
