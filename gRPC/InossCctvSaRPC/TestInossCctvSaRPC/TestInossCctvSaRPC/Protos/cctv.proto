@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "TestInossCctvSaRPC";
+
+package cctv;
+
+// The greeting service definition.
+service Operation {
+  // Sends a greeting
+  rpc GetVersion (VersionRequest) returns (VersionReply);
+}
+
+// The request message containing the modules submodule (could be empty).
+message VersionRequest {
+  string submodule = 1;
+}
+
+// The response message containing the module versions.
+message VersionReply {
+  string version = 1;
+}
