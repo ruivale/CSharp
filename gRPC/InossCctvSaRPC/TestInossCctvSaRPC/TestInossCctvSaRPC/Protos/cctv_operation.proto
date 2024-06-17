@@ -1,0 +1,232 @@
+/***************************************************************************************************************/
+syntax = "proto3";
+
+//import "cctv_messages.proto";
+
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation";
+
+package cctv;
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV operation interface
+//
+//
+service Operation {
+
+	// Obtain the Operation service version
+	rpc GetVersion(MsgEmpty) returns (VersionReply);
+
+	// Obtains the given targets connection information, if any.
+	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetSourcesInTargetsReply);
+	
+	// Setting connections between sources equipments, normally cameras, and targets, normally monitors.
+	rpc ConnectInTargets(MsgSetSourcesInTargets) returns (MsgMultipleRequestsReply);
+
+	// Disconnects all the given targets. Returns a list of results for each given target.
+	rpc DisconnectTargets(MsgListIds) returns (MsgMultipleRequestsReply);
+
+	// Starting sequences in the and targets, normally monitors.
+	rpc StartSequencesInTargets(MsgSequencesInTargets) returns (MsgMultipleRequestsReply);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV enums
+//
+//
+
+//
+// Normally used when target equips connections information is requested.
+enum SourceObjType {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	INVALID = 0;
+	EQUIP = 1;
+	SEQUENCE = 2;
+	REPLAY = 3;
+	RECORDING = 4;
+}
+
+//
+// 
+// @TODO: add ALL possible values
+enum ReplyValue {
+	OK						= 0;
+	NOK						= 1;
+	NOT_IMPLEMENTED			= 2;
+	NOT_SUPPORTED			= 3;
+	INVALID_PARAMETER		= 4;
+	INVALID_EQUIPMENT		= 5;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV messages
+//
+//
+
+//
+// THE empty message
+message MsgEmpty {} 
+
+//
+// Generic numeric reply
+message MsgReply {
+	// The numeric value to return to the caller.
+	ReplyValue replyValue = 1;
+	// A description of the returned value, if needed/wanted (can be left empty).
+	string desc = 2;
+}
+
+//
+// Generic numeric message
+message MsgNumeric {
+	// The numeric value.
+	int32 value = 1;
+}
+//
+// Generic numeric message
+message MsgNumericReply {
+	// The numeric value.
+	MsgReply reply = 1;
+	// The 
+	uint32 iId = 2;
+}
+
+
+//
+// Generic numeric reply
+message VersionReply {
+	// The version major value.
+	uint32 version = 1;
+	// The version major value.
+	uint32 subVersion = 2;
+	// The version major value.
+	uint32 revision = 3;
+	// The version major value.
+	uint64 build = 4;
+	// A description of the returned value, if needed/wanted (can be left empty).
+	string desc = 5;
+}
+
+//
+// The current WorkStation information. Normally used by the auditing system.
+message MsgWorkstationInformation {
+	// The user name of the logged user, i.e., the user login.
+	string userName = 1;
+	// The workstation identification.
+	uint32 workStationId = 2;
+}
+
+// Basic message holder for connections, i.e., only the source and target data. 
+message MsgConnectionInfo {
+	// The source, normally a camera, identification but could also be a sequence id...
+	uint32 sourceId = 1;
+	// The target equipment, normally a monitor, identification.
+	uint32 targetId = 2;
+}
+
+// Set source in target connection attempts data.
+message MsgSetSourceConnectionInfo {
+	// The basic, i.e. source & target, data.
+	MsgConnectionInfo connection = 1;
+	// The source equipment port (can be left without a value, i.e. 0).
+	uint32 sourcePort = 2;
+	// The target equipment port (can be left without a value, i.e. 0).
+	uint32 targetPort = 3;
+	// Used, if needed to set the address where to connect.
+	string address = 4;
+}
+
+//
+// Struct used while setting connections between sources equipments, normally cameras, and targets, normally monitors.
+message MsgSetSourcesInTargets {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	//
+	repeated MsgSetSourceConnectionInfo sourceInTarget = 2;
+}
+
+//
+// Message used when a list of IDs is needed.
+message MsgListIds {
+	// All the target Ids.
+	repeated uint32 ids = 1;
+}
+
+//
+// Message used while obtaining targets, normally monitors, connection info. 
+// This is not directly used by the Operation service.
+message MsgGetSourceInTarget {
+	// The target identification.
+	uint32 targetId = 1;
+	// The type of active source in a target.
+	SourceObjType sourceObjType = 2;
+	// Additional info for SourceObjType.REPLAY type.
+	uint64 handle = 3;
+	// The source identification i.e,, an equipment id, a sequence id, etc.
+	uint32 sourceId = 4;
+	// The source station identification when available/used/set.
+	uint32 stationId = 5;
+	// The recorder source identification when available/used/set.
+	uint32 recorderSourceId = 6;
+}
+
+//
+// Message used while obtaining targets, normally monitors, connection info.
+message MsgGetSourcesInTargetsReply {
+	// The request reply.
+	MsgReply msgReply = 1;
+	// the list of targets connection information.
+	repeated MsgGetSourceInTarget sourceInTarget = 2;
+}
+
+//
+// Return message when multiple requests are sent in a single invocation.
+message MsgMultipleRequestsReply {
+	// Global reply for the request. If this is OK, then ALL requests were successful. 
+	MsgReply globalReply = 1;
+	// The list of IDs and reuquest status of each one of them. 
+	// NOTE: If the globalReply is OK, there no need to use this item.
+	repeated MsgNumericReply specificReplies = 2;
+}
+
+//
+// 
+message MsgSequencesInTargets {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The set information.
+	repeated MsgConnectionInfo connection = 2;
+}
+
+
+
+/***************************************************************************************************************/

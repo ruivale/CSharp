@@ -1,98 +1,18 @@
-
+/*
 syntax = "proto3";
 
-//import "cctv_messages.proto";
+import "cctv_enums.proto";
 
-option csharp_namespace = "Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation";
+option csharp_namespace = "com.efacec.es.efarail.cctv.grpc.messages";
 
 package cctv;
 
-
-////////////////////////////////////////////////////////////////////////////////////
-//
-// CCTV operation interface
-//
-//
-service Operation {
-
-	// Obtain the Operation service version
-	rpc GetVersion(MsgEmpty) returns (VersionReply);
-	
-	// Setting a connection between a source equipment, normally a camera, and a target one, normally a monitor.
-	//rpc SetSourceinTarget(MsgSetSourceInTarget) returns (MsgReply);
-
-	// Obtains the given targets connection information, if any.
-	//rpc GetSourcesInTargets(MsgGetSourcesInTargets) returns (MsgGetSourcesInTargetsReply);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/******************************************************************************************************
-////////////////////////////////////////////////////////////////////////////////////
-//
-// CCTV enums
-//
-//
-
-//
-// Normally used when target equips connections information is requested.
-enum SourceObjType {
-	// since we're dealing w/ OPEN enums, the first element must be zero (0);
-	INVALID = 0;
-	EQUIP = 1;
-	SEQUENCE = 2;
-	REPLAY = 3;
-	RECORDING = 4;
-}
-
-//
-// 
-enum ReplyValue {
-	OK						= 0;
-	NOK						= 1;
-	NOT_IMPLEMENTED			= 2;
-	NOT_SUPPORTED			= 3;
-	INVALID_PARAMETER		= 4;
-	INVALID_EQUIPMENT		= 5;
-}
-******************************************************************************************************/
-
-
-/******************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////
 //
 // CCTV messages
 //
 //
 
-//
-// THE empty message
-message MsgEmpty {} 
-
-
-/*
 //
 // Generic numeric message
 message MsgNumeric {
@@ -109,25 +29,7 @@ message MsgReply {
 	// A description of the returned value, if needed/wanted (can be left empty).
 	string strDesc = 2;
 }
-*/
 
-//
-// Generic numeric reply
-message VersionReply {
-	// The version major value.
-	uint32 version = 1;
-	// The version major value.
-	uint32 subversion = 2;
-	// The version major value.
-	uint32 revision = 3;
-	// The version major value.
-	uint64 build = 4;
-	// A description of the returned value, if needed/wanted (can be left empty).
-	string desc = 5;
-}
-
-
-/***
 //
 // The current WorkStation information. Normally used by the auditing system.
 message MsgWorkstationInformation {
@@ -186,10 +88,10 @@ message MsgGetSourcesInTargetsReply {
 }
 
 
+*/
 
 
 
 
 
 
-******************************************************************************************************/

@@ -1,0 +1,25 @@
+/*
+syntax = "proto3";
+
+option csharp_namespace = "com.efacec.es.efarail.cctv.grpc.enums";
+
+package cctv;
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV enums
+//
+//
+
+//
+// Normally used when target equips connections information is requested.
+enum SourceObjType {
+	INVALID = 0;
+	EQUIP = 1;
+	SEQUENCE = 2;
+	REPLAY = 3;
+	RECORDING = 4;
+}
+
+
+*/

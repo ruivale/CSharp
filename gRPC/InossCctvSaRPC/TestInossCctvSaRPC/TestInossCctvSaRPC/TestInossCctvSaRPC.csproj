@@ -7,11 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\cctv_enums.proto" />
+    <None Remove="Protos\cctv_messages.proto" />
+    <None Remove="Protos\cctv_operation.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\cctv_operation.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\cctv_enums.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\cctv_messages.proto">
+      <GrpcServices>Server</GrpcServices>
+    </Protobuf>
     <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
   </ItemGroup>
 
 </Project>
