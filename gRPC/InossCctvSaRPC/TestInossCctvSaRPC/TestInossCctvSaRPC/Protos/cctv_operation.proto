@@ -8,6 +8,20 @@ option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation";
 package cctv;
 
 
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV operation interface
+//
+//
+service Configuration {
+	// Returns the sequences data: id, name and mode.
+	// GetSequencesById()
+
+	// Returns ALL the sequences configured in the system
+	// GetAllSequences()
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 //
 // CCTV operation interface
@@ -19,40 +33,30 @@ service Operation {
 	rpc GetVersion(MsgEmpty) returns (VersionReply);
 
 	// Obtains the given targets connection information, if any.
-	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetSourcesInTargetsReply);
+	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetConnInfoInTargetsReply);
 	
 	// Setting connections between sources equipments, normally cameras, and targets, normally monitors.
-	rpc ConnectInTargets(MsgSetSourcesInTargets) returns (MsgMultipleRequestsReply);
+	rpc ConnectInTargets(MsgConnectInTargets) returns (MsgMultipleRequestsReply);
 
 	// Disconnects all the given targets. Returns a list of results for each given target.
 	rpc DisconnectTargets(MsgListIds) returns (MsgMultipleRequestsReply);
 
 	// Starting sequences in the and targets, normally monitors.
-	rpc StartSequencesInTargets(MsgSequencesInTargets) returns (MsgMultipleRequestsReply);
+	rpc StartSequencesInTargets(MsgStartSeqsInTargets) returns (MsgMultipleRequestsReply);
 
+	// Stops sequences.
+	rpc ExecSequencesOperation(MsgSequencesOperation) returns (MsgMultipleRequestsReply);
+
+	// Obtain all running sequences. 
+	// The request can be filter by the given WorkStation, targets, sequences handles, etc configured in the MsgRunningSequences parameter, if any.
+	// Can be used to obtain:
+	//		- all running sequences, if the given parameter is unset; 
+	//		- sequences states; 
+	//		- which, if any, sequences are active in the given targets;
+	//		- etc.
+	rpc GetRunningSequences(MsgRunningSequences) returns (MsgRunningSequencesReply);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -66,23 +70,44 @@ service Operation {
 // Normally used when target equips connections information is requested.
 enum SourceObjType {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
-	INVALID = 0;
-	EQUIP = 1;
-	SEQUENCE = 2;
-	REPLAY = 3;
-	RECORDING = 4;
+	SRCOBJ_INVALID = 0;
+	SRCOBJ_EQUIP = 1;
+	SRCOBJ_SEQUENCE = 2;
+	SRCOBJ_REPLAY = 3;
+	SRCOBJ_RECORDING = 4;
+}
+
+//
+// Sequence operations used, only after a sequence as been started, to execute an operation.
+enum SequenceOperType {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SEQOPE_STOP = 0;
+	SEQOPE_PAUSE = 1;
+	SEQOPE_RESTART = 2;
+	SEQOPE_STEP_PREVIOUS = 3;
+	SEQOPE_STEP_NEXT = 4;
+}
+
+// 
+// Sequences state type signalling the running sequence actual state.
+enum SequenceStateType {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SEQSTA_NOT_STARTED = 0;
+	SEQSTA_STOP = 1;
+	SEQSTA_PLAY = 2;
+	SEQSTA_PAUSE = 3;
 }
 
 //
 // 
 // @TODO: add ALL possible values
 enum ReplyValue {
-	OK						= 0;
-	NOK						= 1;
-	NOT_IMPLEMENTED			= 2;
-	NOT_SUPPORTED			= 3;
-	INVALID_PARAMETER		= 4;
-	INVALID_EQUIPMENT		= 5;
+	R_OK						= 0;
+	R_NOK						= 1;
+	R_NOT_IMPLEMENTED			= 2;
+	R_NOT_SUPPORTED			= 3;
+	R_INVALID_PARAMETER		= 4;
+	R_INVALID_EQUIPMENT		= 5;
 }
 
 
@@ -109,29 +134,29 @@ message MsgReply {
 // Generic numeric message
 message MsgNumeric {
 	// The numeric value.
-	int32 value = 1;
+	int64 value = 1;
 }
+
 //
 // Generic numeric message
 message MsgNumericReply {
 	// The numeric value.
 	MsgReply reply = 1;
 	// The 
-	uint32 iId = 2;
+	int64 id = 2;
 }
-
 
 //
 // Generic numeric reply
 message VersionReply {
 	// The version major value.
-	uint32 version = 1;
+	int64 version = 1;
 	// The version major value.
-	uint32 subVersion = 2;
+	int64 subVersion = 2;
 	// The version major value.
-	uint32 revision = 3;
+	int64 revision = 3;
 	// The version major value.
-	uint64 build = 4;
+	int64 build = 4;
 	// A description of the returned value, if needed/wanted (can be left empty).
 	string desc = 5;
 }
@@ -142,70 +167,72 @@ message MsgWorkstationInformation {
 	// The user name of the logged user, i.e., the user login.
 	string userName = 1;
 	// The workstation identification.
-	uint32 workStationId = 2;
+	int64 workStationId = 2;
 }
 
 // Basic message holder for connections, i.e., only the source and target data. 
 message MsgConnectionInfo {
 	// The source, normally a camera, identification but could also be a sequence id...
-	uint32 sourceId = 1;
+	int64 sourceId = 1;
 	// The target equipment, normally a monitor, identification.
-	uint32 targetId = 2;
+	int64 targetId = 2;
 }
 
 // Set source in target connection attempts data.
-message MsgSetSourceConnectionInfo {
+message MsgConnectInTarget {
 	// The basic, i.e. source & target, data.
 	MsgConnectionInfo connection = 1;
 	// The source equipment port (can be left without a value, i.e. 0).
-	uint32 sourcePort = 2;
+	int64 sourcePort = 2;
 	// The target equipment port (can be left without a value, i.e. 0).
-	uint32 targetPort = 3;
+	int64 targetPort = 3;
 	// Used, if needed to set the address where to connect.
 	string address = 4;
 }
 
 //
 // Struct used while setting connections between sources equipments, normally cameras, and targets, normally monitors.
-message MsgSetSourcesInTargets {
+message MsgConnectInTargets {
 	// The workstation information.
 	MsgWorkstationInformation workStationInfo = 1;
 	//
-	repeated MsgSetSourceConnectionInfo sourceInTarget = 2;
+	repeated MsgConnectInTarget connectInTarget = 2;
 }
 
 //
 // Message used when a list of IDs is needed.
 message MsgListIds {
-	// All the target Ids.
-	repeated uint32 ids = 1;
+	// The workstation information, if needed.
+	MsgWorkstationInformation workStationInfo = 1;
+	// Items Ids, whatever tey mean, i.e., sources equipments, targets equipments, sequences ids, active sequences handles, etc.
+	repeated int64 ids = 2;
 }
 
 //
 // Message used while obtaining targets, normally monitors, connection info. 
 // This is not directly used by the Operation service.
-message MsgGetSourceInTarget {
+message MsgGetConnInfoInTarget {
 	// The target identification.
-	uint32 targetId = 1;
+	int64 targetId = 1;
 	// The type of active source in a target.
 	SourceObjType sourceObjType = 2;
 	// Additional info for SourceObjType.REPLAY type.
-	uint64 handle = 3;
+	int64 handle = 3;
 	// The source identification i.e,, an equipment id, a sequence id, etc.
-	uint32 sourceId = 4;
+	int64 sourceId = 4;
 	// The source station identification when available/used/set.
-	uint32 stationId = 5;
+	int64 stationId = 5;
 	// The recorder source identification when available/used/set.
-	uint32 recorderSourceId = 6;
+	int64 recorderSourceId = 6;
 }
 
 //
 // Message used while obtaining targets, normally monitors, connection info.
-message MsgGetSourcesInTargetsReply {
+message MsgGetConnInfoInTargetsReply {
 	// The request reply.
-	MsgReply msgReply = 1;
+	MsgReply reply = 1;
 	// the list of targets connection information.
-	repeated MsgGetSourceInTarget sourceInTarget = 2;
+	repeated MsgGetConnInfoInTarget connInfoInTarget = 2;
 }
 
 //
@@ -213,20 +240,80 @@ message MsgGetSourcesInTargetsReply {
 message MsgMultipleRequestsReply {
 	// Global reply for the request. If this is OK, then ALL requests were successful. 
 	MsgReply globalReply = 1;
-	// The list of IDs and reuquest status of each one of them. 
-	// NOTE: If the globalReply is OK, there no need to use this item.
+	// The list of IDs and request status of each one of them. 
+	// NOTE: If the globalReply is R_OK, there no need to use this item.
 	repeated MsgNumericReply specificReplies = 2;
 }
 
 //
-// 
-message MsgSequencesInTargets {
-	// The workstation information.
-	MsgWorkstationInformation workStationInfo = 1;
-	// The set information.
-	repeated MsgConnectionInfo connection = 2;
+//
+message MsgSequenceConnInfo {
+	// The connection info, i.e., sequence, the source item in the message, and target.
+	MsgConnectionInfo connection = 1;
+	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
+	// NOTE: nowadays, @2406, not used anymore... but here just in case
+	int64 syncTime = 2;
 }
 
+//
+// 
+message MsgStartSeqsInTargets {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The sequences information.
+	repeated MsgSequenceConnInfo sequenceConnection = 2;
+}
 
+//
+// The running sequence data holder 
+message MsgRunningSequence {
+	// The sequence identification. May not be needed if the handle is set. It can be useful, but not always mandatory.
+	int64 id = 1;
+	// The running sequence handle, i.e., the running sequence identification.
+	int64 handle = 2;
+	// The running sequence active target, normally not needed but can be sent just in case.
+	int64 targetId = 3;
+	// The sequence state. Depending on the operation, this value could be not set.
+	SequenceStateType state = 4;
+	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
+	// NOTE: nowadays, @2406, not used anymore... but here just in case.
+	int64 syncTime = 5;
+}
+
+//
+// The running sequences data holder 
+message MsgRunningSequences {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The running sequencse handles, i.e., the running sequence identification
+	repeated MsgRunningSequence runningSequences = 2;	
+}
+
+//
+// The running sequence reply message.
+message MsgRunningSequenceReply {
+	// The running sequence handle and target
+	MsgRunningSequence runningSequence = 1;
+	// The running sequence state, i.e., one from SequenceOperType (When )
+	SequenceOperType sequenceOperType = 2;
+}
+
+//
+// The running sequences reply message, normally used when obtaining all running sequences.
+message MsgRunningSequencesReply {
+	// The running sequences reply message
+	repeated MsgRunningSequenceReply runningSequencesReply = 1;
+}
+
+//
+// Used when stopping, pausing, restarting sequences. Only a single SequenceOperType can be applied to the given list of sequences or targets.
+message MsgSequencesOperation {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The sequence oper: stop, pause, restart, next or previous step.
+	SequenceOperType sequenceOperType = 2;
+	// Items Ids, whatever they mean, i.e., targets equipments or sequences handles depending on the set prop from MsgRunningSequence.
+	repeated MsgRunningSequence runningSequences = 3;
+}
 
 /***************************************************************************************************************/
