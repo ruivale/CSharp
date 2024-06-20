@@ -1,7 +1,7 @@
 /*
 syntax = "proto3";
 
-option csharp_namespace = "com.efacec.es.efarail.cctv.grpc.enums";
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation";
 
 package cctv;
 
@@ -11,15 +11,16 @@ package cctv;
 //
 //
 
+
 //
 // Normally used when target equips connections information is requested.
-enum SourceObjType {
-	INVALID = 0;
-	EQUIP = 1;
-	SEQUENCE = 2;
-	REPLAY = 3;
-	RECORDING = 4;
+enum SourceObj {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SRCOBJ_INVALID = 0;
+	SRCOBJ_EQUIP = 1;
+	SRCOBJ_SEQUENCE = 2;
+	SRCOBJ_REPLAY = 3;
+	SRCOBJ_RECORDING = 4;
 }
-
 
 */

@@ -20,7 +20,7 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<VersionReply> GetVersion(MsgEmpty request, ServerCallContext context)
+        public override Task<VersionReply> GetVersion(MsgWorkstationInformation request, ServerCallContext context)
         {
             return Task.FromResult(new VersionReply
             {
