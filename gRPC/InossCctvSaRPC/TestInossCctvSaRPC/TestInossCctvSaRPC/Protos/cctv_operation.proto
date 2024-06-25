@@ -36,12 +36,12 @@ service Operation {
 
 
 
-	/////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Generic operations
 	//
 
 	// Obtain the Operation service version
-	rpc GetVersion(MsgWorkstationInformation) returns (VersionReply);
+	rpc GetVersion(MsgVersions) returns (MsgVersionsReply);
 
 	// Obtains the given targets connection information, if any.
 	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetConnInfoInTargetsReply);
@@ -86,9 +86,18 @@ service Operation {
     // Get ALL locked equipments, normally cameras.
     rpc GetLockedEquipments(MsgWorkstationInformation) returns (MsgNumericsReply);
 
+    //
+    // From the given list of stations, obtain ALL its equipments state.
+    //rpc GetAllEquipmentsState() returns ();
+
+    //
+    // From the given list of stations, obtain ALL its equipments specific state.
+    //rpc GetAllEquipmentsSpecificState() returns ();
 
 
-	/////////////////////////////////////////////////////////////////////////////
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Sequences interfaces 
 	//
 
@@ -127,14 +136,24 @@ service Operation {
 
 
 
-////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // CCTV enums
 //
 // NOTE: since we're dealing w/ OPEN enums, the first element must be zero (0);
 //
 
-//
+// MsgVersionMod
+// Normally used when version are requested
+enum MsgVersionMod {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	VERMOD_ALL = 0;
+	VERMOD_GRPC = 1;
+	VERMOD_SA = 2;
+	VERMOD_AGENT = 3;
+}
+
+// SourceObj
 // Normally used when target equips connections information is requested.
 enum SourceObj {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -145,7 +164,7 @@ enum SourceObj {
 	SRCOBJ_RECORDING = 4;
 }
 
-//
+// SequenceOper
 // Sequence operations used, only after a sequence as been started, to execute an operation.
 enum SequenceOper {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -156,7 +175,7 @@ enum SequenceOper {
 	SEQOPE_STEP_NEXT = 4;
 }
 
-// 
+// SequenceState
 // Sequences state type signalling the running sequence actual state.
 enum SequenceState {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -166,7 +185,7 @@ enum SequenceState {
 	SEQSTA_PAUSE = 3;
 }
 
-//
+// SequenceMode
 // Sequences mode, i.e., ciclic or no ciclic.
 enum SequenceMode {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -175,7 +194,7 @@ enum SequenceMode {
 	SEQMOD_NO_CICLIC = 2;
 }
 
-//
+// MacroOper
 // Macro operation
 enum MacroOper {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -183,7 +202,7 @@ enum MacroOper {
     MACOPE_STOP = 1;
 }
 
-//
+// ReplyValue
 // All possible reply values
 enum ReplyValue {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
@@ -260,7 +279,7 @@ enum ReplyValue {
     R_STATIONUNAVAILABLE = 70;
 }
 
-//
+// AlarmType
 // All alarm types
 enum AlarmType {
     ALRTYP_UNDEFINED = 0;
@@ -363,18 +382,27 @@ message MsgNumericsReply {
 }
 
 //
-// Generic numeric reply
-message VersionReply {
-	// The version major value.
+// Generic version reply
+message MsgVersionReply {
+	// The version value.
 	int64 version = 1;
-	// The version major value.
+	// The subversion value.
 	int64 subVersion = 2;
-	// The version major value.
+	// The revision value.
 	int64 revision = 3;
-	// The version major value.
+	// The build value.
 	int64 build = 4;
 	// A description of the returned value, if needed/wanted (can be left empty).
 	string desc = 5;
+    // The module.
+    MsgVersionMod versionMod = 6;
+}
+
+//
+// Generic multiple versions reply
+message MsgVersionsReply {
+    // The requested modules versions.
+    repeated MsgVersionReply versions = 1;
 }
 
 //
@@ -384,6 +412,15 @@ message MsgWorkstationInformation {
 	string userName = 1;
 	// The workstation identification.
 	int64 workStationId = 2;
+}
+
+//
+// Message used when version are requested.
+message MsgVersions {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+    // The module requested.
+    MsgVersionMod versionMod = 2;
 }
 
 // Basic message holder for connections, i.e., only the source and target data. 

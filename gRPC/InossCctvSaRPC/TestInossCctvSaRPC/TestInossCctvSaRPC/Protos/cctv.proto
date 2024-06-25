@@ -1,195 +1,107 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Sample from:
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
+//
+//
 
 syntax = "proto3";
 
-//import "cctv_messages.proto";
-
 option csharp_namespace = "Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation";
+import "google/api/annotations.proto";
 
 package cctv;
 
 
-////////////////////////////////////////////////////////////////////////////////////
-//
-// CCTV operation interface
-//
-//
+
 service Operation {
+	// Obtain the Operation service version - simple version
+    // Like: 
+    //      curl https://localhost:7125/v1/simpleversion
+	rpc GetSimpleVersion(EmptyRequest) returns (VersionsReply){
+        option (google.api.http) = {
+            get: "/v1/simpleversion"
+        };
+    }
 
 	// Obtain the Operation service version
-	rpc GetVersion(MsgEmpty) returns (VersionReply);
-	
-	// Setting a connection between a source equipment, normally a camera, and a target one, normally a monitor.
-	//rpc SetSourceinTarget(MsgSetSourceInTarget) returns (MsgReply);
+    // Like: 
+    //      curl https://localhost:7125/v1/versions/6/666/SixSixSix
+	//rpc GetVersions(VersionRequestMsg) returns (VersionsReply){
+    //    option (google.api.http) = {
+    //        get: "/v1/versions/{id}/{version.id}/{version.desc}"
+    //    };
+    //}
 
-	// Obtains the given targets connection information, if any.
-	//rpc GetSourcesInTargets(MsgGetSourcesInTargets) returns (MsgGetSourcesInTargetsReply);
+	// Obtain the Operation service version
+    // Like: 
+    //      curl https://localhost:7125/v1/versions/7?version.id=777&version.desc=SevenSevenSeven
+	rpc GetVersionsWithNoBound(VersionRequestMsg) returns (VersionsReply){
+        option (google.api.http) = {
+            get: "/v1/versions/{id}"
+        };
+    }
 
+	// Obtain the Operation service version
+    // Like: 
+    //      
+	rpc GetVersionsThroughPost(VersionRequestMsg) returns (VersionsReply){
+        option (google.api.http) = {
+            post: "/v1/versionsPost"
+            body: "versions"
+        };
+    }
+
+    // Creates a new shelf in the bookstore.
+    rpc CreateShelf(CreateShelfRequest) returns (Shelf) {
+      // Client example:
+      //   curl -d '{"theme":"Music"}' https://localhost:7125/v1/shelves
+      option (google.api.http) = {
+        post: "/v1/shelves"
+        body: "shelf"
+      };
+    }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/******************************************************************************************************
-////////////////////////////////////////////////////////////////////////////////////
-//
-// CCTV enums
-//
-//
-
-//
-// Normally used when target equips connections information is requested.
-enum SourceObjType {
-	// since we're dealing w/ OPEN enums, the first element must be zero (0);
-	INVALID = 0;
-	EQUIP = 1;
-	SEQUENCE = 2;
-	REPLAY = 3;
-	RECORDING = 4;
+message Shelf {
+    //int64 id = 1;
+    string theme = 1;
 }
 
-//
-// 
-enum ReplyValue {
-	OK						= 0;
-	NOK						= 1;
-	NOT_IMPLEMENTED			= 2;
-	NOT_SUPPORTED			= 3;
-	INVALID_PARAMETER		= 4;
-	INVALID_EQUIPMENT		= 5;
-}
-******************************************************************************************************/
-
-
-/******************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////
-//
-// CCTV messages
-//
-//
-
-//
-// THE empty message
-message MsgEmpty {} 
-
-
-/*
-//
-// Generic numeric message
-message MsgNumeric {
-	// The numeric value.
-	int32 value = 1;
+message CreateShelfRequest {
+    Shelf shelf = 1;
 }
 
-//
-// Generic numeric reply
-message MsgReply {
-	// The numeric value to return to the caller.
-	// @TODO: point to the returning types values enum?????
-	int32 value = 1;
-	// A description of the returned value, if needed/wanted (can be left empty).
-	string strDesc = 2;
-}
-*/
+message EmptyRequest {}
 
-//
-// Generic numeric reply
-message VersionReply {
+
+message VersionRequest {
+    int64 id = 1;
+    string desc = 2;
+}
+
+message VersionRequestMsg {
+    int64 id = 1;
+    repeated VersionRequest versions = 2;
+} 
+
+message VersionBaseMsg {
 	// The version major value.
-	uint32 version = 1;
+	int64 version = 1;
 	// The version major value.
-	uint32 subversion = 2;
+	int64 subversion = 2;
 	// The version major value.
-	uint32 revision = 3;
+	int64 revision = 3;
 	// The version major value.
-	uint64 build = 4;
+	int64 build = 4;
 	// A description of the returned value, if needed/wanted (can be left empty).
 	string desc = 5;
 }
 
-
-/***
-//
-// The current WorkStation information. Normally used by the auditing system.
-message MsgWorkstationInformation {
-	// The user name of the logged user, i.e., the user login.
-	string strUserName = 1;
-	// The workstation identification.
-	int32 wsId = 2;
+message VersionsReply {
+    //
+    string desc = 1;
+	//
+    repeated VersionBaseMsg versions = 2;
 }
 
-//
-// Struct used while setting a connection between a source equipment, normally a camera, and a target one, normally a monitor.
-message MsgSetSourceInTarget {
-	// The workstation information.
-	MsgWorkstationInformation wsInfo = 1;
-	// The source equipment, normally a camera, identification.
-	int32 nSourceId = 2;
-	// The target equipment, normally a monitor, identification.
-	int32 nTargetId = 3;
-	// The source equipment port (can be left without a value, i.e. 0).
-	int32 nSourcePort = 4;
-	// The target equipment port (can be left without a value, i.e. 0).
-	int32 nTargetPort = 5;
-}
-
-//
-//
-message MsgGetSourcesInTargets {
-	// All the target Ids.
-	repeated uint32 targetIds = 1;
-}
-
-//
-//
-message MsgGetSourceInTarget {
-	// The target identification.
-	uint32 nTargetId = 1;
-	// The type of active source in a target.
-	SourceObjType sourceObjType = 2;
-	// Additional info for SourceObjType.REPLAY type.
-	int32 nHandle = 3;
-	// The source identification i.e,, an equipment id, a sequence id, etc.
-	int32 nSourceId = 4;
-	// The source station identification when available/used/set.
-	int32 nStationId = 5;
-	// The source station identification when available/used/set.
-	int32 nRecSourceId = 6;
-}
-
-//
-// Struct used while obtaining a target, normally a monitor, connection info.
-message MsgGetSourcesInTargetsReply {
-	// The request reply.
-	MsgReply msgReply = 1;
-	// the list of targets connection information.
-	repeated MsgGetSourceInTarget sourceInTarget = 2;
-}
-
-
-
-
-
-
-
-
-******************************************************************************************************/

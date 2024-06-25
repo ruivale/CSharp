@@ -14,22 +14,39 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
 
         /// <summary>
         /// Obtain the Operation service version
-        ///     GetVersion(EmptyMessage) returns(MsgReply);
+        ///     GetVersion(MsgVersions) returns(MsgReply);
         ///     
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<VersionReply> GetVersion(MsgWorkstationInformation request, ServerCallContext context)
+        public override Task<MsgVersionsReply> GetVersion(MsgVersions request, ServerCallContext context)
         {
-            return Task.FromResult(new VersionReply
+
+            MsgVersionReply msgVersionReplyGRPC = new MsgVersionReply
             {
                 Version = 0,
                 SubVersion = 0,
                 Revision = 1,
                 Build = 2,
                 Desc = "Hello. I'm CctvOperation service version 0.0.1-alphaI."
-            });
+            };
+
+            MsgVersionReply msgVersionReplySa = new MsgVersionReply
+            {
+                Version = 2,
+                SubVersion = 0,
+                Revision = 1,
+                Build = 2560,
+                Desc = "Hello. I'm CctvSa service version 2.0.1.2560."
+            };
+
+            MsgVersionsReply msgVersions = new MsgVersionsReply()
+            {
+                Versions = {msgVersionReplyGRPC, msgVersionReplySa}
+            };
+
+            return Task.FromResult(msgVersions);
         }
 
         ///// <summary>
