@@ -171,17 +171,5 @@ namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
             });
         }
 
-
-        public override Task<Shelf> CreateShelf(CreateShelfRequest request, ServerCallContext context)
-        {
-            Console.WriteLine("CctvServiceTests.CreateShelf() POST POST POST ...");
-
-            return Task.FromResult(new Shelf
-            {
-                //Id = 988776,
-                Theme = "The theme is: " + request.Shelf.Theme + "."
-            });
-        }
-
     }
 }

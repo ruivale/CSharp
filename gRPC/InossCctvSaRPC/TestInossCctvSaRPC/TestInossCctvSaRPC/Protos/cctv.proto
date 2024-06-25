@@ -51,25 +51,6 @@ service Operation {
         };
     }
 
-    // Creates a new shelf in the bookstore.
-    rpc CreateShelf(CreateShelfRequest) returns (Shelf) {
-      // Client example:
-      //   curl -d '{"theme":"Music"}' https://localhost:7125/v1/shelves
-      option (google.api.http) = {
-        post: "/v1/shelves"
-        body: "shelf"
-      };
-    }
-}
-
-
-message Shelf {
-    //int64 id = 1;
-    string theme = 1;
-}
-
-message CreateShelfRequest {
-    Shelf shelf = 1;
 }
 
 message EmptyRequest {}
