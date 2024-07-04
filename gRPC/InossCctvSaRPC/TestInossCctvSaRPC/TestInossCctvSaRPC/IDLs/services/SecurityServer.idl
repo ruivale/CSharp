@@ -1,0 +1,81 @@
+interface SecurityService
+{
+	typedef unsigned long UserId;
+	typedef struct UserProfileEntry_
+	{
+		unsigned long server;
+		unsigned long app;
+		unsigned long access;
+	} UserProfileEntry;
+	typedef sequence<UserProfileEntry> UserProfile;
+	typedef enum ErrorReason_ { user_logged,user_not_logged,user_exists,user_not_exists,
+			invalid_password,invalid_profile,operation_ok,external_error,
+			user_cannot_log_this_server,cannot_reach_prime_server,no_event_server,
+			no_event_server_operation_ok,user_cannot_log_exclusive_access } ErrorReason;
+	typedef struct UserInfo_
+	{
+		string login;
+		string username;
+		UserId uid;
+		unsigned long server;
+		string lastLogin;
+	} UserInfo;
+	typedef sequence<UserInfo> UserList;
+	typedef struct UserServer_
+	{
+		UserId uid;
+		unsigned long server;
+		string lastLogin;
+	} UserServer;
+	typedef sequence<UserServer> UserServerList;
+	typedef struct AppPermission_
+	{
+		string app;
+		string appPermission;
+	} AppPermission;
+	typedef sequence<AppPermission> AppPermissions;
+
+	exception SecurityError 
+	{ 
+		ErrorReason error; 
+		unsigned long server;
+	};
+
+	UserId BeginSession(in string login,in string password)
+		raises (SecurityError);
+	void EndSession(in UserId uid)
+		raises (SecurityError);
+
+	void AddUser(in string username,in string login,in string password,in string description,in string email,in unsigned long profile,in boolean isenabled)
+		raises (SecurityError);
+	void DeleteUser(in string login)
+		raises (SecurityError);
+	void ChangeUserProfile(in string login,in UserProfile profile)
+		raises (SecurityError);
+
+	void ListLoggedUsers(out UserList list);
+
+	// Internal
+
+//	void InfoLogin(in unsigned long reporting_server,in unsigned long user_server,in UserId uid);
+//	void DoLogin(in unsigned long user_server,in UserId uid);
+	void InfoLogin(in unsigned long reporting_server,in unsigned long user_server,in UserId uid,in string lastLogin);
+	void DoLogin(in unsigned long user_server,in UserId uid,in string lastLogin);
+	void InfoLogout(in unsigned long reporting_server,in unsigned long user_server,in UserId uid);
+	void DoLogout(in unsigned long user_server,in UserId uid);
+
+	// Backward Compatible
+
+	void GetUserProfile(in string login,out UserProfile profile)
+		raises (SecurityError);
+	void ChangeUserData(in string username,in string login,in string password,in string description,in string email,in unsigned long profile,in boolean isenabled)
+		raises (SecurityError);
+
+	// Internal
+
+	void Synch(inout UserServerList list);
+
+	// Backward Compatible
+
+	void GetVersion(out string version);
+};

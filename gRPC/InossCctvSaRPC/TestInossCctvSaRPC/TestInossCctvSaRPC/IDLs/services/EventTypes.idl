@@ -1,0 +1,13 @@
+interface EventTypes
+{
+	typedef sequence<string> DestinationName;
+	typedef struct Property_
+	{
+	        string key;
+	        string value;
+	} Property;
+	typedef sequence<Property> Properties;
+	typedef unsigned long long EventId;
+	typedef sequence<EventId> EventIdList;
+	typedef sequence<octet> SpecificInfo;
+};

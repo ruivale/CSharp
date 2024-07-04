@@ -1,0 +1,7 @@
+
+#include "stv_types.idl"
+
+interface stvCorba
+{
+	void dummy();
+};

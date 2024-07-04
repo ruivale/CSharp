@@ -1,0 +1,13 @@
+module stv {
+	module tao
+	{
+		typedef struct EventInfo_
+		{
+			long nAlarmType;
+			long nObjID;
+			long nEventParam;
+			string sStationID;
+			string sEquipID;
+		} EventInfo;
+	};
+};

@@ -1,0 +1,157 @@
+#include "stv_types.idl"
+
+module stv {
+	module tao
+	{
+		interface CConfigurationStv
+		{
+
+		/////////////////////////////////
+		//////// Agent
+			long getAgentConfigByID(in long ID, 
+				out AgentConfigStv agentCfg, 
+				out listStations theStations, 
+				out listEquipClasses theEquipClasses, 
+				out listEquipTypesConf theEquipTypes,
+				out listEquipsConf theEquipments,
+				out long lastUpdated);
+			long getAgentConfigByAddress(in string ipAddress, 
+				out AgentConfigStv agentCfg, 
+				out listStations theStations, 
+				out listEquipClasses theEquipClasses, 
+				out listEquipTypesConf theEquipTypes,
+				out listEquipsConf theEquipments,
+				out long lastUpdated);
+			long getAllStationsByAgent(in long ID, out listStations theStations);
+
+			
+		/////////////////////////////////
+		//////// Stations
+
+			long getNrOfStations();
+			long getStationByID(in long ID, out StationConfigStv Station);
+			long saveStation(in StationConfigStv Station);
+			long deleteStation(in long ID);
+
+		/////////////////////////////////
+		//////// Equipments
+
+			long getNrOfEquipments(in long StationID);
+			long getNrOfEquipmentsByType(in long Station_ID, in long EqTypeID);
+			long getEquipmentConfigByID(in long EquipmentID, out EquipmentConfigStv EqConfig);
+			long getAllEquipsConf(in long stationId, out listEquipsConf lEquips);
+			long saveEquipmentConfig(in EquipmentConfigStv EqConfig);
+			long deleteEquipmentConfig(in long EqID);
+
+		//////////////////////////
+		////////	Vid Seqs
+
+			long getNrOfVidSeqs();
+			long getVidSeqByID(in long VidSeqID, out VideoSequenceConfigStv VidSeq);
+			long getAllVidSeqs(out listVidSeqs lSeqs);
+			long addNewVidSeq(in workstationInformation logInfo, in VideoSequenceConfigStv VidSeq);
+			long saveVidSeq(in workstationInformation logInfo, in VideoSequenceConfigStv VidSeq);
+			long saveVidSeqFull(in workstationInformation logInfo, in VideoSequenceConfigStv VidSeq, in listVidSeqOpers lOpers);
+			long deleteVidSeq(in workstationInformation logInfo, in long VidSeqID);
+
+
+		/////////////////////////////////
+		//////// Video Sequence Operations
+
+			long getNrOfVidSeqOperations(in long VidSeqID);
+			long getVidSeqOperation(in long VidSeqID, in long nPos,	out VidSeqOperationConfigStv VidSeqOperation);
+			long getAllVidSeqOperations(in long vidSeqId, out listVidSeqOpers lOpers);
+			long saveVidSeqOperation(in VidSeqOperationConfigStv VidSeqOper);
+			long deleteVidSeqOperation(in long VidSeqID, in long nPos);
+
+		/////////////////////////////////
+		//////// ActionParameters
+
+
+			long getNrOfActionParameters(in long Macro, in long ActionNr);
+			long getActionParameter(in long Macro_ID, in long ActionNr, in long ParamNr, out ActionParameterConfigStv Param);
+			long getAllActionParameters(in long macroId, in long actionNr, out listActionParameters lParams);
+			long saveActionParameter(in ActionParameterConfigStv Param);
+			long deleteActionParameter(in long MacroID, in long ActionNr, in long ParamNr);
+
+		/////////////////////////////////
+		//////// Actions
+
+			long getNrOfActions(in long MacroID);
+			long getAction(in long MacroID, in long nActionNr, out ActionConfigStv Action);
+			long getAllActions(in long MacroId, out listActions lActions);
+			long deleteAction(in long MacroID, in long nActionNr);
+			long saveAction(in ActionConfigStv Action);
+			long saveActionFull(in ActionConfigStv Action, in listActionParameters lParams);
+
+		/////////////////////////////////
+		//////// Macros
+
+			long getNrOfMacros();
+			long getNrOfMacrosFromUser(in long UserID);
+			long getMacroByID(in long MacroID, out MacroConfigStv Macro);
+			long getAllMacros(out listMacros lMacros);
+			long getAllMacrosFromUser(in long userId, out listMacros lMacros);
+			long addNewMacro(in workstationInformation logInfo, in MacroConfigStv Macro);
+			long saveMacro(in workstationInformation logInfo, in MacroConfigStv Macro);
+			long saveMacroFull(in workstationInformation logInfo, in MacroConfigStv Macro, in listActions lActions, in listActionParameters lParams);
+			long deleteMacro(in workstationInformation logInfo, in long MacroID);
+
+
+		/////////////////////////////////
+		//////// Presets
+
+			long getNrOfPresets(in long CameraID);
+			long getAllPresets(in long cameraId, out listPresets presets);
+			long getAllPresetsMulti(in listEquipments equips,  out listPresets presets);
+			long getPreset(in long CameraID, in long nPresetNr, out PresetConfigStv Preset);
+			long storePreset(in PresetConfigStv Preset);
+			long deletePreset(in long CameraID, in long nPresetNr);
+
+		/////////////////////////////////
+		//////// EquipmentClasses
+
+			long getNrOfEquipmentClasses();
+			long getEquipmentClassByID(in long EqClassID, out EquipmentClassConfigStv EqClass);
+
+		/////////////////////////////////
+		//////// EquipmentTypes
+
+			long getNrOfEquipmentTypes();
+			long getEquipmentTypeByID(in long EqTypeID, out EquipmentTypeConfigStv EqType);
+			long saveEquipmentType(in EquipmentTypeConfigStv EqType);
+			long deleteEquipmentType(in long EqTypeID);
+
+
+		/////////////////////////////////
+		//////// Scheduled Actions
+
+			long saveScheduledAction(in ScheduledActionConfigStv schedAction);
+			long getAllScheduledActions(out listScheduledActionConfigStv listSchedActions);
+
+		/////////////////////////////////
+		//////// Events
+
+			long addNewEvent(in EventConfigStv event);
+			long getAllEvents(out listEventConfigStv lEvents);
+			long saveEvent(in EventConfigStv event);
+			long deleteEvent(in long eventId);
+
+
+		////////////////////////////////
+		/////// Misc functions
+			long getEquipmentStation(in long eqId);
+			
+		////////////////////////////////
+		/////// VideoMarks functions
+			// RVALE
+			long getVideoMarks(in long stationId, out listVideoMarkConfigStv listVideoMarks);
+			long getVideoMarksMulti(in listIds stations, out listVideoMarkConfigStv listVideoMarks);
+			long getMountaintVideoEquips(in VideoMarkConfigStv markEquip, out listEquipments listEquips);
+			long getAdjacentUpstreamEquipment(in long targetEq, in long targetPort,
+					out long sourceEq, out long sourcePort);
+			long getAdjacentDownstreamEquipment(in long sourceEq, in long sourcePort,
+					out long targetEq, out long targetPort);
+		};
+	};
+};

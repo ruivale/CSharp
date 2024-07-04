@@ -1,0 +1,544 @@
+///***************************************************************************
+// Filename: AgentStv.idl
+// -------------------
+//
+//   Description     :
+//   Comments        :
+//   Author          : Joao Silva - joao.silva@efacec.com
+//   Co-author       : rUI vALE - rui.vale@efacec.com
+//   Creation Date   : 
+//   Last change date: 20190131
+//   Copyright       : EFACEC
+//
+//******************************************************************************
+//  Changes description
+//      20200210
+//        - added method: 
+//                   long ptzf( long nCamId,
+//                              boolean isEnabled,
+//                              boolean isSeqStart,
+//                              boolean isAlarmMng,
+//                              long nTimeout,
+//                              long nPreset,
+//                              boolean isDueToSequenceStart);
+//
+//           This method allows for activation/deactivation of the "return to 
+//           home position" process. 
+//
+//      20190131
+//         - added the method:
+//                   long ackAlarm(in long nEquipId, 
+//                                 in listIds listAlarmIds,
+//                                 out listIds listNotAckAlarmIds)
+//
+//            Allow for alarms acknowledge given the equip identificaX and a 
+//            posible list os alarms. If the list of alarms is empty, it should 
+//            mean ALL alarms should be acknowledge. The method returns, in the 
+//            notAckAlarms list, the identificaX of the alarms which were not 
+//            correctly acknowledged.
+//
+//******************************************************************************
+
+#include "EventTypes.idl"
+#include "stv_types.idl"
+
+module stv {
+    module tao
+    {
+        interface CAgenteStv
+        {
+
+            // Generic
+            void DeliverEvent(in EventTypes::Properties properties, 
+                              in EventTypes::EventIdList relatedEventsList, 
+                              in EventTypes::SpecificInfo specificInfo);
+
+            // Agent
+            void rereadConf_agent();
+            void getConf_agent(out confStvAgente conf);
+            void setConf_agent(in confStvAgente conf);
+
+            void getVersion_agent(out string sName);
+            void getUpTime_agent(out unsigned long lTime);
+            void getHostIpInfo_agent(out string sHostname, out string sIP);
+            long getServerId_agent();
+            void setServerId_agent(in long id);
+            unsigned short getCommTimeout_agent();
+            void setCommTimeout_agent(in unsigned short commTimeout);
+            unsigned short getSyncClocks_agent();
+            void setSyncClocks_agent(in unsigned short syncClocks);
+            string getProj_agent();
+            void setProj_agent(in string sProj);
+            boolean isProj_agent(in string sProj);
+            void enableProj_agent(in string sProj, in boolean bFlag);
+            string getDebugOptions_agent();
+            void enableDebug_agent(in char chDebug, in boolean bEnable);
+            void toggleDebug_agent(in char chDebug);
+
+            short getNrOfStations_agent();
+            short getStations(out listStationDefs listStations);
+
+            long getState_agent();
+            void setState_agent(in long state);
+            long getPreviousState_agent();
+
+            long getAllEquipmentsStateByStations(in listIds lStations, 
+                                                 out listIds lEquipments, 
+                                                 out listIds lEquipStates);
+            long getAllEquipmentsState(in listIds lEquipments, 
+                                       out listIds lEquipStates);
+
+            long getServerCommUp_agent();
+            boolean isSyncOnMinute_agent();
+
+            long startup_agent();
+            long shutdown_agent();
+            long initialize_agent();
+            long terminate_agent();
+            long reset_agent();
+            long updateconfig_agent();
+            long syncclocks_agent();
+
+            long sendStateToServer_agent();
+            boolean timeoutServerComm_agent();
+
+            void getAlarms(out listStvAlarms pendingAlarms);
+
+            // Station
+            long getID_station(in long stationId);
+            string getName_station(in long stationId);
+            long getState_station(in long stationId);
+            void setState_station(in long stationId, in long state);
+            long getPreviousState_station(in long stationId);
+            short getNrOfEquipments_station(in long stationId);
+            short getNrOfEquipmentsByClass_station(in long stationId, 
+                                                   in long classEq);
+            short getNrOfEquipmentsByType_station(in long stationId, 
+                                                  in long typeEq);
+            short getEquipments_station(in long stationId, 
+                                        out listEquipDefs listEquips);
+            short getEquipmentsByClass_station(in long stationId, 
+                                               out listEquipDefs listEquips, 
+                                               in long classEq);
+            short getEquipmentsByType_station(in long stationId, 
+                                              out listEquipDefs listEquips, 
+                                              in long typeEq);
+            long getEquipmentByIndex_station(in long stationId, 
+                                             out defStvEquip defEquip, 
+                                             in short idx);
+            long getEquipmentByID_station(in long stationId, 
+                                          out defStvEquip defEquip, 
+                                          in long id);
+            long getEquipmentByClass_station(in long stationId, 
+                                             out defStvEquip defEquip, 
+                                             in long classEq, 
+                                             in short idx);
+            long getEquipmentByType_station(in long stationId, 
+                                            out defStvEquip defEquip, 
+                                            in long typeEq, 
+                                            in short idx);
+            boolean isSyncOnMinute_station(in long stationId);
+
+            long reset_station(in long stationId);
+            long updateconfig_station(in long stationId);
+
+            long sendStateToServer_station(in long stationId);
+
+            // Equipment
+            string getName(in long idEquip);
+            long getClass(in long idEquip);
+            long getType(in long idEquip);
+            boolean isVideoEquipment(in long idEquip);
+
+            string getClassName(in long idEquip);
+            string getTypeName(in long idEquip);
+            void getDriver(in long idEquip, 
+                           out string sDriver, 
+                           out string sVersion);
+
+            boolean isEnabled(in long idEquip);
+            void enable(in long idEquip, in boolean bValue);
+            long getState(in long idEquip);
+            void setState(in long idEquip, in long state);
+            long getSpecificState(in long idEquip);
+            void setSpecificState(in long idEquip, in long state);
+            long getPreviousState(in long idEquip);
+            long getPreviousSpecificState(in long idEquip);
+
+            string getCommunicationSettings(in long idEquip);
+            void setCommunicationSettings(in long idEquip, 
+                                          in string sComms);
+            string getGenericConfiguration(in long idEquip);
+            void setGenericConfiguration(in long idEquip, 
+                                         in string sConfig);
+            string getSpecificConfiguration(in long idEquip);
+            void setSpecificConfiguration(in long idEquip, 
+                                          in string sConfig);
+            string getGenConfigParam(in long idEquip, in string sToken);
+            void setGenConfigParam(in long idEquip, 
+                                   in string sToken, 
+                                   in string sParam);
+            string getSpecConfigParam(in long idEquip, in string sToken);
+            void setSpecConfigParam(in long idEquip, 
+                                    in string sToken, 
+                                    in string sParam);
+
+            long configure(in long idEquip);
+            long reset(in long idEquip);
+            long updateconfig(in long idEquip);
+
+            long raw(in long idEquip, 
+                     in string pData, 
+                     in unsigned short nDataSize);
+
+
+            // VideoEquipment
+            boolean isAllowedInSequence(in long idEquip);
+            void allowInSequence(in long idEquip, in boolean bAllow);
+            long getNrOfVideoInPorts(in long idEquip);
+            void setNrOfVideoInPorts(in long idEquip, in long nInPorts);
+            long getNrOfVideoOutPorts(in long idEquip);
+            void setNrOfVideoOutPorts(in long idEquip, in long nOutPorts);
+
+            long switchVideoEquipment(in long idEquip, 
+                                      in long nChIn, 
+                                      in long nChOut, 
+                                      in boolean bAutomatic);
+            long switchVideoEquipmentEx2(in long idEquip, 
+                                         in long nChIn, 
+                                         in long nChOut, 
+                                         in short iParam, 
+                                         in boolean bAutomatic);
+            long switchVideoEquipmentEx3(in long idEquip, 
+                                         in string sChIn, 
+                                         in long nChOut, 
+                                         in boolean bAutomatic);
+            long switchVideoEquipmentEx4(in long idEquip,  
+                                         in long nChIn, 
+                                         in long nChOut, 
+                                         in string sSourceName, 
+                                         in long nSourceId, 
+                                         in boolean bAutomatic);
+            long switchVideoEquipmentEx5(in long idEquip, 
+                                         in string sChIn, 
+                                         in long nChOut, 
+                                         in string sSourceName, 
+                                         in long nSourceId, 
+                                         in boolean bAutomatic);
+            long switchVideoEquipmentEx(in listVideoSwitchParams switchesList, 
+                                        out listResults results);
+            long disconnectVideoEquipment (in long idEquip, 
+                                           in long nChIn, 
+                                           in long nChOut);
+            long disconnectVideoEquipmentEx (in listEquipSwitchParams equipsToSwitch, 
+                                             out listResults results);
+            long setChannelLabel(in long idEquip, 
+                                 in long nChannel, 
+                                 in string sLabel);
+            long syncClock(in long idEquip);
+
+
+            // NonVideoEquipment
+            void dummy();
+
+
+            // Camera
+            octet hasPTZF(in long idEquip);
+            boolean hasAutofocus(in long idEquip);
+            boolean hasAutopan(in long idEquip);
+            boolean hasWiper(in long idEquip);
+            boolean hasWasher(in long idEquip);
+            short getNrOfAux(in long idEquip);
+            boolean isHomeTimeoutEnable(in long idEquip);
+            void enableHomeTimeout(in long idEquip, in boolean bEnable);
+            unsigned long getHomeTimeout(in long idEquip);
+            boolean hasPresets(in long idEquip);
+            short getNrOfPresets(in long idEquip);
+
+            long ptzfStart(in long idEquip, 
+                           in octet byMovement, 
+                           in unsigned short nTimeout);
+            long ptzfContinue(in long idEquip, in octet byMovement);
+            long ptzfStop(in long idEquip, in octet byMovement);
+
+            long ptzfStoreHome(in long idEquip);
+            long ptzfStoreHomeex(in long idEquip, 
+                                 in long lPan, 
+                                 in long lTilt, 
+                                 in long lZoom, 
+                                 in long lFocus);
+            long ptzfGetHome(in long idEquip);
+            long ptzfGetHomeEx(in long idEquip, 
+                               out long lPan, 
+                               out long lTilt, 
+                               out long lZoom, 
+                               out long lFocus);
+            long ptzfActivateHome(in long idEquip);
+
+            long ptzfStorePreset(in long idEquip, in short nPreset);
+            long ptzfStorePresetEx(in long idEquip, 
+                                   in short nPreset, 
+                                   in long lPan, 
+                                   in long lTilt, 
+                                   in long lZoom, 
+                                   in long lFocus);
+            long ptzfGetPreset(in long idEquip, in short nPreset);
+            long ptzfGetPresetEx(in long idEquip, 
+                                 in short nPreset, 
+                                 out long lPan, 
+                                 out long lTilt, 
+                                 out long lZoom, 
+                                 out long lFocus);
+            long ptzfDeletePreset(in long idEquip, in short nPreset);
+            long ptzfActivatePreset(in long idEquip, in short nPreset);
+
+            long getPTZFPos(in long idEquip);
+            long getPTZFPosEx(in long idEquip, 
+                              out long lPan, 
+                              out long lTilt, 
+                              out long lZoom, 
+                              out long lFocus);
+            long setPTZFPos(in long idEquip, 
+                            in long lPan, 
+                            in long lTilt, 
+                            in long lZoom, 
+                            in long lFocus);
+
+            long setAutofocus(in long idEquip, in boolean bEnable);
+            long toggleAutopan(in long idEquip);
+            long toggleWasher(in long idEquip);
+            long toggleWiper(in long idEquip, 
+                             in boolean bEnable, 
+                             in unsigned long lTimeout);
+            long activateAux(in long idEquip, 
+                             in octet byAuxMask, 
+                             in octet byActivationMask);
+            long toggleAux(in long idEquip, 
+                           in octet byAuxMask, 
+                           in octet byToggleMask);
+
+
+            // Monitor
+
+
+            // Videorecorder
+            void getFrameRates(in long idEquip, out listFrameRates theList);
+            short getNrOfFrameRates(in long idEquip);
+            short getFrameRateSelected(in long idEquip);
+            unsigned long getCounter(in long idEquip);
+
+            long playback(in long idEquip);
+            long record(in long idEquip, 
+                        in long idSource, 
+                        in unsigned long lDuration, 
+                        out unsigned long handle);
+            long recordEx(in long idEquip, 
+                          in long idSource, 
+                          in unsigned long lDuration, 
+                          in long nQuality, 
+                          out unsigned long handle);
+            long getRecordingQuality(in long vrId, inout listStates quality);
+            long stop(in long idEquip);
+            long pause(in long idEquip);
+            long fastForward(in long idEquip);
+            long rewind(in long idEquip);
+            long reversePlay(in long idEquip);
+            long fieldForward(in long idEquip);
+            long fieldReverse(in long idEquip);
+            long setFrameRate(in long idEquip, in short nRate);
+            long dateTimeSearch(in long idEquip, in long tTime);
+            long resetCounter(in long idEquip);
+            long eject(in long idEquip);
+
+
+            // Recordings search
+            long getRecordings(in listIds EqId, 
+                               in short searchType, 
+                               out listRecordingsStv lRecs);
+            long getRecordingsInTimeSpan(in listIds EqId, 
+                                         in long dStart, 
+                                         in long dEnd, 
+                                         in short searchType, 
+                                         out listRecordingsStv lRecs);
+            long getRecordingsBySource(in listIds EqId, 
+                                       in string sSource, 
+                                       in short searchType, 
+                                       out listRecordingsStv lRecs);
+            long getRecordingsBySourceInTimeSpan(in listIds EqId, 
+                                                 in string sSource, 
+                                                 in long dStart, 
+                                                 in long dEnd, 
+                                                 in short searchType, 
+                                                 out listRecordingsStv lRecs);
+            long getRecordingsBySourcesInTimeSpan(in listIds EqId, 
+                                                  in listString listSources, 
+                                                  in long dStart, 
+                                                  in long dEnd, 
+                                                  in short searchType, 
+                                                  out listRecordingsStv lRecs);
+
+
+            // Replay operations
+            long playbackReplayEx(in long recorderId, 
+                                  in string sSource, 
+                                  in long iFPS, 
+                                  in long tStart, 
+                                  in long tEnd, 
+                                  out long handle, 
+                                  out string sReplayInfo);
+            long syncPlaybackReplay(in long recorderId, 
+                                    in listString sSources,
+                                    in long tStart, 
+                                    in long tEnd, 
+                                    out long handle);
+            long playbackReplay(in long recorderId, in long handle);
+            long stopReplay(in long recorderId, in long handle);
+            long pauseReplay(in long recorderId, in long handle);
+            long reversePlayReplay(in long recorderId, in long handle);
+            long fastForwardReplay(in long recorderId, in long handle);
+            long rewindReplay(in long recorderId, in long handle);
+            long fieldForwardReplay(in long recorderId, in long handle);
+            long fieldReverseReplay(in long recorderId, in long handle);
+            long setReplaySpeed(in long recorderId, in long handle, in long speed);
+            long getReplaySpeed(in long recorderId, in long handle, out long speed);
+            long setReplayPos(in long recorderId, in long handle, in long positionTime);
+            long getReplayPos(in long recorderId, in long handle, out long positionTime);
+
+            // Export to file
+            long exportToFile(in long recorderId, 
+                              in string sSource, 
+                              in long iFPS,
+                              in long tStart, 
+                              in long tEnd, 
+                              in string sFilename);
+
+            // Current replays
+            long getCurrentReplays(in long recorderId, out listReplaysStv lReplays);
+
+            // Mark a recording as alarm
+            long alarmRecording(in long recorderId, 
+                                in string recordingSource, 
+                                in string alarmDescription, 
+                                in long tStart, 
+                                in long tEnd);
+            long alarmRecordingEx(in long recorderId, 
+                                  in string recordingSource, 
+                                  in string alarmDescription, 
+                                  in long tStart, 
+                                  in long tEnd, 
+                                  in long tAlarm);
+
+
+
+
+            // Vidcap
+
+
+            // Multiplexer
+            short getNumberOfPages(in long idEquip, in short modeMpx);
+
+            long multiplexEx(in long idEquip, in short modeMpx, in listChannel listIns);
+            long multiplex(in long idEquip, in short modeMpx, in short nPage);
+            long setInQuad(in long idEquip, in short nPage);
+            long fullscreen(in long idEquip, in short nChannel);
+            long cycle(in long idEquip);
+            long freeze(in long idEquip);
+            long vcr(in long idEquip);
+
+
+            // Matrix
+            long switchChannels(in long idEquip, in long nChIn, in long nChOut);
+            long configOverlay(in long idEquip, in long nOutChannel, in octet byConfig);
+
+
+            // Codec
+            long getCodecType(in long idEquip);
+            boolean isPersistent(in long idEquip);
+
+            long configConnection(in long idEquip);
+            long setVideoInput(in long idEquip, in long nVideoPort);
+            long connect(in long idEquip, in string sAddress);
+            long disconnect(in long idEquip);
+
+
+            // Sensor
+            long getSensorType(in long idEquip);
+            void setSensorType(in long idEquip, in long typeSensor);
+            short getNrOfInputs(in long idEquip);
+            void setNrOfInputs(in long idEquip, in short nInputs);
+            octet getInputMask(in long idEquip);
+            void setInputMask(in long idEquip, in octet byMask);
+
+            long readInput(in long idEquip);
+
+
+            // Actuator
+            short getOutputsNumber(in long idEquip);
+            void setOutputsNumber(in long idEquip, in short nOuts);
+            octet getOutputMask(in long idEquip);
+            void setOutputMask(in long idEquip, in octet byMask);
+            octet getDefaultOutput(in long idEquip);
+            void setDefaultOutput(in long idEquip, in octet byOut);
+            octet getActuationOutput(in long idEquip);
+            void setActuationOutput(in long idEquip, in octet byOut);
+
+            long getOutput(in long idEquip);
+            long getOutputCurrentMask(in long idEquip, out octet byOutput);
+            long setOutput(in long idEquip, in octet byOutput, in unsigned long lDuration);
+            long actuate(in long idEquip, in unsigned long lDuration);
+            long actuateMask(in long idEquip, in octet byOutput, in unsigned long lDuration);
+            long deactuate(in long idEquip);
+            long deactuateMask(in long idEquip, in octet byOutput);
+
+
+            // Clock
+            long getSync(in long idEquip);
+
+
+            // Watchdog
+            unsigned long getTimeout(in long idEquip);
+            void setTimeout(in long idEquip, in unsigned long lTimeout);
+
+            long shutdown(in long idEquip, in unsigned long lSec);
+            long alive(in long idEquip);
+            long enableWatchdog(in long idEquip);
+            long disableWatchdog(in long idEquip);
+
+
+            // Pctrl
+
+            // Recordings Protection
+            long actionAlarm( in long recorderId, in long sourceId, in string sourceName, in long tAlarm, in long tAlarmStart, in long tAlarmEnd, in long tProtectStart, in long tProtectEnd, in string alarmDescription);
+            long protect(in long recorderId, in long sourceId, in string sourceName, in long tStart, in long tEnd);
+            long protectMulti(inout listProtections protections);
+            long unprotect(in long recorderId, in long sourceId, in string sourceName, in long tStart, in long tEnd, in long expirationDate);
+            long unprotectMulti(in listProtections protections, in long expirationDate);
+
+
+
+            /// Allow for alarms acknowledge given the equip identificaX and a posible list os alarms.
+            /// If the list of alarms is empty, it should mean ALL alarms should be acknowledge.
+            /// the method returns, in the notAckAlarms list, the identificaX os the alarms 
+            /// which were not correctly acknowledged.
+            long ackAlarm(in long nEquipId, 
+                          in listIds listAlarmIds, 
+                          out listIds listNotAckAlarmIds);
+
+
+            ///
+            /// Method allowing the "return to home position" feature, after some timeout, for
+            /// mobile cameras.
+            ///
+            /// This method allows for activation/deactivation of the "return to home position" process. 
+            long ptzf(in long nCamId,
+                      in boolean isEnabled,
+                      in boolean isSeqStart,
+                      in boolean isAlarmStart,
+                      in long nTimeout,
+                      in long nPreset,
+                      in boolean isDueToSequenceStart);
+
+        };
+    };
+};
+

@@ -1,0 +1,101 @@
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Sample from:
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
+//      https://www.infoq.com/articles/dotnet-grpc-json-transcoding/
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-binding
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-openapi?view=aspnetcore-8.0
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/aspnetcore?view=aspnetcore-8.0
+//      https://cloud.google.com/endpoints/docs/grpc/transcoding
+//      https://cloud.google.com/apis/design/naming_convention
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+syntax = "proto3";
+
+option csharp_namespace = "Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+import "protos/cctv_enums.proto";
+
+package cctv;
+
+
+
+service Operation {
+	// Obtain the Operation service version - simple version
+    // Like: 
+    //      curl https://localhost:7125/v1/simpleversion
+	rpc GetSimpleVersion(EmptyRequest) returns (VersionsReply){
+        option (google.api.http) = {
+            get: "/v1/simpleversion"
+        };
+    }
+
+	// Obtain the Operation service version
+    // Like: 
+    //      curl https://localhost:7125/v1/versions/6/666/SixSixSix
+	//rpc GetVersions(VersionRequestMsg) returns (VersionsReply){
+    //    option (google.api.http) = {
+    //        get: "/v1/versions/{id}/{version.id}/{version.desc}"
+    //    };
+    //}
+
+	// Obtain the Operation service version
+    // Like: 
+    //      curl https://localhost:7125/v1/versions/7?version.id=777&version.desc=SevenSevenSeven
+	rpc GetVersionsWithNoBound(VersionRequestMsg) returns (VersionsReply){
+        option (google.api.http) = {
+            get: "/v1/versions/{id}"
+        };
+    }
+
+	// Obtain the Operation service version
+    // Like: 
+    //      
+	rpc GetVersionsThroughPost(VersionRequestMsg) returns (VersionsReply){
+        option (google.api.http) = {
+            post: "/v1/versionsPost"
+            body: "versions"
+        };
+    }
+
+}
+
+message EmptyRequest {}
+
+
+message VersionRequest {
+    google.protobuf.Int64Value id = 1;
+    google.protobuf.StringValue desc = 2;
+}
+
+message VersionRequestMsg {
+    google.protobuf.Int64Value id = 1;
+    repeated VersionRequest versions = 2;
+} 
+
+message VersionBaseMsg {
+	// The version major value.
+	int64 version = 1;
+	// The version major value.
+	int64 subversion = 2;
+	// The version major value.
+	int64 revision = 3;
+	// The version major value.
+	int64 build = 4;
+	// A description of the returned value, if needed/wanted (can be left empty).
+	string desc = 5;
+}
+
+message VersionsReply {
+    //
+    string desc = 1;
+	//
+    repeated VersionBaseMsg versions = 2;
+}
+

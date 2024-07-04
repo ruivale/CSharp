@@ -1,88 +1,643 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Sample from:
-//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
-//
-//
-
+/*****************************
 syntax = "proto3";
 
-option csharp_namespace = "Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation";
-import "google/api/annotations.proto";
+//import "cctv_enums.proto";
+
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation";
 
 package cctv;
 
 
 
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV operation interface
+//
+//
+service Configuration {
+
+	//
+	// Sequences interfaces 
+	//
+	// Obtain ALL configured sequences in the system.
+	// If the given MsgListIds is empty, or null, this method returns ALL sequences otherwise, 
+	// it filters the result by the MsgListIds configured workstation and/or sequences identification.
+	rpc GetAllSequences(MsgListIds) returns (MsgSequencesReply);
+
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV operation interface
+//
+//
 service Operation {
-	// Obtain the Operation service version - simple version
-    // Like: 
-    //      curl https://localhost:7125/v1/simpleversion
-	rpc GetSimpleVersion(EmptyRequest) returns (VersionsReply){
-        option (google.api.http) = {
-            get: "/v1/simpleversion"
-        };
-    }
+
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Generic operations
+	//
 
 	// Obtain the Operation service version
-    // Like: 
-    //      curl https://localhost:7125/v1/versions/6/666/SixSixSix
-	//rpc GetVersions(VersionRequestMsg) returns (VersionsReply){
-    //    option (google.api.http) = {
-    //        get: "/v1/versions/{id}/{version.id}/{version.desc}"
-    //    };
-    //}
+	rpc GetVersion(MsgVersions) returns (MsgVersionsReply);
 
-	// Obtain the Operation service version
-    // Like: 
-    //      curl https://localhost:7125/v1/versions/7?version.id=777&version.desc=SevenSevenSeven
-	rpc GetVersionsWithNoBound(VersionRequestMsg) returns (VersionsReply){
-        option (google.api.http) = {
-            get: "/v1/versions/{id}"
-        };
-    }
+	// Obtains the given targets connection information, if any.
+	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetConnInfoInTargetsReply);
+	
+	// Setting connections between sources equipments, normally cameras, and targets, normally monitors.
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	//       is OK, there's' no need to use the specific target response item.
+	rpc ConnectInTargets(MsgConnectInTargets) returns (MsgMultipleRequestsReply);
 
-	// Obtain the Operation service version
-    // Like: 
-    //      
-	rpc GetVersionsThroughPost(VersionRequestMsg) returns (VersionsReply){
-        option (google.api.http) = {
-            post: "/v1/versionsPost"
-            body: "versions"
-        };
-    }
+	// Disconnects all the given targets. Returns a list of results for each given target.
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	//       is OK, there's' no need to use the specific target response item.
+	rpc DisconnectTargets(MsgListIds) returns (MsgMultipleRequestsReply);
+
+    //
+    // Obtain ALL active alarms
+    rpc GetAlarms(MsgWorkstationInformation) returns (MsgAlarmsReply);
+
+    // 
+    // Lock/Unlock equipments, normally cameras. The r
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	//       is OK, there's' no need to use the specific lock/unlock response item.
+    // 
+    //  Param:
+    //      message MsgLockUnlock {
+	//          // The list of identifications, normally from cameras.
+	//          MsgListIds ids = 1;
+    //          // The lock or unlock Operation
+    //          LockUnlockType LockUnlock = 2;
+    //      } 
+    //
+    //  Returns:
+    //      message MsgMultipleRequestsReply {
+	//          // Global reply for the request. If this is OK, then ALL requests were successful. 
+	//          MsgReply globalReply = 1;
+	//          // The list of IDs and request status of each one of them. 
+	//          repeated MsgNumericReply specificReplies = 2;
+    //      }
+    rpc LockUnlockEquipments(MsgLockUnlockEquips) returns (MsgMultipleRequestsReply);
+
+    // 
+    // Get ALL locked equipments, normally cameras.
+    rpc GetLockedEquipments(MsgWorkstationInformation) returns (MsgNumericsReply);
+
+    //
+    // From the given list of stations, obtain ALL its equipments state.
+    //rpc GetAllEquipmentsState() returns ();
+
+    //
+    // From the given list of stations, obtain ALL its equipments specific state.
+    //rpc GetAllEquipmentsSpecificState() returns ();
+
+
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Sequences interfaces 
+	//
+
+	// Starting sequences in the targets, normally monitors, all given in the MsgStartSeqsInTargets message.
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+    //       is OK, there's' no need to use the specific target response item.
+	rpc StartSequencesInTargets(MsgStartSeqsInTargets) returns (MsgMultipleRequestsReply);
+
+	// Executes sequences operations: stop, pause, restart and steps forward and backward.
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+    //       is OK, there's' no need to use the specific target response item.
+	rpc ExecSequencesOperation(MsgSequencesOperation) returns (MsgMultipleRequestsReply);
+
+	// Obtain all running sequences. 
+	// The request can be filter by the given WorkStation, targets, sequences handles, etc, 
+    // configured in the MsgRunningSequences parameter, if any.
+	// Can be used to obtain:
+	//		- all running sequences, if the given parameter is unset; 
+	//		- sequences states; 
+	//		- which, if any, sequences are active in the given targets;
+	//		- etc.
+	rpc GetRunningSequences(MsgRunningSequences) returns (MsgRunningSequencesReply);
+
+
+
+	/////////////////////////////////////////////////////////////////////////////
+	// Macros interfaces 
+	//
+
+	// Executes macros operations, i.e., start or stop.
+	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+    //       is OK, there's' no need to use the specific macro response item.
+	rpc ExecMacrosOperation(MsgMacrosOperation) returns (MsgMultipleRequestsReply);
 
 }
 
-message EmptyRequest {}
 
 
-message VersionRequest {
-    int64 id = 1;
-    string desc = 2;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV enums
+//
+// NOTE: since we're dealing w/ OPEN enums, the first element must be zero (0);
+//
+
+// MsgVersionMod
+// Normally used when version are requested
+enum MsgVersionMod {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	VERMOD_ALL = 0;
+	VERMOD_GRPC = 1;
+	VERMOD_SA = 2;
+	VERMOD_AGENT = 3;
 }
 
-message VersionRequestMsg {
-    int64 id = 1;
-    repeated VersionRequest versions = 2;
-} 
+// SourceObj
+// Normally used when target equips connections information is requested.
+enum SourceObj {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SRCOBJ_INVALID = 0;
+	SRCOBJ_EQUIP = 1;
+	SRCOBJ_SEQUENCE = 2;
+	SRCOBJ_REPLAY = 3;
+	SRCOBJ_RECORDING = 4;
+}
 
-message VersionBaseMsg {
-	// The version major value.
+// SequenceOper
+// Sequence operations used, only after a sequence as been started, to execute an operation.
+enum SequenceOper {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SEQOPE_STOP = 0;
+	SEQOPE_PAUSE = 1;
+	SEQOPE_RESTART = 2;
+	SEQOPE_STEP_PREVIOUS = 3;
+	SEQOPE_STEP_NEXT = 4;
+}
+
+// SequenceState
+// Sequences state type signalling the running sequence actual state.
+enum SequenceState {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SEQSTA_NOT_STARTED = 0;
+	SEQSTA_STOP = 1;
+	SEQSTA_PLAY = 2;
+	SEQSTA_PAUSE = 3;
+}
+
+// SequenceMode
+// Sequences mode, i.e., ciclic or no ciclic.
+enum SequenceMode {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	SEQMOD_UNDEF = 0;
+	SEQMOD_CICLIC = 1;
+	SEQMOD_NO_CICLIC = 2;
+}
+
+// MacroOper
+// Macro operation
+enum MacroOper {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+    MACOPE_START = 0;
+    MACOPE_STOP = 1;
+}
+
+// ReplyValue
+// All possible reply values
+enum ReplyValue {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+	R_OK = 0;
+    R_ERROR = 1;
+    R_NOTIMPLEMENTED = 2;
+    R_NOTSUPPORTED = 3;
+    R_INVALIDPARAMETER = 4;
+    R_INVALIDEQUIPMENT = 5;
+    R_CONFFILE_FAILOPEN = 6;
+    R_IPC_CREATION = 7;
+    R_IPC_COMMFAIL = 8;
+    R_CORBA_EXCEPTION = 9;
+    R_DB_ERROR = 10;
+    R_DB_NODATABASE = 11;
+    R_DB_CONNECTIONTIMEDOUT = 12;
+    R_DB_NODATAFOUND = 13;
+    R_EQUIP_INITIALIZING = 14;
+    R_EQUIP_TERMINATING = 15;
+    R_EQUIP_RESETING = 16;
+    R_EQUIP_NOTINIT = 17;
+    R_EQUIP_ALREADYINIT = 18;
+    R_EQUIP_INVALIDSTATE = 19;
+    R_EQUIP_NOSTATION = 20;
+    R_EQUIP_LOCKED = 21;
+    R_EQUIP_PROTOUNKNOWN = 22;
+    R_EQUIP_PROTONOPROTOCOL = 23;
+    R_EQUIP_PROTOTRYTIMEOUT = 24;
+    R_EQUIP_PROTOSENDFAIL = 25;
+    R_EQUIP_PROTOFAIL = 26;
+    R_EQUIP_PROTOACK = 27;
+    R_EQUIP_PROTOACKLASTMSG = 28;
+    R_EQUIP_EQDATAUNKNOWN = 29;
+    R_EQUIP_EQDATAINCOMPLETE = 30;
+    R_EQUIP_EQDATANOTOK = 31;
+    R_EQUIP_EQDATAOK = 32;
+    R_EQUIP_ANSWERINVALID = 33;
+    R_EQUIP_ANSWERINCOMPLETE = 34;
+    R_EQUIP_ANSWERNOTOK = 35;
+    R_EQUIP_ANSWEROK = 36;
+    R_EQUIP_ANSWERCOMMERROR = 37;
+    R_EQUIP_CAM_INVALIDPRESET = 38;
+    R_EQUIP_MPX_INVALIDCHANNEL = 39;
+    R_EQUIP_MPX_INVALIDPAGE = 40;
+    R_EQUIP_MATRIX_INVALIDCHANNELIN = 41;
+    R_EQUIP_MATRIX_INVALIDCHANNELOUT = 42;
+    R_VC_SERVERERROR = 43;
+    R_VC_PATHBROKEN = 44;
+    R_VC_PATHEMPTY = 45;
+    R_VC_PATHBOUNDERROR = 46;
+    R_VC_REFERENCEERROR = 47;
+    R_VC_OUTOFMEMORY = 48;
+    R_VC_STATUSERROR = 49;
+    R_VC_PATHNOTFOUND = 50;
+    R_VC_SOURCEERROR = 51;
+    R_VC_TARGETERROR = 52;
+    R_VC_UNKNOWNERROR = 53;
+    R_SEQ_ERROR = 54;
+    R_SEQ_INVALIDSEQID = 55;
+    R_SEQ_NOTAVALIDSEQUENCE = 56;
+    R_SEQ_INVALIDTARGET = 57;
+    R_SEQ_COULDNOTSTART = 58;
+    R_SEQ_ALREADYPLAYING = 59;
+    R_SEQ_ALREADYPAUSED = 60;
+    R_SEQ_NOTPLAYING = 61;
+    R_SEQ_UNDEFSTATE = 62;
+    R_MACRO_ERROR = 63;
+    R_MACRO_COULDNOTSTART = 64;
+    R_MACRO_NOTRUNNING = 65;
+    R_SCHED_INITERR = 66;
+    R_SCHED_SPAWNERR = 67;
+    R_EQUIPLOCK_INSUFICIENTPRIVILEGES = 68;
+    R_EQUIPLOCK_ALREADYLOCKED = 69;
+    R_STATIONUNAVAILABLE = 70;
+}
+
+// AlarmType
+// All alarm types
+enum AlarmType {
+    ALRTYP_UNDEFINED = 0;
+    ALRTYP_DBCOMMFAIL = 1;
+    ALRTYP_SACOMMFAIL = 2;
+    ALRTYP_SASTATECHANGE = 3;
+    ALRTYP_SAINITIALIZE = 4;
+    ALRTYP_SATERMINATE = 5;
+    ALRTYP_SESSIONBEGIN = 6;
+    ALRTYP_SESSIONEND = 7;
+    ALRTYP_OBJREFERROR = 8;
+    ALRTYP_VIDEOCONNECTERROR = 9;
+    ALRTYP_VIDEOSOURCEINVALID = 10;
+    ALRTYP_VIDEOTARGETINVALID = 11;
+    ALRTYP_VIDSEQSTATECHANGE = 12;
+    ALRTYP_MAXSEQUENCES = 13;
+    ALRTYP_MACROSTATECHANGE = 14;
+    ALRTYP_SCHEDULEDACTIONEXECUTED = 15;
+    ALRTYP_GUICOMMFAIL = 16;
+    ALRTYP_STATIONCOMMFAIL = 17;
+    ALRTYP_STATIONSTATECHANGE = 18;
+    ALRTYP_EQUIPCOMMFAIL = 19;
+    ALRTYP_EQUIPSTATECHANGED = 20;
+    ALRTYP_EQUIPSPECIFICSTATECHANGED = 21;
+    ALRTYP_EQUIPVIDEOINFAIL = 22;
+    ALRTYP_EQUIPVIDEOOUTFAIL = 23;
+    ALRTYP_IOACTIVE = 24;
+    ALRTYP_CLOCKSYNCARRIVED = 25;
+    ALRTYP_EQUIPVIDEOINTAMPER = 26;
+    ALRTYP_EQUIPMOTIONDETECTED = 27;
+    ALRTYP_VRNOSPACELEFT = 28;
+    ALRTYP_VRRECORDFAILURE = 29;
+    ALRTYP_VIDSEQADDED = 30;
+    ALRTYP_VIDSEQREMOVED = 31;
+    ALRTYP_VIDSEQCHANGE = 32;
+    ALRTYP_MACROADDED = 33;
+    ALRTYP_MACROREMOVED = 34;
+    ALRTYP_MACROCHANGE = 35;
+    ALRTYP_AGENTCOMMFAIL = 36;
+    ALRTYP_EQUIPLOCKFAIL = 37;
+    ALRTYP_RECQUALITYCHANGE = 38;
+    ALRTYP_MONITORGROUPCHANGED = 39;
+    ALRTYP_AUTOVIDEOCONNECTERROR = 40;
+    ALRTYP_USERALARM = 41;
+    ALRTYP_REPLAYSTOPED = 42;
+    ALRTYP_HQRECQUOTAEXCEEDED = 43;
+}
+
+//
+// Lock/Unlock equipments 
+enum LockUnlockType {
+	// since we're dealing w/ OPEN enums, the first element must be zero (0);
+    LCK_LOCK = 0;
+    LCK_UNLOCK = 1;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV messages
+//
+//
+
+//
+// THE empty message
+message MsgEmpty {} 
+
+//
+// Generic numeric reply
+message MsgReply {
+	// The numeric value to return to the caller.
+	ReplyValue replyValue = 1;
+	// A description of the returned value, if needed/wanted (can be left empty).
+	string desc = 2;
+}
+
+//
+// Generic numeric message
+message MsgNumeric {
+	// The numeric value.
+	int64 value = 1;
+}
+
+//
+// Generic numeric message
+message MsgNumericReply {
+	// The numeric value.
+	MsgReply reply = 1;
+	// The 
+	int64 id = 2;
+}
+
+//
+// Generic multiple numeric message
+message MsgNumericsReply {
+	// The numeric value.
+	MsgReply reply = 1;
+	// The 
+	repeated int64 ids = 2;
+}
+
+//
+// Generic version reply
+message MsgVersionReply {
+	// The version value.
 	int64 version = 1;
-	// The version major value.
-	int64 subversion = 2;
-	// The version major value.
+	// The subversion value.
+	int64 subVersion = 2;
+	// The revision value.
 	int64 revision = 3;
-	// The version major value.
+	// The build value.
 	int64 build = 4;
 	// A description of the returned value, if needed/wanted (can be left empty).
 	string desc = 5;
+    // The module.
+    MsgVersionMod versionMod = 6;
 }
 
-message VersionsReply {
-    //
-    string desc = 1;
+//
+// Generic multiple versions reply
+message MsgVersionsReply {
+    // The requested modules versions.
+    repeated MsgVersionReply versions = 1;
+}
+
+//
+// The current WorkStation information. Normally used by the auditing system.
+message MsgWorkstationInformation {
+	// The user name of the logged user, i.e., the user login.
+	string userName = 1;
+	// The workstation identification.
+	int64 workStationId = 2;
+}
+
+//
+// Message used when version are requested.
+message MsgVersions {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+    // The module requested.
+    MsgVersionMod versionMod = 2;
+}
+
+// Basic message holder for connections, i.e., only the source and target data. 
+message MsgConnectionInfo {
+	// The source, normally a camera, identification but could also be a sequence id...
+	int64 sourceId = 1;
+	// The target equipment, normally a monitor, identification.
+	int64 targetId = 2;
+}
+
+// Set source in target connection attempts data.
+message MsgConnectInTarget {
+	// The basic, i.e. source & target, data.
+	MsgConnectionInfo connection = 1;
+	// The source equipment port (can be left without a value, i.e. 0).
+	int64 sourcePort = 2;
+	// The target equipment port (can be left without a value, i.e. 0).
+	int64 targetPort = 3;
+	// Used, if needed to set the address where to connect.
+	string address = 4;
+}
+
+//
+// Struct used while setting connections between sources equipments, normally cameras
+// and targets, normally monitors.
+message MsgConnectInTargets {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
 	//
-    repeated VersionBaseMsg versions = 2;
+	repeated MsgConnectInTarget connectInTarget = 2;
 }
 
+//
+// Message used when a list of IDs is needed.
+message MsgListIds {
+	// The workstation information, if needed.
+	MsgWorkstationInformation workStationInfo = 1;
+	// Items Ids, whatever tey mean, i.e., sources equipments, targets equipments, 
+    // sequences ids, active sequences handles, etc.
+	repeated int64 ids = 2;
+}
+
+//
+// Message used while obtaining targets, normally monitors, connection info. 
+// This is not directly used by the Operation service.
+message MsgGetConnInfoInTarget {
+	// The target identification.
+	int64 targetId = 1;
+	// The type of active source in a target.
+	SourceObj SourceObj = 2;
+	// Additional info for SourceObj.REPLAY type.
+	int64 handle = 3;
+	// The source identification i.e,, an equipment id, a sequence id, etc.
+	int64 sourceId = 4;
+	// The source station identification when available/used/set.
+	int64 stationId = 5;
+	// The recorder source identification when available/used/set.
+	int64 recorderSourceId = 6;
+}
+
+//
+// Message used while obtaining targets, normally monitors, connection info.
+message MsgGetConnInfoInTargetsReply {
+	// The request reply.
+	MsgReply reply = 1;
+	// the list of targets connection information.
+	repeated MsgGetConnInfoInTarget connInfoInTarget = 2;
+}
+
+//
+// Return message when multiple requests are sent in a single invocation.
+message MsgMultipleRequestsReply {
+	// Global reply for the request. If this is OK, then ALL requests were successful. 
+	MsgReply globalReply = 1;
+	// The list of IDs and request status of each one of them. 
+	// NOTE: if the globalReply is OK, there no need to use this item.
+	repeated MsgNumericReply specificReplies = 2;
+}
+
+//
+//
+message MsgSequenceConnInfo {
+	// The connection info, i.e., sequence, the source item in the message, and target.
+	MsgConnectionInfo connection = 1;
+	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
+	// NOTE: nowadays, @2406, not used anymore... but here just in case
+	int64 syncTime = 2;
+}
+
+//
+// 
+message MsgStartSeqsInTargets {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The sequences information.
+	repeated MsgSequenceConnInfo sequenceConnection = 2;
+}
+
+//
+// The sequence basic information, normally used to define a sequence but NOT a running one.
+message MsgSequence {
+	//
+	int64 id = 1;
+	//
+	string name = 2;
+	// 
+	SequenceMode sequenceMode = 3;
+}
+
+//
+// Reply message when all sequences are requested.
+message MsgSequencesReply {
+	// All the sequences
+	repeated MsgSequence sequences = 1;
+}
+
+//
+// The running sequence data holder 
+message MsgRunningSequence {
+	// The sequence identification. 
+    // May not be needed if the handle is set. It can be useful, but not always mandatory.
+	int64 id = 1;
+	// The running sequence handle, i.e., the running sequence identification.
+	int64 handle = 2;
+	// The running sequence active target, normally not needed but can be sent just in case.
+	int64 targetId = 3;
+	// The sequence state. Depending on the operation, this value could be not set.
+	SequenceState state = 4;
+	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
+	// NOTE: nowadays, @2406, not used anymore... but here just in case.
+	int64 syncTime = 5;
+}
+
+//
+// The running sequences data holder 
+message MsgRunningSequences {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The running sequencse handles, i.e., the running sequence identification
+	repeated MsgRunningSequence runningSequences = 2;	
+}
+
+//
+// The running sequence reply message.
+message MsgRunningSequenceReply {
+	// The running sequence handle and target
+	MsgRunningSequence runningSequence = 1;
+	// The running sequence state, i.e., one from SequenceOper (When )
+	SequenceOper SequenceOper = 2;
+}
+
+//
+// The running sequences reply message, normally used when obtaining all running sequences.
+message MsgRunningSequencesReply {
+	// The running sequences reply message
+	repeated MsgRunningSequenceReply runningSequencesReply = 1;
+}
+
+//
+// Used when stopping, pausing, restarting sequences. 
+// Only a single SequenceOper can be applied to the given list of sequences or targets.
+message MsgSequencesOperation {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The sequence oper: stop, pause, restart, next or previous step.
+	SequenceOper sequenceOper = 2;
+	// Items Ids, whatever they mean, i.e., targets equipments or sequences handles 
+    // depending on the set prop from MsgRunningSequence.
+	repeated MsgRunningSequence runningSequences = 3;
+}
+
+
+
+//
+// Used to start and stop macros. 
+// Only a single MacroOper can be applied to the given list of macros.
+message MsgMacrosOperation {
+	// The workstation information.
+	MsgWorkstationInformation workStationInfo = 1;
+	// The macro oper, i.e., start or stop.
+	MacroOper macroOper = 2;
+	// Macros Ids.
+	repeated int64 ids = 3;
+}
+
+//
+// Alarm information
+message MsgAlarm {
+    // The alarm identification
+    AlarmType alarmType = 1;
+    // The alarm parameters
+    string params = 2;
+    // The alarm equipment identification, if any.
+    int64 equipmentId = 3;
+    // The alarm station identification, if any.
+    int64 stationId = 4;
+    // The alarm trigger, if any.
+    int64 trigger = 5;
+}
+
+//
+// List of alarms, normally used when obtaing the list of ALL active alarms.
+message MsgAlarmsReply {
+    // The list of alarms.
+    repeated MsgAlarm alarms = 1;
+}
+
+//
+// Message used when a lock, or unlock, equipments request is invoked.
+message MsgLockUnlockEquips {
+	// The list of identifications, normally from cameras.
+	MsgListIds ids = 1;
+    // The lock or unlock Operation.
+    LockUnlockType LockUnlock = 2;
+}
+
+
+
+
+**********************/

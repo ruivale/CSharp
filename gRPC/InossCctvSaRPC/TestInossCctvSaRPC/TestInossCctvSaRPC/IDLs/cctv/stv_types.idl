@@ -1,0 +1,590 @@
+module stv
+{
+	module tao
+	{
+		// File where the system-wide structs are defined.
+		// These are used by both SA and Agent servers.
+		typedef struct RecordingStv_
+		{
+			long recorderId;
+			string sSource;
+			long eqSourceId;
+			long stSourceId;
+			long nFrameRate;
+			long tStart;
+			long tEnd;
+			boolean bAlarm;
+		} RecordingStv;
+		typedef sequence<RecordingStv> listRecordingsStv;
+
+		typedef struct ReplayStv_
+		{
+			long recorderId;
+			long lHandle;
+			string sSource;
+			long nFrameRate;
+			long nReplayStatus;
+			long nTarget;
+		} ReplayStv;
+		typedef sequence<ReplayStv> listReplaysStv;
+
+		typedef sequence<long> listIds;
+		typedef sequence<long> listResults;
+		typedef sequence<string> listString;
+
+		typedef struct State_
+		{
+			long nId;
+			long nState;
+		} State;
+		typedef sequence<State> listStates;
+
+		typedef sequence<short> listFrameRates;
+		typedef sequence<long> listChannel;
+
+		typedef struct agentVersionInfo_
+		{
+			long agentId;
+			string agentName;
+			string swVersion;
+		} agentVersionInfo;
+
+		typedef sequence<agentVersionInfo> seqAgentVersionInfo;
+
+		typedef struct driverVersionInfo_
+		{
+			long eqId;
+			string eqName;
+			long eqTypeId;
+			string eqTypeName;
+			long eqClassId;
+			string eqClassName;
+			string driverVersion;
+		} driverVersionInfo;
+		typedef sequence<driverVersionInfo> seqDriverVersionInfo;
+
+		typedef struct ptzfInfo_
+		{
+			long ptzfId;
+			long ptzfValue;
+		} ptzfInfo;
+
+		typedef sequence<ptzfInfo> seqPtzfInfo;
+
+		typedef struct runningSeq_
+		{
+			long seqId;
+			long targetId;
+			long nState;
+		} runningSeq;
+
+		typedef sequence<runningSeq> listRunningSeqs;
+
+		typedef struct runningMacros_
+		{
+			long macroId;
+			long macroState;
+			long nrActions;
+			long currentAction;
+		} runningMacros;
+
+		typedef sequence<runningMacros> listRunningMacros;
+
+		typedef struct stationStatus_
+		{
+			long nId;
+			string sName;
+			string sVersion;
+			long nStatus;
+			unsigned long lastAlive;
+			unsigned long sessionBegin;
+		} stationStatus;
+
+		typedef sequence <stationStatus> seqStationStatus;
+
+		typedef struct configData_
+		{
+			long sidSA;
+			string sdbType;
+			string sdbUser;
+			string sdbSid;
+			short cacheSize;
+			long ninossId;
+			string sappId;
+			short nsamplingInterval;
+			short nqueueTime;
+			short nmaxSeqs;
+			short npollingTimeout;
+		} configData;
+
+		typedef struct queuedEvent_
+		{
+			long evetId;
+			long macroId;
+			unsigned long launchMoment;
+		} queuedEvent;
+
+		typedef sequence <queuedEvent> listQueuedEvents;
+
+		typedef sequence<string> DestinationName;
+		typedef unsigned long long EventId;
+		typedef sequence<EventId> EventIdList;
+		typedef sequence<octet> SpecificInfo;
+
+
+
+		/////////////////////////////////
+		//////// Agent
+
+		typedef struct AgentConfigStv_ {
+			long agentId;
+			string sAddress;
+			boolean bEnabled;
+			long serverId;
+		} AgentConfigStv;
+
+
+		/////////////////////////////////
+		//////// Stations
+
+		typedef struct StationConfigStv_ {
+			long ID_Station;
+			long ID_Server;
+			string Name;
+			long Status;
+			boolean Enabled;
+			long nPollingTimeout;
+			short nType;
+		} StationConfigStv;
+
+		typedef sequence<StationConfigStv> listStations;
+
+		/////////////////////////////////
+		//////// Equipment classes
+		typedef struct EquipmentClassConfigStv_
+		{
+			long id;
+			string sName;
+			string sSxGenericConfig;
+			boolean bSource;
+			boolean bTarget;
+			boolean bAllowedInSequence;
+		} EquipmentClassConfigStv;
+
+		typedef sequence<EquipmentClassConfigStv> listEquipClasses;
+
+
+
+		/////////////////////////////////
+		//////// EquipmentTypes
+		typedef struct EquipmentTypeConfigStv_
+		{
+			long EqTypeID;
+			string Name;
+			long EqClass;
+			string VideoTerminals;
+			string CommSettings;
+			string GenericConfig;
+			string SpecificConfig;
+			string Driver;
+		} EquipmentTypeConfigStv;
+
+		typedef sequence<EquipmentTypeConfigStv> listEquipTypesConf;
+
+		/////////////////////////////////
+		//////// Equipments
+		typedef struct EquipmentConfigStv_
+		{
+			long ID;
+			string Name;
+			long EqType;
+			boolean Enabled;
+			long Station;
+			string CommSettings;
+			long GenericState;
+			long SpecificState;
+			string GenericConfig;
+			string SpecificConfig;
+			long BoxID;
+		} EquipmentConfigStv;
+
+		typedef sequence<EquipmentConfigStv> listEquipsConf;
+
+		/////////////////////////////////
+		//////// Presets
+		typedef struct PresetConfigStv_
+		{
+			string sName;
+			long Cam_ID;
+			long nSlot;
+			long nPan;
+			long nTilt;
+			long nZoom;
+			long nFocus;
+		} PresetConfigStv;
+
+		typedef sequence<PresetConfigStv> listPresets;
+
+
+		///////////////////////////////////
+		////////// Multiplexing pages functions
+		//typedef struct MpxPageConfigStv_
+		//{
+		//	string sName;
+		//	long MpxId;
+		//	short nPage;
+		//	long nMode;
+		//	string sDistribution;
+		//} MpxPageConfigStv;
+		//
+		//typedef sequence<MpxPageConfigStv> listMpxPages;
+
+
+
+
+		/////////////////////////////////
+		//////// Video Map
+		typedef struct videoLinkStv_
+		{
+			long id_Equipment;
+			long VidPort;
+			short vidPortType;
+			long linkedEqId;
+			long linkedEqVidPort;
+		} videoLinkStv;
+
+		typedef sequence<videoLinkStv> videoMap;
+
+
+		////////////////////////////////
+		//////// Video Records
+		typedef struct VideoRecordsStv_
+		{
+		  long idRecord;
+		  long dtStart;
+		  long dtEnd;
+		  long nMOde;
+		  long eqId;
+		  long supportId;
+		  long recType;
+		  long recTypeId;
+		} VideoRecordsStv;
+
+		typedef sequence <VideoRecordsStv> listVideoRecords;
+
+		////////////////////////////////
+		//////// Station state
+		typedef struct StationStateStruct_
+		{
+		  long idStation;
+		  long nState;
+		} StationStateStruct;
+
+		typedef sequence <StationStateStruct> listStationStateStruct;
+
+
+		////////////////////////////////
+		////// Alarms
+		typedef struct stvAlarm_ {
+			long alarmId;
+			string sParam;
+			long referenceId;
+			unsigned long tTrigger;
+		} StvAlarm;
+		typedef sequence<StvAlarm> listStvAlarms;
+
+
+		//////////////////////////////////////////////////////////////////////
+		// Agent
+		typedef struct defStvStation_
+		{
+			long idStation;
+			string sName;
+		} defStvStation;
+
+		typedef sequence<defStvStation> listStationDefs;
+
+		typedef struct defStvObject_
+		{
+			long idStation;
+			string sName;
+		} defStvObject;
+
+		typedef sequence<defStvObject> listStvObject;
+
+		//////////////////////////////////////////////////////////////////////
+		// Station
+		typedef struct defStvEquip_
+		{
+			long classEq; string sClass;
+			long typeEq; string sType;
+			string sDriver; string sDriverVersion;
+			long	idEq;
+			string	sName;
+		} defStvEquip;
+		typedef sequence<defStvEquip> listEquipDefs;
+
+		//const unsigned short maskConfCommTimeout=1;
+		//const unsigned short maskConfSyncClocks=2;
+		//const unsigned short maskConfProj=4;
+		typedef struct confStvAgente_
+		{
+			unsigned short nCommTimeout;
+			unsigned short nSyncClocks;
+			string sProj;
+			unsigned short mask;
+		} confStvAgente;
+
+
+		//////////////////////////////////////////////////////////////////////
+		// Equipment
+
+
+		/////////////////////////////////
+		//////// Video Sequence Operations
+		typedef struct VidSeqOperationConfigStv_
+		{
+		    long SeqID;
+		    long nPosition;
+		    boolean bEnabled;
+		    long EquipID;
+		    string eqName;
+		    long eqStationID;
+		    string eqStationName;
+		    string sParam;
+		    long nDuration;
+		} VidSeqOperationConfigStv;
+
+		typedef sequence<VidSeqOperationConfigStv> listVidSeqOpers;
+
+
+		//////////////////////////
+		////////    Vid Seqs
+		typedef struct VideoSequenceConfigStv_
+		{
+		    long ID;
+		    string sName;
+		    long Mode;
+		} VideoSequenceConfigStv;
+
+		typedef sequence<VideoSequenceConfigStv> listVidSeqs;
+
+		/////////////////////////////////
+		//////// ActionParameters
+
+		typedef struct ActionParameterConfigStv_
+		{
+		    long MacroID;
+		    long nActionNr;
+		    long nParameterNr;
+		    string sValue;
+		} ActionParameterConfigStv;
+
+		typedef sequence<ActionParameterConfigStv> listActionParameters;
+
+		/////////////////////////////////
+		//////// Actions
+
+		typedef struct ActionConfigStv_
+		{
+		    long MacroID;
+		    long nActionNr;
+		    long nActionCode;
+		    boolean bEnabled;
+		} ActionConfigStv;
+
+		typedef sequence<ActionConfigStv> listActions;
+
+		/////////////////////////////////
+		//////// Macros
+		typedef struct MacroConfigStv_
+		{
+		    string sName;
+		    long ID;
+		    long Mode;
+		    long OwnerID;
+		    long Permissions;
+		    short Scope;
+		    long userId;
+		    boolean canEdit;
+			boolean bSilent;
+		} MacroConfigStv;
+
+		typedef sequence<MacroConfigStv> listMacros;
+
+		/////////////////////////////////
+		//////// Scheduled Actions
+		typedef struct ScheduledActionConfigStv_
+		{
+		    long id;
+		    string sDescription;
+		    boolean bEnabled;
+		    long nDay;
+		    long nMonth;
+		    long nYear;
+		    long nHour;
+		    long nMinute;
+		    long period;
+		    long idMacro;
+		} ScheduledActionConfigStv;
+
+		typedef sequence<ScheduledActionConfigStv> listScheduledActionConfigStv;
+
+
+		/////////////////////////////////
+		//////// Events
+
+		typedef struct i18nMessage_
+		{
+			string sLang;
+			string sMessage;
+		} i18nMessage;
+		typedef sequence<i18nMessage> listI18nMessages;
+
+		typedef struct EventConfigStv_
+		{
+		    long eventId;
+		    string sDescription;
+		    listI18nMessages i18nDescriptions;
+		    boolean bEnabled;
+		    short evtType;
+		    string sParams;
+		    long macroId;
+		} EventConfigStv;
+
+		typedef sequence<EventConfigStv> listEventConfigStv;
+
+
+		/////////////////////////////////
+		//////// VideoMarks
+		// RVALE
+		typedef struct VideoMarkConfigStv_
+		{
+			long stationId;
+		    long videoMarkId;
+		    long outPort;
+		} VideoMarkConfigStv;
+
+		typedef sequence<VideoMarkConfigStv> listVideoMarkConfigStv;
+
+		/////////////////////////////////
+		//////// A List of Equips
+		// RVALE
+		typedef sequence<long> listEquipments;
+
+		/////////////////////////////////
+		//////// Objects in target
+		typedef struct RunningObjStv_
+		{
+		    long targetId;
+		    long sourceType;
+		    long handle;
+		    long eqId;
+		    long stationId;
+			long recSourceId;
+		} RunningObjStv;
+		typedef sequence<RunningObjStv> listRunningObjsStv;
+
+
+		////////////////////////////////
+		////// Alarms
+		typedef struct stvIgAlarm_ {
+			long alarmId;
+			string sParam;
+			long equipmentId;
+			long stationId;
+			unsigned long tTrigger;
+		} stvIgAlarm;
+		typedef sequence<stvIgAlarm> listStvIgAlarms;
+
+		////////////////////////////////
+		////// Alarm monitors
+		typedef struct notAckAlarm_ {
+			long groupId;
+			long nMonId;
+			long long nAlarmId;
+			long nPos;
+			string sDescription;
+			long nSourceId;
+			long nPrePos;
+		} notAckAlarms;
+		typedef sequence<notAckAlarms> listNotAckAlarms;
+
+		////////////////////////////////
+		//////// Video switch parameters
+		/// video switch types can be:
+		/// 1 - (in long idEquip, in short nChIn, in short nChOut, in boolean bAutomatic)
+		/// 2 - (in long idEquip, in short nChIn, in short nChOut, in short iParam, in boolean bAutomatic)
+		/// 3 - (in long idEquip, in string sChIn, in short nChOut, in boolean bAutomatic)
+		/// 4 - (in long idEquip, in short nChIn, in short nChOut, in string sSourceName, in long nSourceId, in boolean bAutomatic)
+		/// 5 - (in long idEquip, in string sChIn, in short nChOut, in string sSourceName, in long nSourceId, in boolean bAutomatic)
+		typedef struct videoSwitchParams_
+		{
+			short nSwitchType;
+			long idEquip;
+			long nChannelIn;
+			string sChannelInAddress;
+			long nChannelOut;
+			short iParam;
+			string sSourceName;
+			long nSourceId;
+			boolean bAutomatic;
+		} videoSwitchParams;
+		typedef sequence<videoSwitchParams> listVideoSwitchParams;
+
+		typedef struct videoPort_
+		{
+			long idEquip;
+			long nChannel;
+		} videoPort;
+		typedef sequence<videoPort> listVideoPorts;
+
+		typedef struct equipSwitchParams_
+		{
+			long idEquip;
+			long nChannelIn;
+			long nChannelOut;
+		} equipSwitchParams;
+		typedef sequence<equipSwitchParams> listEquipSwitchParams;
+
+		typedef struct currentRecording_
+		{
+			long recorderId;
+			long sourceId;
+			long recQuality; // 0 - low, 1 - Normal, 2 - High
+			long defaultQuality; // 0 - low, 1 - Normal, 2 - High
+		} currentRecording;
+		typedef sequence<currentRecording> listCurrentRecordings;
+
+		typedef struct protection_
+		{
+			long alarmId;
+			long recorderId;
+			long sourceId;
+			string sourceName;
+			unsigned long protectionStart;
+			unsigned long protectionEnd;
+			boolean unprotectResult;
+		} protection;
+		typedef sequence<protection> listProtections;
+
+		typedef struct workstationInformation_
+		{
+			string userName;
+			long workstation;
+		} workstationInformation;
+
+		typedef struct MobileCamHomePosReturn_
+		{
+			long nCamId;
+                        boolean isEnabled;
+                        boolean isSequenceMng;
+                        boolean isAlarmMng;
+                        long nTimeout;
+                        long nPreset;
+                        boolean hasHomePosSet;
+		} MobileCamHomePosReturn;
+		typedef sequence<MobileCamHomePosReturn> listMobileCamHomePosReturn;
+
+	};
+};

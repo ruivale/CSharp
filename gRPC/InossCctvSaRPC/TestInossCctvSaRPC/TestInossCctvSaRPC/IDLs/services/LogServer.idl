@@ -1,0 +1,18 @@
+#include "EventTypes.idl"
+
+interface LogService:EventTypes
+{
+	typedef struct DateTime_
+	{
+		unsigned short year;
+		unsigned short month;
+		unsigned short day;
+		unsigned short hour;
+		unsigned short minute;	
+		unsigned short second;
+		unsigned short milliseconds;
+	} DateTime;
+
+	void LogEvent(in DateTime date,in unsigned long severity,in string app,in string description,in Properties properties,in EventIdList relatedEventsList,in SpecificInfo specificInfo, in boolean logOnly);
+	void GetVersion(out string version);
+};

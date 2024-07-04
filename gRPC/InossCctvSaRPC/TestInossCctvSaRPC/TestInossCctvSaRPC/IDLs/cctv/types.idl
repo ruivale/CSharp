@@ -1,0 +1,357 @@
+interface EnumTypes
+{
+
+//typedef enum EventType_
+//{
+//  EVT_Undefined,
+//  EVT_Initialize,
+//  EVT_Terminate,
+//  EVT_SessionBegin,
+//  EVT_SessionEnd,
+//  EVT_Equipment,
+//  EVT_Station,
+//  EVT_ScheduledAction,
+//  EVT_SequenceEvent,
+//  EVT_MacroEvent,
+//  EVT_VideoConnectionEvent
+//} EventType;
+
+
+//typedef enum StationEvent_
+//{
+//  SE_Undefined,
+//  SE_CommFail,
+//  SE_StateChanged
+//} StationEvent;
+
+
+//typedef enum EquipmentEvent_
+//{
+//  EE_Undefined,
+//  EE_CommFail,
+//  EE_StateChanged,
+//  EE_SpecificStateChanged,
+//  EE_VideoInFail,
+//  EE_SensorActive
+//  EE_SignalArrived,
+//} EquipmentEvent;
+
+
+typedef enum StvAlarmType_
+{
+ 	Alarm_Undefined,                // = -1,
+
+	// System alarms
+	Alarm_DbCommFail,				// Critical
+
+	Alarm_SaCommFail,				// Critical
+	Alarm_SaStateChange,			// Information
+	Alarm_SaInitialize,				// Information
+	Alarm_SaTerminate,				// Information
+
+	Alarm_SessionBegin,				// Information
+	Alarm_SessionEnd,				// Information
+
+	Alarm_ObjRefError,				// Information
+
+	Alarm_VideoConnectError,		// Information
+	Alarm_VideoSourceInvalid,		// Information
+	Alarm_VideoTargetInvalid,		// Information	/* 10 */
+	Alarm_VidSeqStateChange,		// Information
+	Alarm_MaxSequences,					// Information
+	Alarm_MacroStateChange,			// Information
+	Alarm_ScheduledActionExecuted,	// Information
+
+	// GUI alarms
+	Alarm_GuiCommFail,				// Warning
+
+	// Station alarms
+	Alarm_StationCommFail,			// Major
+	Alarm_StationStateChange,		// Information
+
+	// Equipment alarms
+	Alarm_EquipCommFail,			// Major
+	Alarm_EquipStateChanged,		// Information
+	Alarm_EquipSpecificStateChanged,// Information	/* 20 */
+	Alarm_EquipVideoInFail,			// Major
+	Alarm_EquipVideoOutFail,		// Major
+	Alarm_IOActive,				// Warning
+	Alarm_ClockSyncArrived,			// Information
+ 	Alarm_EquipVideoInTamper,		// Warning ############# *NEW* Stv Alarm ####
+	// Camera detected motion
+	Alarm_EquipMotionDetected,		// Warning
+	Alarm_VrNoSpaceLeft,				// Major
+	// A failure on vr recording was detected
+	Alarm_VrRecordFailure,				// Minor
+
+	// Configuration alarms
+	Alarm_VidSeqAdded,				// Internal
+	Alarm_VidSeqRemoved,			// Internal		/* 30 */
+	Alarm_VidSeqChange,				// Internal
+	Alarm_MacroAdded,				// Internal
+	Alarm_MacroRemoved,				// Internal
+	Alarm_MacroChange,				// Internal
+
+	// Agent alarms
+	Alarm_AgentCommFail,			// Major
+
+	// Try to lock equipment with the same access level
+	Alarm_EquipLockFail,			// Information
+
+	/// Recording quality changed
+	Alarm_RecQualityChange,				// Information
+
+	/// Monitor group has changed
+	Alarm_MonitorGroupChanged,			// Information
+
+	/// An automatic video switch failed
+	Alarm_AutoVideoConnectError,			// Information
+
+	/// An user pressed an alarm button/ HQ recording on GUI
+	Alarm_UserAlarm,		/* 40 */
+
+	/// A replay has stoped
+	Alarm_ReplayStoped,				// Information
+
+	/// HQReqQuotaExceeded
+	Alarm_HQRecQuotaExceeded	// Information
+} StvAlarmType;
+
+
+typedef enum StvError_
+{
+    StvErr_Ok,
+    StvErr_Error,
+    StvErr_NotImplemented,
+    StvErr_NotSupported,
+    StvErr_InvalidParameter,
+    StvErr_InvalidEquipment,
+    StvErr_ConfFile_FailOpen,
+    StvErr_IPC_Creation,
+    StvErr_IPC_CommFail,
+
+    Stv_Err_CORBA_Exception,
+
+    StvErr_Db_Error,
+    StvErr_Db_NoDatabase,
+    StvErr_Db_ConnectionTimedOut,
+    StvErr_Db_NoDataFound,
+
+    StvErr_Equip_Initializing,
+    StvErr_Equip_Terminating,
+    StvErr_Equip_Reseting,
+    StvErr_Equip_NotInit,
+    StvErr_Equip_AlreadyInit,
+    StvErr_Equip_InvalidState,
+    StvErr_Equip_NoStation,
+    StvErr_Equip_Locked,
+
+    StvErr_Equip_ProtoUnknown,
+    StvErr_Equip_ProtoNoProtocol,
+    StvErr_Equip_ProtoTryTimeout,
+    StvErr_Equip_ProtoSendFail,
+    StvErr_Equip_ProtoFail,
+    StvErr_Equip_ProtoAck,
+    StvErr_Equip_ProtoAckLastMsg,
+
+    StvErr_Equip_EqDataUnknown,
+    StvErr_Equip_EqDataIncomplete,
+    StvErr_Equip_EqDataNotOk,
+    StvErr_Equip_EqDataOk,
+    StvErr_Equip_AnswerInvalid,
+    StvErr_Equip_AnswerIncomplete,
+    StvErr_Equip_AnswerNotOk,
+    StvErr_Equip_AnswerOk,
+    StvErr_Equip_AnswerCommError,
+
+    StvErr_Equip_Cam_InvalidPreset,
+
+    StvErr_Equip_Mpx_InvalidChannel,
+    StvErr_Equip_Mpx_InvalidPage,
+
+    StvErr_Equip_Matrix_InvalidChannelIn,
+    StvErr_Equip_Matrix_InvalidChannelOut,
+
+    StvErr_VC_ServerError,
+    StvErr_VC_PathBroken,
+    StvErr_VC_PathEmpty,
+    StvErr_VC_PathBoundError,
+    StvErr_VC_ReferenceError,
+    StvErr_VC_OutOfMemory,
+    StvErr_VC_StatusError,
+    StvErr_VC_PathNotFound,
+    StvErr_VC_SourceError,
+    StvErr_VC_TargetError,
+    StvErr_VC_UnknownError,
+
+    StvErr_Seq_Error,
+    StvErr_Seq_InvalidSeqID,
+    StvErr_Seq_NotAValidSequence,
+    StvErr_Seq_InvalidTarget,
+    StvErr_Seq_CouldNotStart,
+    StvErr_Seq_AlreadyPlaying,
+    StvErr_Seq_AlreadyPaused,
+    StvErr_Seq_NotPlaying,
+    StvErr_Seq_UndefState,
+
+    StvErr_Macro_Error,
+    StvErr_Macro_CouldNotStart,
+    StvErr_Macro_NotRunning,
+
+    StvErr_Sched_InitErr,
+    StvErr_Sched_SpawnErr,
+
+    StvErr_EquipLock_InsuficientPrivileges,
+    StvErr_EquipLock_AlreadyLocked,
+    StvErr_StationUnavailable
+} StvError;
+
+
+typedef enum EquipSpecificState_
+{
+    ESS_Undefined,
+
+    ESS_Cam_Idle,
+    ESS_Cam_Autopan,
+    ESS_Cam_Reseting,
+
+    ESS_Vr_NoMedia,
+    ESS_Vr_Playback,
+    ESS_Vr_Record,
+    ESS_Vr_Stop,
+    ESS_Vr_Pause,
+    ESS_Vr_FastForward,
+    ESS_Vr_Rewind,
+    ESS_Vr_ReversePlay,
+    ESS_Vr_TimeDateSearch,
+
+    ESS_Mpx_Multiplex,
+    ESS_Mpx_Fullscreen,
+    ESS_Mpx_Cycle,
+    ESS_Mpx_Freeze,
+    ESS_Mpx_Vcr,
+
+    ESS_Codec_Disconnected,
+    ESS_Codec_Connected,
+    ESS_Codec_Connecting,
+    ESS_Codec_Disconnecting,
+
+    ESS_Sensor_Idle,
+    ESS_Sensor_Active,
+
+    ESS_Actuator_Idle,
+    ESS_Actuator_Actuated,
+    ESS_Actuator_Active,
+
+    ESS_Watchdog_Enabled,
+    ESS_Watchdog_Disabled
+
+} EquipSpecificState;
+
+
+typedef enum EquipmentGenericState_
+{
+    EGS_Undefined,
+    EGS_Ok,
+    EGS_NotOk,
+    EGS_Locked
+} EquipmentGenericState;
+
+
+typedef enum StationState_
+{
+    SSt_Undefined,
+    SSt_Ok,
+    SSt_NotOk,
+    SSt_Initializing,
+    SSt_Terminating,
+    SSt_Reseting,
+    SSt_Locked,
+    SSt_OutOfService,
+    SSt_Disabled
+} StationState;
+
+typedef StationState SaState;
+
+typedef enum PeriodicityType_
+{
+    PT_Undef,
+    PT_Once,
+    PT_Hour,
+    PT_Daily,
+    PT_Week
+} PeriodicityType;
+
+typedef enum MacroActionCode_
+{
+    MAC_Unknown,
+    MAC_CamSelect,
+    MAC_Multiplex,
+    MAC_Sequence,
+    MAC_Play,
+    MAC_Record,
+    MAC_Stop_VR,
+    MAC_Actuate,
+    MAC_Deactuate,
+    MAC_Sleep,
+    MAC_Disconnect,
+    MAC_SetStationState,
+    MAC_MarkAlarm
+} MacroActionCode;
+
+typedef enum MacroPermissions_
+{
+    MP_Unknown,
+    MP_Private,
+    MP_EditExecute,
+    MP_Execute
+} MacroPermissions;
+
+typedef enum MacroScope_
+{
+    MS_Unknown,
+    MS_Any,
+    MS_Manual,
+    MS_Event
+} MacroScope;
+
+typedef enum ReplayState_
+{
+    RS_Undefined,
+    RS_Playback,
+    RS_Pause,
+    RS_FastForward,
+    RS_Rewind,
+    RS_ReversePlay
+} ReplayState;
+
+typedef enum RecordingSearchType_
+{
+    RST_AlarmAll,
+    RST_AlarmPresent
+} RecordingSearchType;
+
+typedef enum DisconnectType_
+{
+    DT_Target,
+    DT_Source,
+    DT_SourceStation
+} DisconnectType;
+
+typedef enum UserAccessType_
+{
+    UAT_Login,
+    UAT_Logout
+} UserAccessType;
+
+typedef enum StvSaObjType_
+{
+    StvSaTy_Invalid,
+    StvSaTy_Equipment,
+    StvSaTy_Sequence,
+    StvSaTy_Replay,
+    StvSaTy_Recording
+} StvSaObjType;
+
+};
+

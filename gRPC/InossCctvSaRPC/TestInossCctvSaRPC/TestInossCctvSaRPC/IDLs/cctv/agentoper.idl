@@ -1,0 +1,35 @@
+
+/////////////////////////////////////
+///////// Data structures	
+#include "stv_types.idl"
+
+module stv {
+	module tao
+	{
+		interface CAgentOper
+		{
+
+			long getEquipmentTypes(in long stationId, out listEquipTypesConf stEqTypes);
+			long getEquipmentClasses(in long stationId, out  listEquipClasses stEqClasses);
+
+			long getVideoMap(in long stationId, out videoMap stVideoMap);
+
+			long getEquipments(in long stationId, out listEquipsConf stEquipments);
+			long getEquipmentsEx(in long stationId, out listEquipsConf stEquipments, out listEquipTypesConf stEqTypes, out listEquipClasses stEqClasses);
+
+			long getStationCfg(in long stationId, out StationConfigStv stationCfg);
+			long getStationCfgEx(in long stationId, out StationConfigStv stationCfg, out listEquipsConf stEquipments, out listEquipTypesConf stEqTypes, out listEquipClasses stEqClasses, out  videoMap stVideoMap);
+
+			long getPresets(in long camId, out listPresets camPresets);
+			long sendPresets(in long camId, in listPresets camPresets);
+
+			long getVideoRecords(in long vrId, out listVideoRecords videoRecords);
+			long sendVideoRecords(in long vrId, in listVideoRecords videoRecords);
+
+			long sendState(in long stationId, in long currentState);
+			long sendStateMulti(in listStationStateStruct currentStates);
+
+			void processUnprotectResult(in listProtections protections, in long expirationDate);
+		};
+	};
+};

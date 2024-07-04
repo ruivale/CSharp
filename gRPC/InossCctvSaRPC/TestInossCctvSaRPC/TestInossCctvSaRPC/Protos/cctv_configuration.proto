@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration";
+
+
+import "protos/cctv_enums.proto";
+import "protos/cctv_messages.proto";
+
+
+package cctv;
+
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV configuration interface
+//
+//
+service Configuration {
+
+	//
+	// Sequences interfaces 
+	//
+	// Obtain ALL configured sequences in the system.
+	// If the given MsgListIds is empty, or null, this method returns ALL sequences otherwise, 
+	// it filters the result by the MsgListIds configured workstation and/or sequences identification.
+	rpc GetAllSequences(MsgListIds) returns (MsgSequencesReply);
+
+
+}

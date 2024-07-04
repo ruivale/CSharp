@@ -1,0 +1,6 @@
+#include "EventTypes.idl"
+
+interface EventConsumer:EventTypes
+{
+	void DeliverEvent(in Properties properties,in EventIdList relatedEventsList,in SpecificInfo specificInfo);
+};

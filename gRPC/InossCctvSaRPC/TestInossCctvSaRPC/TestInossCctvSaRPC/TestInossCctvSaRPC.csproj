@@ -5,28 +5,55 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<IncludeHttpRuleProtos>true</IncludeHttpRuleProtos>
+	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\cctv_configuration.proto" />
     <None Remove="Protos\cctv_enums.proto" />
     <None Remove="Protos\cctv_messages.proto" />
     <None Remove="Protos\cctv_operation.proto" />
+    <None Remove="Protos\test_cctv.proto" />
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\cctv_configuration.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\cctv_operation.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\cctv_enums.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\cctv_messages.proto">
       <GrpcServices>Server</GrpcServices>
     </Protobuf>
     <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\test_cctv.proto" GrpcServices="Both" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.57.0" />
+    <PackageReference Include="Efacec.ERAS.Template" Version="3.4.5" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.8.6" />
+    <PackageReference Include="OpenDDSharp" Version="3.250.2" />
+    <PackageReference Include="OpenDDSharp.IdlGenerator" Version="3.250.2" />
+    <PackageReference Include="OpenDDSharp.Marshaller" Version="3.250.2" />
+    <PackageReference Include="OpenDDSharp.Native" Version="3.250.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="IDLs\services\EventConsumer.idl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="IDL\EventConsumer.idl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <IdlFiles Remove="IDL\EventConsumer.idl" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <IdlFiles Remove="IDL\EventTypes.idl" />
   </ItemGroup>
 
 </Project>

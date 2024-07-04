@@ -1,0 +1,625 @@
+///***************************************************************************
+// Filename: operation.idl
+// -------------------
+//
+//   Description     :
+//   Comments        :
+//   Author          : Joao Silva - joao.silva@efacec.com
+//   Co-author       : rUI vALE - rui.vale@efacec.com
+//   Creation Date   : 20020107
+//   Last change date: 20200210
+//   Copyright       : EFACEC
+//
+//******************************************************************************
+//  Changes description
+//      20200210
+//        - added methods:
+//                  long ptzf(in workstationInformation logInfo, 
+//                            in listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+//
+//         This method allows for configuration and also, for activation of the 
+//         "return" process. Whenever this method is called, it's up to the StvSa
+//         to update the data base and also signal the StvAgent for changes, 
+//         allowing it to enable/disable/etc. the feature over the given cameras.
+//       
+//
+//                  long getMobileCamerasHomePosConfig(in workstationInformation logInfo, 
+//                                                     out listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+//
+//          This method returns ALL the actual configurations from the database.
+//
+//
+//                  long deleteMobileCamerasHomePosConfig(in workstationInformation logInfo, 
+//                                                        in listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+//
+//          This method removes configurations from the database.
+// 
+//
+//
+//      20190131
+//         - added the method:
+//                   long ackAlarm(in workstationInformation logInfo, 
+//                                 in long nEquipId, 
+//                                 in listIds listAlarmIds,
+//                                 out listIds listNotAckAlarmIds)
+//
+//           Allow for alarms acknowledge given the equip identificaX and a 
+//           posible list os alarms. If the list of alarms is empty, it should 
+//           mean ALL alarms should be acknowledge. The method returns, in the 
+//           notAckAlarms list, the identificaX os the alarms which were not 
+//           correctly acknowledged.
+//
+//******************************************************************************
+
+
+#include "stv_types.idl"
+#include "EventTypes.idl"
+
+module stv 
+{
+    module tao
+    {
+        interface COperationStv
+        {
+            // Video map operations
+            // RVALE -> typedef sequence<VideoMarkConfigStv> listVideoMarkConfigStv;
+            long setSourceinTargetWithVideoMarks(in workstationInformation logInfo, 
+                                                 in long SourceID, 
+                                                 in long TargetID, 
+                                                 in long nSourcePort, 
+                                                 in long nTargetPort, 
+                                                 in listVideoMarkConfigStv listVideoMarks);
+            long setSourceinTargetWithVideoMarksEx(in workstationInformation logInfo, 
+                                                   in long SourceID, 
+                                                   in long TargetID, 
+                                                   in long nSourcePort, 
+                                                   in long nTargetPort, 
+                                                   in listVideoMarkConfigStv listVideoMarks, 
+                                                   in long sourceInPortID);
+
+            long setSourceinTarget(in workstationInformation logInfo, 
+                                   in long SourceID, 
+                                   in long TargetID, 
+                                   in long nSourcePort, 
+                                   in long nTargetPort);
+            long setSourceinTargetEx(in workstationInformation logInfo, 
+                                     in long SourceID, 
+                                     in long TargetID, 
+                                     in long nSourcePort, 
+                                     in long nTargetPort, 
+                                     in long sourceInPortID);
+            long getTargetWithSource(in long sourceId);
+            long getSourceInTarget(in long targetId, 
+                                   out long sourceType, 
+                                   out long handle, 
+                                   out long eqId, 
+                                   out long stationId);
+
+            // getSourcesInTargets has changed its interface
+            // Before changing, listRunningObjsStv objs was passed with the requested targets.
+            // Now, requested targets are supplied on listIds targets
+            // listRunningObjsStvobjs is used to pass information to both sides
+            //  - provides stvsa with the GUI controlled replays
+            //  - GUIs receive running objects for targets passed on listIds targets
+            long getSourcesInTargets(in listIds targets, 
+                                     inout listRunningObjsStv objs);
+            long disconnectVideoFromTarget(in workstationInformation logInfo, 
+                                           in long targetId);
+            long disconnectVideoFromTargetPort(in workstationInformation logInfo, 
+                                               in long targetId, 
+                                               in long nTargetInPort);
+            long disconnectVideoFromTargetEx(in workstationInformation logInfo, 
+                                             in listIds targetIds, 
+                                             out listResults results);
+            long disconnectVideoFromTargetPortEx(in workstationInformation logInfo, 
+                                                 in listVideoPorts videoPorts, 
+                                                 out listResults results);
+
+            // In the following method parameter TargetID is not considered
+            long setSourceInTargetByAddr(in workstationInformation logInfo, 
+                                         in long SourceID, 
+                                         in long TargetID, 
+                                         in string sAddress);
+
+        // Sequence operations
+            long setSequenceinTarget(in workstationInformation logInfo, 
+                                     in long SeqID, 
+                                     in long TargetID);
+            long stopSequence(in workstationInformation logInfo, in long SeqHdl);
+            long stopAllSequences(in workstationInformation logInfo, in long SeqID);
+            long startSequence(in workstationInformation logInfo, in long SeqHdl);
+            long pauseSequence(in workstationInformation logInfo, in long SeqHdl);
+            long getSequenceInTarget(in long targetId);
+            long getSequenceState(in long SeqHdl);
+            long getSequenceId(in long SeqHdl);
+            long showNextStep(in long SeqHdl);
+            long showPreviousStep(in long SeqHdl);
+
+        // Macro operations
+            long runMacro(in workstationInformation logInfo, in long macroId);
+            long stopMacro(in long macroHdl);
+
+        // Method to get pending alarms
+            void getAlarms(out listStvIgAlarms pendingAlarms);
+
+        // Priority management
+            long ping(in long IG, 
+                      in long priorityLevel, 
+                      in listIds lockedEquips, 
+                      in long IGTimeout);   // Also used to determine IG aliveness
+            long releaseEquipment(in workstationInformation logInfo, 
+                                  in long equipId, 
+                                  in long IG, 
+                                  in long priorityLevel);
+
+        // Software version related functions
+            void getAgentVersions(out seqAgentVersionInfo versions);
+            void getDriverVersions(in long idStation, 
+                                   out seqDriverVersionInfo versions);
+            void getStvSaVersion( out string version);
+
+
+        // Station operations
+            string stationGetName(in long stId);
+            void stationSetName(in long stId, in string sName);
+            long stationGetServerId(in long stId);
+            void stationSetServerId(in long stId, in long serverId);
+            long stationGetState(in long stId);
+            void stationSetState(in long stId, in long state);
+            short stationGetNrOfEquipments(in long stId);
+            long stationReset(in long stId);
+            long getAllStationsState(out listIds lStations, 
+                                     out listIds lStationStates);
+            long getAllEquipmentsState(in listIds lStations, 
+                                       out listIds lEquipments, 
+                                       out listIds lEquipStates);
+            long getAllEquipmentsSpecificState(in listIds lStations, 
+                                               out listIds lEquipments, 
+                                               out listIds lEquipStates);
+
+        // Equipment operations
+            long getID(in long EqId);
+            void setID(in long EqId, in long Id);
+            string getName(in long EqId);
+            void setName(in long EqId, in string sName);
+            long getClass(in long EqId);
+            void setClass(in long EqId, in long classEq);
+            long getType(in long EqId);
+            void setType(in long EqId, in long typeEq);
+            boolean isVideoEquipment(in long EqId);
+
+            boolean isEnabled(in long EqId);
+            void enable(in long EqId, in boolean bValue);
+            long getState(in long EqId);
+            void setState(in long EqId, in long state);
+            long getSpecificState(in long EqId);
+            void setSpecificState(in long EqId, in long state);
+            long getPreviousState(in long EqId);
+            long getPreviousSpecificState(in long EqId);
+
+            string getGenericConfiguration(in long EqId);
+            void setGenericConfiguration(in long EqId, in string sConfig);
+            string getSpecificConfiguration(in long EqId);
+            void setSpecificConfiguration(in long EqId, in string sConfig);
+            string getCommunicationSettings(in long EqId);
+            void setCommunicationSettings(in long EqId, in string sComms);
+            string getDriver(in long EqId);
+            void setDriver(in long EqId, in string sDriver);
+
+            long configure(in long EqId, in long id);
+            long reset(in long EqId);
+
+            long raw(in long EqId, in string pData, in unsigned short nDataSize);
+
+
+        // VideoEquipment
+            boolean isAllowedInSequence(in long EqId);
+            void allowInSequence(in long EqId, in boolean bAllow);
+            long getNrOfVideoInPorts(in long EqId);
+            void setNrOfVideoInPorts(in long EqId, in long nInPorts);
+            long getNrOfVideoOutPorts(in long EqId);
+            void setNrOfVideoOutPorts(in long EqId, in long nOutPorts);
+            long switchVideoEquipment(in long EqId, in long nChIn, in long nChOut);
+            long switchVideoEquipmentEx(in long EqId, 
+                                        in long nChIn, 
+                                        in long nChOut, 
+                                        in short iParam);
+            long setChannelLabel(in long EqId, in long nChannel, in string sLabel);
+            long synchronize(in long EqId);
+
+
+        // NonVideoEquipment
+            void dummy();
+
+
+        // Camera
+            octet hasPTZF(in long EqId);
+            boolean hasAutofocus(in long EqId);
+            boolean hasAutopan(in long EqId);
+            boolean hasWiper(in long EqId);
+            boolean hasWasher(in long EqId);
+            short getNrOfAux(in long EqId);
+            boolean isHomeTimeoutEnable(in long EqId);
+            void enableHomeTimeout(in long EqId, in boolean bEnable);
+            unsigned long getHomeTimeout(in long EqId);
+            boolean hasPresets(in long EqId);
+            short getNrOfPresets(in long EqId);
+
+            long ptzfStart(in long EqId, 
+                           in short byMovement, 
+                           in unsigned short nTimeout);
+            long ptzfContinue(in long EqId, in short byMovement);
+            long ptzfStop(in long EqId, in short byMovement);
+
+            long ptzfStoreHome(in long EqId);
+            long ptzfStoreHomeFull(in long EqId, 
+                                   in long lPan, 
+                                   in long lTilt, 
+                                   in long lZoom, 
+                                   in long lFocus);
+            long ptzfGetHome(in long EqId);
+            long ptzfGetHomeFull(in long EqId, 
+                                 out long lPan, 
+                                 out long lTilt, 
+                                 out long lZoom, 
+                                 out long lFocus);
+            long ptzfActivateHome(in long EqId);
+
+            long ptzfStorePreset(in workstationInformation logInfo, 
+                                 in long EqId, 
+                                 in short nPreset);
+            long ptzfStorePresetFull(in workstationInformation logInfo, 
+                                     in long EqId, 
+                                     in short nPreset, 
+                                     in long lPan, 
+                                     in long lTilt, 
+                                     in long lZoom, 
+                                     in long lFocus);
+            long ptzfGetPreset(in long EqId, in short nPreset);
+            long ptzfGetPresetFull(in long EqId, 
+                                   in short nPreset, 
+                                   out long lPan, 
+                                   out long lTilt, 
+                                   out long lZoom, 
+                                   out long lFocus);
+            long ptzfDeletePreset(in workstationInformation logInfo, 
+                                  in long EqId, 
+                                  in short nPreset);
+            long ptzfActivatePreset(in long EqId, in short nPreset);
+
+            long getPTZFPos(in long EqId);
+            long getPTZFPosFull(in long EqId, 
+                                out long lPan, 
+                                out long lTilt, 
+                                out long lZoom, 
+                                out long lFocus);
+            long setPTZFPos(in long EqId, 
+                            in long lPan, 
+                            in long lTilt, 
+                            in long lZoom, 
+                            in long lFocus);
+
+            long setAutofocus(in long EqId, in boolean bEnable);
+            long toggleAutopan(in long EqId);
+            long toggleWasher(in long EqId);
+            long toggleWiper(in long EqId, 
+                             in boolean bEnable, 
+                             in unsigned long lTimeout);
+            long activateAux(in long EqId, 
+                             in octet byAuxMask, 
+                             in octet byActivationMask);
+            long toggleAux(in long EqId, 
+                           in octet byAuxMask, 
+                           in octet byToggleMask);
+
+
+        // Monitor
+
+
+        // VideoRecorder
+            void getFrameRates(in long EqId, out listFrameRates list);
+            short getFrameRateSelected(in long EqId);
+            unsigned long getCounter(in long EqId);
+
+            long playback(in long EqId);
+            long record(in long EqId, 
+                        in unsigned long lDuration, 
+                        in long SourceId, 
+                        out unsigned long hRecording);
+            long stop(in long EqId);
+            long pause(in long EqId);
+            long fastForward(in long EqId);
+            long rewind(in long EqId);
+            long reversePlay(in long EqId);
+            long fieldForward(in long EqId);
+            long fieldReverse(in long EqId);
+            long setFrameRate(in long EqId, in short nRate);
+            long dateTimeSearch(in long EqId, in long tTime);
+        //  long synchronize();
+            long resetCounter(in long EqId);
+            long eject(in long EqId);
+
+            // Recordings search
+            long getRecordings(in listIds EqId, in short searchType, out listRecordingsStv lRecs);
+            long getRecordingsInTimeSpan(in listIds EqId, 
+                                         in long dStart,
+                                         in long dEnd, 
+                                         in short searchType, 
+                                         out listRecordingsStv lRecs);
+            long getRecordingsBySource(in listIds VrId, 
+                                       in string sSource, 
+                                       in short searchType,
+                                       out listRecordingsStv lRecs);
+            long getRecordingsBySourceInTimeSpan(in listIds VrId, 
+                                                 in string sSource,
+                                                 in long dStart, 
+                                                 in long dEnd, 
+                                                 in short searchType, 
+                                                 out listRecordingsStv lRecs);
+            long getRecordingsBySourcesInTimeSpan(in listIds VrId, 
+                                                  in listString listSources,
+                                                  in long dStart, 
+                                                  in long dEnd, 
+                                                  in short searchType, 
+                                                  out listRecordingsStv lRecs);
+
+            // Replay operations
+            long playbackReplayEx(in long targetEq, 
+                                  in long recorderId, 
+                                  in string sSource, 
+                                  in long iFPS,
+                                  in long tStart, 
+                                  in long tEnd, 
+                                  out long handle);
+            long syncPlaybackReplay(in listIds targetEqs, 
+                                    in long recorderId, 
+                                    in listString sSources,
+                                    in long tStart, 
+                                    in long tEnd, 
+                                    out long handle);
+            long playbackReplay(in long recorderId, in long handle);
+            long reversePlayReplay(in long recorderId, in long handle);
+            long stopReplay(in long recorderId, in long handle);
+            long stopReplayAndActivateOld(in long recorderId, 
+                                          in long handle, 
+                                          in boolean activateOldSource);
+            long pauseReplay(in long recorderId, in long handle);
+            long fastForwardReplay(in long recorderId, in long handle);
+            long rewindReplay(in long recorderId, in long handle);
+            long fieldForwardReplay(in long recorderId, in long handle);
+            long fieldReverseReplay(in long recorderId, in long handle);
+            long setReplaySpeed(in long recorderId, in long handle, in long speed);
+            long getReplaySpeed(in long recorderId, in long handle, out long speed);
+            long setReplayPos(in long recorderId, in long handle, in long positionTime);
+            long getReplayPos(in long recorderId, in long handle, out long positionTime);
+
+            // Recording extraction
+            long exportToFile(in long recorderId, in string sSource, in long iFPS,
+                in long tStart, in long tEnd, in string sFilename);
+
+            // Current replays
+            long getCurrentReplays(in long recorderId, out listReplaysStv lReplays);
+
+        // VidCap
+
+
+        // Multiplexer
+            short getNumberOfPages(in long EqId, in short modeMpx);
+
+            long multiplexEx(in long EqId, in short modeMpx, in listChannel listIns);
+            long multiplex(in long EqId, in short modeMpx, in short nPage);
+            long setInQuad(in long EqId, in short nPage);
+            long fullscreen(in long EqId, in short nChannel);
+            long cycle(in long EqId);
+            long freeze(in long EqId);
+        //  long setChannelLabel(in short nChannel, in string sLabel);
+        //  long synchronize();
+
+
+        // Matrix
+            long switchChannels(in long EqId, in long nChIn, in long nChOut);
+        //  long setChannelLabel(in long nChannel, in string sLabel);
+            long configOverlay(in long EqId, in long nOutChannel, in octet byConfig);
+        //  long synchronize();
+
+
+        // Codec
+            long getCodecType(in long EqId);
+            boolean isPersistent(in long EqId);
+
+            long configConnection(in long EqId);
+            long setVideoInput(in long EqId, in long nVideoPort);
+            long connect(in long EqId, in string sAddress);
+            long disconnect(in long EqId);
+
+
+        // Sensor
+            long getSensorType(in long EqId);
+            void setSensorType(in long EqId, in long typeSensor);
+            short getNrOfInputs(in long EqId);
+            void setNrOfInputs(in long EqId, in short nInputs);
+            octet getInputMask(in long EqId);
+            void setInputMask(in long EqId, in octet byMask);
+
+            long readInput(in long EqId);
+
+
+        // Actuator
+            short getOutputsNumber(in long EqId);
+            void setOutputsNumber(in long EqId, in short nOuts);
+            octet getOutputMask(in long EqId);
+            void setOutputMask(in long EqId, in octet byMask);
+            octet getDefaultOutput(in long EqId);
+            void setDefaultOutput(in long EqId, in octet byOut);
+            octet getActuationOutput(in long EqId);
+            void setActuationOutput(in long EqId, in octet byOut);
+
+            long getOutput(in long EqId);
+            long getOutputCurrentMask(in long EqId, out octet byOutput);
+            long setOutput(in long EqId, 
+                           in octet byOutput, 
+                           in unsigned long lDuration);
+            long actuate(in workstationInformation logInfo, 
+                         in long EqId, 
+                         in unsigned long lDuration);
+            long actuateMask(in workstationInformation logInfo, 
+                             in long EqId, 
+                             in octet byOutput, 
+                             in unsigned long lDuration);
+            long deactuate(in workstationInformation logInfo, in long EqId);
+            long deactuateMask(in workstationInformation logInfo, 
+                               in long EqId, 
+                               in octet byOutput);
+
+
+        // Clock
+            long getSync(in long EqId);
+
+
+        // Watchdog
+            unsigned long getTimeout(in long EqId);
+            void setTimeout(in long EqId, in unsigned long lTimeout);
+
+            long shutdown(in long EqId, in unsigned long lSec);
+            long alive(in long EqId);
+            long enableWatchdog(in long EqId);
+            long disableWatchdog(in long EqId);
+
+
+        // Pctrl
+
+        // Misc
+            long getSaUptime();
+            void getPtzfInfo(inout seqPtzfInfo ptzfInfoList);
+            void getRunningSeqs(out listRunningSeqs runningSeqs);
+            void getRunningMacros(out listRunningMacros runningMacros);
+            void getQueuedEvents(out listQueuedEvents events);
+
+            void getStationsInfo(out seqStationStatus list);
+            void getSaConfig(out configData cfg);
+            void setSaCommTimeout(in unsigned long lTimeout);
+            void getSaCommTimeout(out unsigned long lTimeout);
+            void getDbConnectionStatus(out long nStatus);
+
+        // Method for user access notification sent by GUI
+            void userAccess(in short type, in long userId);
+        // Send IG some system-wide settings that are needed
+            long getConfig(in long guiID, out EventTypes::Properties configurations);
+        /// Gets all locked equipments
+            long getLockedEquipments(out listIds lockedEquips);
+
+            long setDebug(in char cDebugVar);
+
+        /// Alarm monitors groups
+            long acknowledgeAlarms( in workstationInformation logInfo, 
+                                    in EventIdList ackAlarms, 
+                                    out listNotAckAlarms alarms );
+            long getNotAckAlarms( out listNotAckAlarms alarms );
+            long setAlarmOnMonitor( in workstationInformation logInfo, 
+                                    in long long alarmId, 
+                                    in long monitorId );
+            long ackAlarmToTarget( in workstationInformation logInfo, 
+                                   in long long alarmId, 
+                                   in long monitorId);
+            long resetMonitorGroup( in long groupId );
+
+        /// Sequence optimizations and sync sequences
+            long getSequenceInTargetData(in long targetId, 
+                                         out long seqId, 
+                                         out long seqHandle, 
+                                         out long seqSyncTime, 
+                                         out long seqState);
+            long setSyncSequenceInTarget(in long seqID, 
+                                         in long targetID, 
+                                         in long syncTime);
+
+        /// Recording with quality definition
+            long recordEx(in long EqId, 
+                          in unsigned long lDuration, 
+                          in long SourceId, 
+                          in long nQuality, 
+                          out unsigned long hRecording);
+
+        /// User raised an alarm
+            long userRecAlarm(in workstationInformation logInfo, 
+                              in long userId, 
+                              in long EqId, 
+                              in unsigned long lDuration, 
+                              in long SourceId, 
+                              in long nQuality, 
+                              out unsigned long hRecording);
+
+        /// Sets a station in quad, by actuating on a quad located in the same station as a given monitor
+            long setStationInQuadToMonitor(in workstationInformation logInfo, 
+                                           in long stationId, in long monitorId);
+
+        /// Current recordings and optimization to be used on GUI startup
+            long getCurrentRecordings(out listCurrentRecordings curRecs);
+            long getEquipmentsData(out listIds lockedEquips, 
+                                   out listCurrentRecordings curRecs);
+            long startRecordingMonitor(in workstationInformation logInfo, 
+                                       in long monitorId, 
+                                       in long vrId);
+
+        /// User request to mark a recording as in alarm. This method only marks the alarm, it
+        /// doesn't allows protection and/or recording quality change.
+        /// The sTag is the tag identification for which the inspection is related to.
+        /// The sSensorAlarmSubtypeTagId is the sensor alarm subtype tag identification
+        /// for which the inspection is related to. With sTag, identifies the tagging.
+        /// The notes are the notes associated with the marking and can be empty.
+        /// The alarmId is the alarm Id resulted from the BD insertion which is returned to the
+        /// caller.
+            long markUserAlarm(in workstationInformation logInfo, 
+                               in long userId, 
+                               in long SourceId,
+                               in long alarmSubtypeId,
+                               in string sTag, 
+                               in string sSensorAlarmSubtypeTagId,
+                               in string notes,
+                               out unsigned long alarmId);
+
+        /// This method allows the user to change a marking. It allows to signal the marking
+        /// ending and/or changes in the specific subtype alarm parameters, f.i., the related
+        /// vehicle, if the subtype allows the vehicle inspection, or the marking associated notes.
+            long changeUserMarkAlarm(in workstationInformation logInfo,
+                                      in long alarmId,
+                                      in long userId,
+                                      in string sTag,
+                                      in string sSensorAlarmSubtypeTagId,
+                                      in string notes,
+                                      in boolean isMarkingEnd);
+
+        /// Allow for alarms acknowledge given the equip identificaX and a posible list os alarms.
+        /// If the list of alarms is empty, it should mean ALL alarms should be acknowledge.
+        /// the method returns, in the notAckAlarms list, the identificaX os the alarms 
+        /// which were not correctly acknowledged.
+            long ackAlarm(in workstationInformation logInfo, 
+                          in long nEquipId, 
+                          in listIds listAlarmIds, 
+                          out listIds listNotAckAlarmIds);
+
+
+        ///
+        /// Methods allowing the "return to home position" feature, after some timeout, for
+        /// mobile cameras.
+        ///
+        /// This method allows for configuration and also, for activation of the 
+        /// "return" process. Whenever this method is called, it's up to the StvSa
+        /// to update the data base and also signal the StvAgent for changes, 
+        /// allowing it to enable/disable/etc. the feature over the given cameras.
+            long ptzf(in workstationInformation logInfo, 
+                      in listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+        ///
+        /// This method returns ALL the actual configurations from the database.
+            long getMobileCamerasHomePosConfig(
+                    in workstationInformation logInfo, 
+                    out listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+        ///
+        /// This method removes configurations from the database.
+            long deleteMobileCamerasHomePosConfig(
+                    in workstationInformation logInfo, 
+                    in listMobileCamHomePosReturn listMobileCamsHomePosReturnConfig);
+
+        };
+    };
+};

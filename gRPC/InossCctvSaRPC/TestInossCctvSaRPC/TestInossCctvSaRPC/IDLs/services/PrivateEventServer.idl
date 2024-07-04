@@ -1,0 +1,7 @@
+#include "EventServer.idl"
+
+interface PrivateEventService : EventService
+{
+	void UpwardEvent(in Properties properties,in EventIdList relatedEventsList,in SpecificInfo specificInfo);
+	void Reload();
+};

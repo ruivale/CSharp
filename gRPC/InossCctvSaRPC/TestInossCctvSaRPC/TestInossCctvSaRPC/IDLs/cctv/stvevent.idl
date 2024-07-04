@@ -1,0 +1,54 @@
+////////////////////////////////////////////////////////////////////////////////
+// Author: jOÃO sILVA {joao dot silva at efacec dot com}
+//
+// Changed by:
+//      - 20190906: rUI vALE {rui dot vale at efacec dot com}
+//          . added the "onEquipConnDataChange(targetEqId, sourceEqId)" method
+//            used by the StvAgent to signal the StvSa that some target equip
+//            has it connection data changed (the source equip can be -1 to 
+//            signal the given target has no source equip set at the moment)
+//
+////////////////////////////////////////////////////////////////////////////////
+// Started by:
+//      - StvSa
+//
+// Used by: 
+//      - StvAgent
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////
+// Data structures	
+#include "stv_types.idl"
+
+
+module stv {
+	module tao {
+		interface StvEvent {
+			///
+			void onEquipmentInformationEx(in long eqId, in long stvEventType, in long nParam);
+			///
+            void onEquipmentInformation(in long eqId, in long stvEventType);                            
+			///
+			void onStationInformationEx(in long stId, in long stvEventType, in long nParam);
+			///
+			void onStationInformation(in long stId, in long stvEventType);
+			
+			///
+			void onEquipmentAlarm(in long eqId, in StvAlarm alarm, in boolean bPresent);
+			///
+			void onEquipmentAlarmEx(in long eqId, in StvAlarm alarm, in boolean bPresent, in boolean bForceReport);
+			///
+			void onStationAlarm(in long stId, in StvAlarm alarm, in boolean bPresent);
+			
+			///
+			void onStationStartup(in long stId, in long currentState);
+
+			/// Used to signal the StvSa that some target equip has 
+                        /// its connection changed (the source equip can be -1  
+                        /// to signal the given target has no source equip set)
+			void onEquipConnDataChange(in long targetEqId, in long sourceEqId);
+		};
+	};
+};

@@ -1,0 +1,16 @@
+#include "EventTypes.idl"
+
+interface EventService:EventTypes
+{
+	exception InvalidEvent
+	{
+		string why;
+	};
+
+	void RegisterConsumer(in string iorStr,in DestinationName name);
+//	void UnregisterConsumer(in Object obj);
+  	void UnregisterConsumer(in DestinationName name);
+  //    void UnregisterConsumer(in Object obj, in DestinationName name);
+	void ForwardEvent(in Properties properties,in EventIdList relatedEventsList,in SpecificInfo specificInfo);
+	void GetVersion(out string version);
+};
