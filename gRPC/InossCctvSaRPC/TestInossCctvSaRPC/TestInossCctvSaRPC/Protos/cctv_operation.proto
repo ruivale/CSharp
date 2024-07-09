@@ -1,13 +1,14 @@
 syntax = "proto3";
 
-option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation";
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.v1";
+option java_package = "com.efacec.es.trp.efarail.cctv.grpc.operation.v1";
 
 
 import "protos/cctv_enums.proto";
 import "protos/cctv_messages.proto";
 
 
-package cctv;
+//package com.efacec.es.trp.efarail.cctv.grpc.operation.v1;
 
 
 
@@ -23,50 +24,50 @@ service Operation {
 	//
 
 	// Obtain the Operation service version
-	rpc GetVersion(MsgVersions) returns (MsgVersionsReply);
+	rpc GetVersions(VersionsRequest) returns (CctvVersions);
 
 	// Obtains the given targets connection information, if any.
-	rpc GetConnectionInfoInTargets(MsgListIds) returns (MsgGetConnInfoInTargetsReply);
+	rpc GetDetailedConnectionsInfo(ListIds) returns (DetailedConnectionsInfoResponse);
 	
 	// Setting connections between sources equipments, normally cameras, and targets, normally monitors.
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
 	//       is OK, there's' no need to use the specific target response item.
-	rpc ConnectInTargets(MsgConnectInTargets) returns (MsgMultipleRequestsReply);
+	rpc Connect(ConnectionsRequest) returns (MultipleRequestsResponse);
 
 	// Disconnects all the given targets. Returns a list of results for each given target.
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
 	//       is OK, there's' no need to use the specific target response item.
-	rpc DisconnectTargets(MsgListIds) returns (MsgMultipleRequestsReply);
+	rpc Disconnect(ListIds) returns (MultipleRequestsResponse);
 
     //
     // Obtain ALL active alarms
-    rpc GetAlarms(MsgWorkstationInformation) returns (MsgAlarmsReply);
+    rpc GetAlarms(WorkstationInformation) returns (Alarms);
 
     // 
     // Lock/Unlock equipments, normally cameras. The r
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
 	//       is OK, there's' no need to use the specific lock/unlock response item.
     // 
     //  Param:
     //      message MsgLockUnlock {
 	//          // The list of identifications, normally from cameras.
-	//          MsgListIds ids = 1;
+	//          ListIds ids = 1;
     //          // The lock or unlock Operation
     //          LockUnlockType LockUnlock = 2;
     //      } 
     //
     //  Returns:
-    //      message MsgMultipleRequestsReply {
+    //      message MultipleRequestsResponse {
 	//          // Global reply for the request. If this is OK, then ALL requests were successful. 
-	//          MsgReply globalReply = 1;
+	//          MsgReply globalResponse = 1;
 	//          // The list of IDs and request status of each one of them. 
-	//          repeated MsgNumericReply specificReplies = 2;
+	//          repeated NumericResponse specificReplies = 2;
     //      }
-    rpc LockUnlockEquipments(MsgLockUnlockEquips) returns (MsgMultipleRequestsReply);
+    rpc LockUnlockEquipments(LockUnlockEquipsRequest) returns (MultipleRequestsResponse);
 
     // 
     // Get ALL locked equipments, normally cameras.
-    rpc GetLockedEquipments(MsgWorkstationInformation) returns (MsgNumericsReply);
+    rpc GetLockedEquipments(WorkstationInformation) returns (NumericsResponse);
 
     //
     // From the given list of stations, obtain ALL its equipments state.
@@ -83,25 +84,25 @@ service Operation {
 	// Sequences interfaces 
 	//
 
-	// Starting sequences in the targets, normally monitors, all given in the MsgStartSeqsInTargets message.
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// Starting sequences in the targets, normally monitors, all given in the StartSeqsInTargetsRequest message.
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
     //       is OK, there's' no need to use the specific target response item.
-	rpc StartSequencesInTargets(MsgStartSeqsInTargets) returns (MsgMultipleRequestsReply);
+	rpc StartSequences(StartSequencesRequest) returns (MultipleRequestsResponse);
 
-	// Executes sequences operations: stop, pause, restart and steps forward and backward.
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// For all given sequences, executes the given operation: stop, pause, restart and steps forward and backward.
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
     //       is OK, there's' no need to use the specific target response item.
-	rpc ExecSequencesOperation(MsgSequencesOperation) returns (MsgMultipleRequestsReply);
+	rpc ExecSequencesOperation(SequencesOperationRequest) returns (MultipleRequestsResponse);
 
 	// Obtain all running sequences. 
 	// The request can be filter by the given WorkStation, targets, sequences handles, etc, 
-    // configured in the MsgRunningSequences parameter, if any.
+    // configured in the RunningSequencesRequest parameter, if any.
 	// Can be used to obtain:
 	//		- all running sequences, if the given parameter is unset; 
 	//		- sequences states; 
 	//		- which, if any, sequences are active in the given targets;
 	//		- etc.
-	rpc GetRunningSequences(MsgRunningSequences) returns (MsgRunningSequencesReply);
+	rpc GetRunningSequences(RunningSequencesRequest) returns (RunningSequencesResponse);
 
 
 
@@ -109,10 +110,10 @@ service Operation {
 	// Macros interfaces 
 	//
 
-	// Executes macros operations, i.e., start or stop.
-	// NOTE: if the globalReply, present in the returned MsgMultipleRequestsReply, 
+	// For all given macros, executes the given operation, i.e., start or stop.
+	// NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
     //       is OK, there's' no need to use the specific macro response item.
-	rpc ExecMacrosOperation(MsgMacrosOperation) returns (MsgMultipleRequestsReply);
+	rpc ExecMacrosOperation(MacrosOperationRequest) returns (MultipleRequestsResponse);
 
 }
 

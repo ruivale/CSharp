@@ -33,27 +33,55 @@
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.8.6" />
-    <PackageReference Include="OpenDDSharp" Version="3.250.2" />
-    <PackageReference Include="OpenDDSharp.IdlGenerator" Version="3.250.2" />
-    <PackageReference Include="OpenDDSharp.Marshaller" Version="3.250.2" />
-    <PackageReference Include="OpenDDSharp.Native" Version="3.250.2" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="IDLs\services\EventConsumer.idl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="IDL\EventConsumer.idl">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
-    <IdlFiles Remove="IDL\EventConsumer.idl" />
+    <Folder Include="IDL\" />
   </ItemGroup>
 
   <ItemGroup>
-    <IdlFiles Remove="IDL\EventTypes.idl" />
+    <Reference Include="IIOPChannel">
+      <HintPath>lib\iiop.net\IIOPChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoAgenteStv">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoAgenteStv.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoAgentOper">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoAgentOper.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoConfiguration">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoConfiguration.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoEventConsumer">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoEventConsumer.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoEventInfo">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoEventInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoEventServer">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoEventServer.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoEventTypes">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoEventTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoOperation">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoOperation.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoStvEvent">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoStvEvent.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoStvTypes">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoStvTypes.dll</HintPath>
+    </Reference>
+    <Reference Include="InossCctvTaoTypes">
+      <HintPath>lib\inoss_cctv_server_tao\InossCctvTaoTypes.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

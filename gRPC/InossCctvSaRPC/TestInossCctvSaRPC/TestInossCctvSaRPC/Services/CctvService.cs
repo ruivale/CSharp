@@ -1,14 +1,14 @@
 using Grpc.Core;
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation;
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration;
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums;
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages.v1;
 
 
 
 namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
 {
-    public class CctvService : Operation.OperationBase
+    public class CctvService : v1.Operation.OperationBase
     {
         private readonly ILogger<CctvService> _logger;
 
@@ -25,10 +25,10 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<MsgVersionsReply> GetVersion(MsgVersions request, ServerCallContext context)
+        public override Task<CctvVersions> GetVersions(VersionsRequest request, ServerCallContext context)
         {
 
-            MsgVersionReply msgVersionReplyGRPC = new MsgVersionReply
+            CctvVersion msgVersionReplyGRPC = new CctvVersion
             {
                 Version = 0,
                 SubVersion = 0,
@@ -37,7 +37,7 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
                 Desc = "Hello. I'm CctvOperation service version 0.0.1-alphaI."
             };
 
-            MsgVersionReply msgVersionReplySa = new MsgVersionReply
+            CctvVersion msgVersionReplySa = new CctvVersion
             {
                 Version = 2,
                 SubVersion = 0,
@@ -46,7 +46,7 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
                 Desc = "Hello. I'm CctvSa service version 2.0.1.2560."
             };
 
-            MsgVersionsReply msgVersions = new MsgVersionsReply()
+            CctvVersions msgVersions = new CctvVersions()
             {
                 Versions = {msgVersionReplyGRPC, msgVersionReplySa}
             };

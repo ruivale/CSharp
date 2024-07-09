@@ -14,6 +14,7 @@
 syntax = "proto3";
 
 option csharp_namespace = "Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation";
+option java_package = "test.com.efacec.es.efarail.cctv.grpc.operation";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -22,7 +23,7 @@ import "google/protobuf/wrappers.proto";
 
 import "protos/cctv_enums.proto";
 
-package cctv;
+//package test.com.efacec.es.efarail.cctv.grpc.operation;
 
 
 

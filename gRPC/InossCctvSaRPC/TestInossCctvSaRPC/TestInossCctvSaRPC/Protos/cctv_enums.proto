@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums";
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums.v1";
+option java_package = "com.efacec.es.trp.efarail.cctv.grpc.enums.v1";
 
-
-package cctv;
+//package com.efacec.es.trp.efarail.cctv.grpc.enums.v1;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -15,12 +15,13 @@ package cctv;
 
 // MsgVersionMod
 // Normally used when version are requested
-enum MsgVersionMod {
+enum VersionMod {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
 	VERMOD_ALL = 0;
 	VERMOD_GRPC = 1;
 	VERMOD_SA = 2;
 	VERMOD_AGENT = 3;
+	VERMOD_PROXY = 4;
 }
 
 // SourceObj
@@ -74,7 +75,7 @@ enum MacroOper {
 
 // ReplyValue
 // All possible reply values
-enum ReplyValue {
+enum ResponseValue {
 	// since we're dealing w/ OPEN enums, the first element must be zero (0);
 	R_OK = 0;
     R_ERROR = 1;
