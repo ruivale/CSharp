@@ -1,3 +1,15 @@
+/////////////////////////////////////////////////////////////////////////////////////
+//  Links:
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
+//      https://www.infoq.com/articles/dotnet-grpc-json-transcoding/
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-binding
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-openapi?view=aspnetcore-8.0
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/aspnetcore?view=aspnetcore-8.0
+//      https://cloud.google.com/endpoints/docs/grpc/transcoding
+//      https://cloud.google.com/apis/design/naming_convention
+//
+/////////////////////////////////////////////////////////////////////////////////////
+
 syntax = "proto3";
 
 option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration.v1";
@@ -14,17 +26,34 @@ import "protos/cctv_messages.proto";
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
-// CCTV configuration interface
+// CCTV configuration interface (TAO IDL: configuration.idl)
 //
 //
 service Configuration {
+    
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Equipments interfaces
+    //
+    
+    //
+    // Returns 
+    // TAO IDL: 
+    //          - ??????? int getAllEquipsConf(int stationId, listEquipsConfHolder lEquips); ??????
+    // TODO: probably will required MORE developments in StvSa. There's no such API as "getAllEquips(..)"'
+    rpc GetAllEquipments(ListIds) returns (ListEquipments);
 
-	//
+
+
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Sequences interfaces 
 	//
-	// Obtain ALL configured sequences in the system.
+	
+    // Obtain ALL configured sequences in the system.
 	// If the given MsgListIds is empty, or null, this method returns ALL sequences otherwise, 
 	// it filters the result by the MsgListIds configured workstation and/or sequences identification.
+    // TAO IDL: 
+    //          - int getAllVidSeqs(...);
 	rpc GetAllSequences(ListIds) returns (ListSequences);
 
 

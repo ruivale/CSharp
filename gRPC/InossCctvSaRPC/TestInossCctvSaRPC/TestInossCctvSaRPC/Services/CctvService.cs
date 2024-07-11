@@ -25,7 +25,7 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
         /// <param name="request"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public override Task<CctvVersions> GetVersions(VersionsRequest request, ServerCallContext context)
+        public override Task<ListCctvVersions> GetVersions(VersionsRequest request, ServerCallContext context)
         {
 
             CctvVersion msgVersionReplyGRPC = new CctvVersion
@@ -46,7 +46,7 @@ namespace Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services
                 Desc = "Hello. I'm CctvSa service version 2.0.1.2560."
             };
 
-            CctvVersions msgVersions = new CctvVersions()
+            ListCctvVersions msgVersions = new ListCctvVersions()
             {
                 Versions = {msgVersionReplyGRPC, msgVersionReplySa}
             };

@@ -1,3 +1,15 @@
+/////////////////////////////////////////////////////////////////////////////////////
+//  Links:
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
+//      https://www.infoq.com/articles/dotnet-grpc-json-transcoding/
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-binding
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-openapi?view=aspnetcore-8.0
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/aspnetcore?view=aspnetcore-8.0
+//      https://cloud.google.com/endpoints/docs/grpc/transcoding
+//      https://cloud.google.com/apis/design/naming_convention
+//
+/////////////////////////////////////////////////////////////////////////////////////
+
 syntax = "proto3";
 
 option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages.v1";
@@ -39,7 +51,7 @@ message Response {
 message NumericResponse {
 	// The numeric value.
 	Response response = 1;
-	// The 
+	// The numeric response identification
 	int64 id = 2;
 }
 
@@ -50,6 +62,26 @@ message NumericsResponse {
 	Response response = 1;
 	// The 
 	repeated int64 ids = 2;
+}
+
+//
+// The user message
+message User {
+    // The user identification
+    google.protobuf.Int64Value id = 1;
+    // The user name
+    google.protobuf.StringValue login = 2;
+    // The user name
+    google.protobuf.StringValue name = 3;
+}
+
+//
+// The user access request: login or logout.
+message UserAccessRequest {
+    // The user identification
+    User user = 1;
+    // The acces type: login or logout.
+    UserAccessType userAccessType = 2;
 }
 
 //
@@ -71,7 +103,7 @@ message CctvVersion {
 
 //
 // Generic multiple versions reply
-message CctvVersions {
+message ListCctvVersions {
     // The requested modules versions.
     repeated CctvVersion versions = 1;
 }
@@ -80,9 +112,9 @@ message CctvVersions {
 // The current WorkStation information. Normally used by the auditing system.
 message WorkstationInformation {
 	// The user name of the logged user, i.e., the user login.
-	string userName = 1;
+	google.protobuf.StringValue userName = 1;
 	// The workstation identification.
-	int64 id = 2;
+	google.protobuf.Int64Value id = 2;
 }
 
 //
@@ -97,9 +129,9 @@ message VersionsRequest {
 // Basic message holder for connections, i.e., only the source and target data. 
 message ConnectionInfo {
 	// The source, normally a camera, identification  but could also be a sequence id...
-	int64 sourceId = 1;
+	google.protobuf.Int64Value sourceId = 1;
 	// The target equipment, normally a monitor, identification.
-	int64 targetId = 2;
+	google.protobuf.Int64Value targetId = 2;
 }
 
 // Set source in target connection attempts data.
@@ -107,11 +139,11 @@ message ConnectionRequest {
 	// The basic, i.e. source & target, data.
 	ConnectionInfo connectionInfo = 1;
 	// The source equipment port (can be left without a value, i.e. 0).
-	int64 sourcePort = 2;
+	google.protobuf.Int64Value sourcePort = 2;
 	// The target equipment port (can be left without a value, i.e. 0).
-	int64 targetPort = 3;
+	google.protobuf.Int64Value targetPort = 3;
 	// Used, if needed to set the address where to connect.
-	string address = 4;
+	google.protobuf.StringValue address = 4;
 }
 
 //
@@ -131,7 +163,7 @@ message ListIds {
 	WorkstationInformation workStationInfo = 1;
 	// Items Ids, whatever tey mean, i.e., sources equipments, targets equipments, 
     // sequences ids, active sequences handles, etc.
-	repeated int64 ids = 2;
+	repeated google.protobuf.Int64Value ids = 2;
 }
 
 //
@@ -172,13 +204,13 @@ message MultipleRequestsResponse {
 }
 
 //
-//
+// Information associated to a sequence start.
 message SequenceConnInfo {
 	// The connection info, i.e., sequence, the source item in the message, and target.
 	ConnectionInfo connectionInfo = 1;
 	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
 	// NOTE: nowadays, @2406, not used anymore... but here just in case
-	int64 syncTime = 2;
+	google.protobuf.StringValue syncTime = 2;
 }
 
 //
@@ -213,16 +245,16 @@ message ListSequences {
 message RunningSequence {
 	// The sequence identification. 
     // May not be needed if the handle is set. It can be useful, but not always mandatory.
-	int64 id = 1;
+	google.protobuf.Int64Value id = 1;
 	// The running sequence handle, i.e., the running sequence identification.
-	int64 handle = 2;
+	google.protobuf.Int64Value handle = 2;
 	// The running sequence active target, normally not needed but can be sent just in case.
-	int64 targetId = 3;
+	google.protobuf.Int64Value targetId = 3;
 	// The sequence state. Depending on the operation, this value could be not set.
 	SequenceState state = 4;
 	// Used for syncronous sequences. Values from 0..30, in intervals of 5 meaning seconds.
 	// NOTE: nowadays, @2406, not used anymore... but here just in case.
-	int64 syncTime = 5;
+	google.protobuf.Int64Value syncTime = 5;
 }
 
 //
@@ -263,8 +295,6 @@ message SequencesOperationRequest {
 	repeated RunningSequence runningSequences = 3;
 }
 
-
-
 //
 // Used to start and stop macros. 
 // Only a single MacroOper can be applied to the given list of macros.
@@ -274,7 +304,7 @@ message MacrosOperationRequest {
 	// The macro oper, i.e., start or stop.
 	MacroOper macroOper = 2;
 	// Macros Ids.
-	repeated int64 ids = 3;
+	repeated google.protobuf.Int64Value ids = 3;
 }
 
 //
@@ -294,7 +324,7 @@ message Alarm {
 
 //
 // List of alarms, normally used when obtaing the list of ALL active alarms.
-message Alarms {
+message ListAlarms {
     // The list of alarms.
     repeated Alarm alarms = 1;
 }
@@ -302,11 +332,225 @@ message Alarms {
 //
 // Message used when a lock, or unlock, equipments request is invoked.
 message LockUnlockEquipsRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
 	// The list of identifications, normally from cameras.
-	ListIds ids = 1;
+	ListIds ids = 2;
     // The lock or unlock Operation.
-    LockUnlockType LockUnlock = 2;
+    LockUnlockType LockUnlock = 3;
 }
+
+//
+// Equipment generic state
+message EquipmentGenericState {
+    // The equipment identification
+    int64 equipId = 1;
+    // The generic state.
+    EquipGenericState state = 2;
+}
+
+//
+// The equipments generic state response
+message EquipmentsGenericStateResponse {
+    repeated EquipmentGenericState equipsGenericStates = 1;
+}
+
+//
+// Equipment specific state
+message EquipmentSpecificState {
+    // The equipment identification
+    int64 equipId = 1;
+    // The generic state.
+    EquipSpecificState state = 2;
+}
+
+//
+// The equipments specific state response
+message EquipmentsSpecificStateResponse {
+    repeated EquipmentSpecificState equipsSpecificStates = 1;
+}
+
+//
+// An equipment associated data.
+message Equipment {
+    // The equipment identification.
+    google.protobuf.Int64Value id = 1;
+    // The equipment name.
+    google.protobuf.StringValue name = 2;
+    // The equipment type.
+    google.protobuf.Int64Value type = 3;
+    // Is the equipment enabled?
+    google.protobuf.BoolValue enabled = 4;
+    // The equipment station identification.
+    google.protobuf.Int64Value stationId = 5;
+    // The equipment communications settings.
+    google.protobuf.StringValue commSettings = 6;
+    // The equipment generic state.
+    EquipGenericState genericState = 7;
+    // The equipment specific state.
+    EquipSpecificState specificState = 8;
+    // The equipment generic configuration.
+    google.protobuf.StringValue genericConfig = 9;
+    // The equipment specific configuration.
+    google.protobuf.StringValue specificConfig = 10;
+    // The equipment associated box identification, if any.
+    google.protobuf.Int64Value boxId = 11;
+}
+
+//
+// The equipments response
+message ListEquipments {
+    repeated Equipment equipments = 1;
+}
+
+//
+// An equipment associated data.
+message EquipmentConfiguration {
+    // The equipment identification.
+    google.protobuf.Int64Value id = 1;
+    // The equipment communications settings.
+    google.protobuf.StringValue commSettings = 2;
+    // The equipment generic configuration.
+    google.protobuf.StringValue genericConfig = 3;
+    // The equipment specific configuration.
+    google.protobuf.StringValue specificConfig = 4;
+}
+
+//
+// The equipments configuration response
+message EquipmentsConfigurationResponse {
+    repeated EquipmentConfiguration equips = 1;
+}
+
+//
+// A camera preset CRUD operation message.
+message CameraPtzfSavePreset {
+    // The camera identification.
+    google.protobuf.Int64Value camId = 1;
+    // The ptzf camera preset slot index.
+    google.protobuf.Int64Value presetIdx = 2;
+    // The ptzf camera preset name.
+    google.protobuf.StringValue presetName = 3;
+}
+
+//
+// The cameras preset CRUD operations request.
+message CameraPtzfSavePresetsRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The camera identification.
+    repeated CameraPtzfSavePreset camerasPtzfSavePresets = 2;
+    // The request operation: add, update and delete
+    CameraPtzfPresetOperation camPtzfPresetOper = 3;
+}
+
+//
+// The cameras preset CRUD operation response.
+message CameraPtzfSavePresetResponse {
+	// The response.
+	Response response = 1;
+    // The camera preset saving information.
+    CameraPtzfSavePreset camPtzfSavePreset = 2;
+}
+
+//
+// The cameras preset CRUD operations request.
+message CameraPtzfSavePresetsResponse {
+    // The list of saving cameras presets responses.
+    repeated CameraPtzfSavePresetResponse camPtzfSavePresetResponse = 1;
+}
+
+//
+// The actuator operation: actuate or deactuate.
+message ActuatorOperationRequest {
+    // The actuator identification.
+    google.protobuf.Int64Value actuatorId = 1;
+    // The actuator operation.
+    ActuatorOperation oper = 2;
+}
+
+//
+// The actuator operations request.
+message ActuatorOperationsRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The list of actuator operations.
+    repeated ActuatorOperationRequest actuatorsOperRequest = 2;
+}
+
+//
+// Single actuator operation request response.
+message ActuatorOperationResponse {
+	// The response.
+	Response response = 1;
+    // The actuator operation.
+    ActuatorOperation actuatorOper = 2;
+}
+
+//
+// Actuators operations requests response.
+message ActuatorOperationsResponse {
+	// The response.
+	repeated ActuatorOperationResponse actuatorsOpersResponse = 1;
+}
+
+//
+// The "Not Acknowledged Alarm".
+message NotAcknowledgedAlarm {
+    // The associated monitors list identification.
+	int64 groupId = 1;
+    // The monitor identification (of course, the given monitor identification, if valid, must be a monitor "belonging" to the group set. ).
+	int64 nMonId = 2;
+    // The not acknowledged alarm identification.
+	int64 nAlarmId = 3;
+    // The not acknowledged alarm position "inside" the alarms stack list.
+	int64 nPos = 4;
+    // The not acknowledged alarm description.
+	string sDescription = 5;
+    // The not acknowledged alarm source equipment identification, normally pointing to a camera.
+	int64 nSourceId = 6;
+    // The not acknowledged alarm source equipment, normally a camera, preset, if set and if the camera is a PTZ one.
+	int64 nPrePos = 7;
+}
+
+//
+// The acknowledge alarms response, which, basicaly, is the new list of NotAcknowledgeAlarms.
+message AcknowledgeAlarmsResponse {
+    repeated NotAcknowledgedAlarm notAcknowledgedAlarms = 1;
+}
+
+//
+// The "Set Alarms On Monitor" request. Basically is a list of NotAcknowledgeAlarms identifications and target equipments, normally monitors, identifications.
+message SetAlarmsOnMonitorRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The connections info, i.e., source and target identifications pairs.
+    repeated ConnectionInfo connectionsInfo = 2;
+}
+
+//
+// The mark an user alarm message associated with the given source identification. 
+message MarkUserAlarmRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The user identification.
+    google.protobuf.Int64Value userId = 2;
+    // The source equipment identification.
+    google.protobuf.Int64Value equipId = 3;
+    // The alarm sub type identification.
+    google.protobuf.Int64Value alarmSubtypeId = 4;
+    // The marking parameters.
+    google.protobuf.StringValue param = 5;
+    // The marking subtype tag id of the sensor.
+    google.protobuf.StringValue alarmSensorSubtypeTagId = 6;
+    // The marking notes.
+    google.protobuf.StringValue notes = 7;
+}
+
+
+
+
+
 
 
 

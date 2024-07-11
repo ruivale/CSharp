@@ -1,3 +1,15 @@
+/////////////////////////////////////////////////////////////////////////////////////
+//  Links:
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding?view=aspnetcore-8.0
+//      https://www.infoq.com/articles/dotnet-grpc-json-transcoding/
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-binding
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-openapi?view=aspnetcore-8.0
+//      https://learn.microsoft.com/en-us/aspnet/core/grpc/aspnetcore?view=aspnetcore-8.0
+//      https://cloud.google.com/endpoints/docs/grpc/transcoding
+//      https://cloud.google.com/apis/design/naming_convention
+//
+/////////////////////////////////////////////////////////////////////////////////////
+
 syntax = "proto3";
 
 option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums.v1";
@@ -207,3 +219,73 @@ enum LockUnlockType {
     LCK_UNLOCK = 1;
 }
 
+//
+// The equipments generic state.
+enum EquipGenericState {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    EGS_UNDEF = 0;
+    EGS_OK = 1;
+    EGS_ERROR = 2;
+    EGS_LOCKED = 3;
+}
+
+//
+// The equipments specific state.
+enum EquipSpecificState {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    ESS_UNDEFINED = 0;
+    ESS_CAM_IDLE = 1;
+    ESS_CAM_AUTOPAN = 2;
+    ESS_CAM_RESETING = 3;
+    ESS_VR_NOMEDIA = 4;
+    ESS_VR_PLAYBACK = 5;
+    ESS_VR_RECORD = 6;
+    ESS_VR_STOP = 7;
+    ESS_VR_PAUSE = 8;
+    ESS_VR_FASTFORWARD = 9;
+    ESS_VR_REWIND = 10;
+    ESS_VR_REVERSEPLAY = 11;
+    ESS_VR_TIMEDATESEARCH = 12;
+    ESS_MPX_MULTIPLEX = 13;
+    ESS_MPX_FULLSCREEN = 14;
+    ESS_MPX_CYCLE = 15;
+    ESS_MPX_FREEZE = 16;
+    ESS_MPX_VCR = 17;
+    ESS_CODEC_DISCONNECTED = 18;
+    ESS_CODEC_CONNECTED = 19;
+    ESS_CODEC_CONNECTING = 20;
+    ESS_CODEC_DISCONNECTING = 21;
+    ESS_SENSOR_IDLE = 22;
+    ESS_SENSOR_ACTIVE = 23;
+    ESS_ACTUATOR_IDLE = 24;
+    ESS_ACTUATOR_ACTUATED = 25;
+    ESS_ACTUATOR_ACTIVE = 26;
+    ESS_WATCHDOG_ENABLED = 27;
+    ESS_WATCHDOG_DISABLED = 28;
+}
+
+//
+// The cameras presets oprations.
+enum CameraPtzfPresetOperation {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    CPO_ACTIVATE = 0;
+    CPO_ADD = 1;
+    CPO_UPDATE = 2;
+    CPO_DELETE = 3;
+}
+
+//
+// The actuator operations
+enum ActuatorOperation {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    ACO_ACTUATE = 0;
+    ACO_DEACTUATE = 1;
+}
+
+//
+// The user acces type
+enum UserAccessType {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    UAT_LOGIN = 0;
+    UAT_LOGOUT = 1;
+}
