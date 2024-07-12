@@ -116,9 +116,27 @@ service Operation {
     rpc MarkUserAlarm(MarkUserAlarmRequest) returns (NumericResponse);
 
     //
-    // Returns sensors types and all its associated subtypes and related information
+    // Returns sensor alarm types. Normally used in the user alarms marking operations.
+    // TAO IDL:
+    //          - ???????
+    // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    rpc GetSensorAlarmTypes(WorkstationInformation) returns (ListSensorAlarmTypes);
+
     //
-    //rpc GetAlarmTypes() returns ();
+    // Returns sensor alarm subtypes. Normally used in the user alarms marking operations.
+    // TAO IDL:
+    //          - ???????
+    // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    rpc GetSensorAlarmSubtypes(WorkstationInformation) returns (ListSensorAlarmSubtypes);
+
+    //
+    // Returns sensor alarm subtype tags. Normally used in the user alarms marking operations.
+    // TAO IDL:
+    //          - ???????
+    // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    rpc GetSensorAlarmSubtypesTags(WorkstationInformation) returns (ListSensorAlarmSubtypesTags);
+
+
 
 
 

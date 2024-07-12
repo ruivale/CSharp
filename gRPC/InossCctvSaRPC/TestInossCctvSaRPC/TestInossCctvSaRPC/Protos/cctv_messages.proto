@@ -115,6 +115,8 @@ message WorkstationInformation {
 	google.protobuf.StringValue userName = 1;
 	// The workstation identification.
 	google.protobuf.Int64Value id = 2;
+    //
+    // TODO: should we add the user id?
 }
 
 //
@@ -537,18 +539,80 @@ message MarkUserAlarmRequest {
     google.protobuf.Int64Value userId = 2;
     // The source equipment identification.
     google.protobuf.Int64Value equipId = 3;
-    // The alarm sub type identification.
+    // The alarm sub type identification. (from STV DB. t_sensoralarmsubtypes)
     google.protobuf.Int64Value alarmSubtypeId = 4;
-    // The marking parameters.
+    // The marking parameters. (from STV DB: t_sensralarsubtypes_tags_parms)
     google.protobuf.StringValue param = 5;
-    // The marking subtype tag id of the sensor.
+    // The marking subtype tag id of the sensor. (from STV DB: t_sensoralarmsubtypes_tags)
     google.protobuf.StringValue alarmSensorSubtypeTagId = 6;
-    // The marking notes.
+    // The marking notes. (from STV DB: t_video_recalarm_params)
     google.protobuf.StringValue notes = 7;
 }
 
 
+//
+// A sensor alarm type.
+message SensorAlarmType {
+    // The sensor alarm type identifiction.
+    int64 id = 1;
+    // The sensor alarm type description.
+    string description = 2;
+}
 
+//
+// A list of sensor alarm types.
+message ListSensorAlarmTypes {
+    // The list of SensorAlarmType.
+    repeated SensorAlarmType sensorAlarmTypes = 1;
+}
+
+//
+// A sensor alarm subtype.
+message SensorAlarmSubtype {
+    // The sensor alarm type identifiction.
+    int64 id = 1;
+    // The sensor alarm type description.
+    string description = 2;
+    // The sensor alarm type.
+    SensorAlarmType sensorAlarmType = 3;
+    // Indicates if the sensor alarm subtype can be searchable in any searchable GUI.
+    bool isGuiSearchable = 4;
+    // The sensor alarm subtype priority.
+    int64 priority = 5;
+}
+
+//
+// A list of sensor alarm subtypes.
+message ListSensorAlarmSubtypes {
+    // The list of SensorAlarmSubtype.
+    repeated SensorAlarmSubtype sensorAlarmSubtypes = 1;
+}
+
+//
+// A sensor alarm subtype tag.
+message SensorAlarmSubtypesTag {
+    // The sensor alarm type identifiction.
+    int64 id = 1;
+    // The sensor alarm subtype tag description.
+    string description = 2;
+    // The sensor alarm subtype tag name.
+    string name = 3;
+    // True if the sensor alarm subtype tag needs parameters when used.
+    bool hasParameters = 4;
+    // True if the sensor alarm subtype tag allows for notes to be added when used.
+    bool allowNotes = 5;
+    // The sensor alarm subtype tag associated subtype.
+    SensorAlarmSubtype sensorAlarmSubtype = 6;
+    // Trie if the sensor alarm subtype tag is te default one in the system.
+    bool isDefault = 7;
+}
+
+//
+// A list of sensor alarm subtype tags.
+message ListSensorAlarmSubtypesTags {
+    // The list of SensorAlarmSubtype.
+    repeated SensorAlarmSubtypesTag sensorAlarmSubtypesTags = 1;
+}
 
 
 
