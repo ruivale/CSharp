@@ -216,7 +216,7 @@ message SequenceConnInfo {
 }
 
 //
-// 
+// The sequences starting command request.
 message StartSequencesRequest {
 	// The workstation information.
 	WorkstationInformation workStationInfo = 1;
@@ -421,7 +421,7 @@ message EquipmentConfiguration {
 //
 // The equipments configuration response
 message EquipmentsConfigurationResponse {
-    repeated EquipmentConfiguration equips = 1;
+    repeated EquipmentConfiguration equipsConfig = 1;
 }
 
 //
@@ -549,7 +549,6 @@ message MarkUserAlarmRequest {
     google.protobuf.StringValue notes = 7;
 }
 
-
 //
 // A sensor alarm type.
 message SensorAlarmType {
@@ -614,9 +613,161 @@ message ListSensorAlarmSubtypesTags {
     repeated SensorAlarmSubtypesTag sensorAlarmSubtypesTags = 1;
 }
 
+//
+// The message used to edit an already user/manual alarm marking.
+//workstationInformation_ logInfo, int alarmId, int userId, String sTag, String sSensorAlarmSubtypeTagId, String notes, boolean isMarkingEnd
+message MarkUserAlarmEditRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The alarm identification.
+    google.protobuf.Int64Value alarmId = 2;
+    // The user identification.
+    google.protobuf.Int64Value userId = 3;
+    // The marking tag parameter. 
+    google.protobuf.StringValue tag = 4;
+    // The marking subtype tag id of the sensor. 
+    google.protobuf.StringValue alarmSensorSubtypeTagId = 5;
+    // The marking notes. (from STV DB: t_video_recalarm_params)
+    google.protobuf.StringValue notes = 6;
+    // If true it means the marking just occurred. False for all other usages.
+    google.protobuf.BoolValue isMarkingEnd =  7;
+}
+
+//
+// The "normal" acknowledge alarms message, Normally used to acknowledge sensors and actuators alarms.
+message AckAlarmsRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The equipment identification.
+    google.protobuf.Int64Value equipId = 2;
+    // The list os alarms to acknowledge.
+    repeated google.protobuf.Int64Value alarmsIds = 3;
+}
+
+//
+// A PTZF operation associated info. Used when a PTZF camera is PTZFed, i.e., moved, 
+// and it supports the "Return to Home Position" feature.
+// Its used for configuration and operation (reset/restar the "Go to Home Position" timer).
+message MobileCameraAutoHomePositionActivation {
+    // The camera identification.
+    google.protobuf.Int64Value camId = 1;
+    // If true it means the camera has the "Go To Home Position" feature enabled.
+    google.protobuf.BoolValue isEnabled =  2;
+    // The "Return to Home Position" timeout, i.e., the ammount of seconds before moving 
+    // the camera to its configured home position after the last PTZF operation was performed.
+    google.protobuf.Int64Value nTimeout = 3;
+    // The camera preset index used to set the home position.
+    google.protobuf.Int64Value nPreset = 4;
+    // True if the home position is set by a PreSet, 
+    // false if the home position is set by a pre-configured value (stored in T_OPTIONSSTV [PRESETS_HOME oprtion]).
+    google.protobuf.BoolValue hasHomePosSet =  5;
+//    // If true it means the camera has the "Go To Home Position" feature enabled.
+//    google.protobuf.BoolValue isSequenceMng =  6;
+//    // 
+//    google.protobuf.BoolValue isAlarmMng =  7;
+}
+
+//
+// The "Go to Home Position" oper/config request message.
+message MobileCameraAutoHomePositionActivationsRequest {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The PTZF operations.
+    repeated MobileCameraAutoHomePositionActivation mobCamAutoHomePosActs = 2;
+}
+
+//
+// The list of PtzfOperation.
+message ListMobileCameraAutoHomePositionActivations {
+    // The list of PtzfOperations.
+    repeated MobileCameraAutoHomePositionActivation mobCamAutoHomePosActs = 1;
+}
 
 
 
+//
+// The Cctv agent data.
+message Agent {
+    // The agent identification.
+    int64 id = 1;
+    // The agente address.
+    string address = 2;
+    // True if the agent is enabled.
+    bool isEnabled = 3;
+    // The agent server identification.
+    int64 serverId = 4;
+}
 
+//
+// The Cctv station.
+message Station {
+    // The station identification.
+    int64 id = 1;
+    // The station name.
+    string name = 2;
+    // The station status.
+    int64 status = 3;
+    // True if the station is enabled.
+    bool isEnabled = 4;
+    // The station polling timeout. (?????)
+    int64 pollingTimeout = 5;
+    // The station identification
+    int64 type = 6;
+}
 
+//
+// The Cctv equipment class.
+message EquipmentClass {
+    // The equipment class identification.
+    int64 id = 1;
+    // The equipment class name.
+    string name = 2;
+    // The equipment class generic configuration sintaxe.
+    string sxGenericConfig = 3;
+}
 
+//
+// The Cctv equipment type.
+message EquipmentType {
+    // The equipment type identification.
+    int64 id = 1;
+    // The equipment type name.
+    string name = 2;
+    // The equipment type class identification.
+    int64 classId = 3;
+    // The equipment type generic configuration.
+    string genericConfig = 4;
+    // The equipment type specific configuration.
+    string specificConfig = 5;
+
+//    // The equipment type communication settings.
+//    string commSettings = n;
+//    // The equipment type video terminals.
+//    string videoTerminals = n;
+//    // The equipment type driver.
+//    string driver = n;
+}
+
+//
+// An Cctv agent configuration and the network data: agent, stations, equipment classes, equipment types and equipments.
+message CctvConfig {
+    // The agent configuration.
+    Agent agent = 1;
+    // The agent stations.
+    repeated Station stations = 2;
+    // The agent equipment classes.
+    repeated EquipmentClass equipClasses = 3;
+    // The agent equipment types.
+    repeated EquipmentType equipTypes = 4;
+    // The agent equipments.
+    repeated Equipment equipments = 5;
+}
+
+//
+// The Cctv basic network configuration grouped by Cctv agents.
+message CctvConfigResponse {
+	// The workstation information.
+	WorkstationInformation workStationInfo = 1;
+    // The agents configurations.
+    repeated CctvConfig cctvConfigs = 2;
+}

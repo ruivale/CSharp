@@ -31,6 +31,14 @@ import "protos/cctv_messages.proto";
 //
 service Configuration {
     
+
+    //
+    // Used to obtain all the network data: agent, stations, equipment classes, equipment types and equipments.
+    // TAO IDL:
+    //          - 	int getAgentConfigByID(int ID, AgentConfigStv_Holder, listStationsHolder, listEquipClassesHolder, listEquipTypesConfHolder, listEquipsConfHolder, lastUpdated);
+    rpc GetAgentConfigById(ListIds) returns (CctvConfigResponse);
+
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Equipments interfaces
     //
