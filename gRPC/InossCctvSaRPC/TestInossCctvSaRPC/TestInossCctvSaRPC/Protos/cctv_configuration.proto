@@ -31,15 +31,26 @@ import "protos/cctv_messages.proto";
 //
 service Configuration {
     
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Generic interfaces
+    //
 
     //
     // Used to obtain all the network data: agent, stations, equipment classes, equipment types and equipments.
+    // If the given ListIds has no ids set, it means all configured agent information should be returned.
+    //
+    // NOTE: THIS IS NOT RELATED WITH THE GUI/GI STV DATABASE TABLES (T_IG_*).
+    //
     // TAO IDL:
     //          - 	int getAgentConfigByID(int ID, AgentConfigStv_Holder, listStationsHolder, listEquipClassesHolder, listEquipTypesConfHolder, listEquipsConfHolder, lastUpdated);
-    rpc GetAgentConfigById(ListIds) returns (CctvConfigResponse);
+    rpc GetAgentNetworkConfigById(ListIds) returns (CctvConfigResponse);
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Equipments interfaces
     //
     
@@ -53,16 +64,118 @@ service Configuration {
 
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Sequences interfaces 
-	//
-	
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Sequences interfaces 
+    //
+    
+    //
     // Obtain ALL configured sequences in the system.
-	// If the given MsgListIds is empty, or null, this method returns ALL sequences otherwise, 
-	// it filters the result by the MsgListIds configured workstation and/or sequences identification.
+    // If the given ListIds is empty, or null, this method returns ALL sequences basic data otherwise, 
+    // it filters the result by ListIds identifications which relates to sequences identifications.
     // TAO IDL: 
     //          - int getAllVidSeqs(...);
-	rpc GetAllSequences(ListIds) returns (ListSequences);
+    rpc GetAllSequences(ListIds) returns (ListSequences);
+
+    //
+    // Used to add, basic and full edition, delete sequences and also edit and delete specific sequences operations (this last two must already exist).
+    // TAO IDL:
+    //          - int addNewVidSeq(workstationInformation_, VideoSequenceConfigStv_); (SequenceConfig.SEQCONF_ADD)
+    //          - int saveVidSeq(workstationInformation_, VideoSequenceConfigStv_ ); (SequenceConfig.SEQCONF_EDIT_BASIC)
+    //          - int saveVidSeqFull(workstationInformation_, VideoSequenceConfigStv_, VidSeqOperationConfigStv_[]); (SequenceConfig.SEQCONF_EDIT_FULL)
+    //          - int deleteVidSeq(workstationInformation_ logInfo, int VidSeqID); (SequenceConfig.SEQCONF_DELETE)
+    //          - int saveVidSeqOperation(VidSeqOperationConfigStv_); (SequenceConfig.SEQCONF_SAVE_OPERATION)
+    //          - int deleteVidSeqOperation(int VidSeqID, int nPos); (SequenceConfig.SEQCONF_DELETE_OPERATION)
+    rpc ExecSequenceConfiguration(SequenceConfigRequest) returns (SequenceConfigResponse);
+
+    // 
+    // Obtains, for given sequences and its list of operations. 
+    // It can filter the results by setting the ListIds identifications which relates to sequences identifications.
+    // TAO IDL:
+    //          - int getAllVidSeqOperations(int vidSeqId, listVidSeqOpersHolder);
+    rpc GetSequencesConfiguration(ListIds) returns (ListSequenceFullData);
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Macros interfaces 
+    //
+    
+    //
+    // Obtain ALL configured macros in the system. 
+    // It returns macros basic data, i.e., not macros actions and its parameters; for this use the GetMacrosConfiguration(..) API.
+    // If the given ListIds is empty, or null, this method returns ALL macros otherwise, it filters 
+    // the results by the ListIds configured identifications which relates to the macro owner identification.
+    // TAO IDL:
+    //          - int getMacroByID(int MacroID, MacroConfigStv_Holder);
+	//          - int getAllMacros(listMacrosHolder);
+    //          - int getAllMacrosFromUser(int userId, listMacrosHolder);
+    rpc GetAllMacros(ListIds) returns (ListMacros);
+
+    //
+    // Obtains macros configurations: macros, its actions and its actions parameters. 
+    // It can be filtered by setting the request macro or owner id. If not set, or invalid, all macros are returned.
+    // TAO IDL:
+    //          - int getMacroByID(int MacroID, MacroConfigStv_Holder);
+	//          - int getAllMacros(listMacrosHolder);
+	//          - int getAllMacrosFromUser(int userId, listMacrosHolder);
+    rpc GetMacrosConfiguration(MacrosRequest) returns (ListMacrosFullData);
+
+    //
+    // From the given MacroActionParametersRequest, we can filter the returning data according to the given macro action parameter index. 
+    // If no parameter index is given, all the macro action parameters are returned, otherwise, only the desired parameter, if exists, is returned.
+    // TAOL IDL:
+    //          - int getActionParameter(int Macro_ID, int ActionNr, int ParamNr, ActionParameterConfigStv_Holder);
+    //          - int getAllActionParameters(int macroId, int actionNr, listActionParametersHolder );
+    rpc GetMacroActionParameters(MacroActionParametersRequest) returns (ListMacroActionParameter);
+
+    //
+    // Used to configure macro actions parameters.
+    // TAO IDL:
+	//          - int saveActionParameter(com.efacec.es.inoss.stv.corba.jacorb.stv.tao.ActionParameterConfigStv_ Param);
+	//          - int deleteActionParameter(int MacroID, int ActionNr, int ParamNr);
+    rpc ExectMacroActionParameterConfiguration(MacroActionParameterConfigurationRequest) returns (MacroActionParameterConfigurationResponse);
+
+    //
+    // From the given MacroActionsRequest, we can filter the returning data according to the given macro action index. 
+    // If no action index is given, all the macro actions are returned, otherwise, only the desired action, if exists, is returned.
+    // If all data from a macro, i.e., its actions and its actions parameters is the desired bunch of data, the GetMacrosConfiguration(..) API should be used.
+    // TAO IDL:
+	//          - int getAction(int MacroID, int nActionNr, com.efacec.es.inoss.stv.corba.jacorb.stv.tao.ActionConfigStv_Holder Action);
+	//          - int getAllActions(int MacroId, com.efacec.es.inoss.stv.corba.jacorb.stv.tao.listActionsHolder lActions);
+    rpc GetMacroActions(MacroActionsRequest) returns (ListMacroAction);
+
+    //
+    // Used to configure macro actions.
+    // If the configuration operation is a save and the MacroActionConfigurationRequest MacroActionFullData has the 
+    // macroActionParameters list set, then the save is considered a FULL macro action save.
+    // For a deletion only the macro identification and its action index are required.
+    // TAO IDL:
+	//          - int saveAction(ActionConfigStv_ Action);
+	//          - int deleteAction(int MacroID, int nActionNr);
+    //          - int saveActionFull(ActionConfigStv_, ActionParameterConfigStv_[]);
+    rpc ExectMacroActionConfiguration(MacroActionConfigurationRequest) returns (MacroActionConfigurationResponse);
+
+    //
+    // Used to configure macros.
+    // If the configuration operation is a save and the MacroActionConfigurationRequest MacroActionFullData has the 
+    // macroActionParameters list set, then the save is considered a FULL macro action save.
+    // For a deletion only the macro identification and its action index are required.
+    // TAO IDL:
+	//          - int addNewMacro(workstationInformation_ logInfo, MacroConfigStv_ Macro);
+	//          - int saveMacro(workstationInformation_ logInfo, MacroConfigStv_ Macro);
+	//          - int saveMacroFull(workstationInformation_ logInfo, MacroConfigStv_, ActionConfigStv_[] lActions, ActionParameterConfigStv_[] lParams);
+	//          - int deleteMacro(workstationInformation_ logInfo, int MacroID);
+    rpc ExectMacroConfiguration(MacroConfigurationRequest) returns (MacroConfigurationResponse);
 
 
 }
+
+
+
+
+
