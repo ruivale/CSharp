@@ -42,7 +42,7 @@ service Configuration {
     // NOTE: THIS IS NOT RELATED WITH THE GUI/GI STV DATABASE TABLES (T_IG_*).
     //
     // TAO IDL:
-    //          - 	int getAgentConfigByID(int ID, AgentConfigStv_Holder, listStationsHolder, listEquipClassesHolder, listEquipTypesConfHolder, listEquipsConfHolder, lastUpdated);
+    //          - int getAgentConfigByID(int ID, AgentConfigStv_Holder, listStationsHolder, listEquipClassesHolder, listEquipTypesConfHolder, listEquipsConfHolder, lastUpdated);
     rpc GetAgentNetworkConfigById(ListIds) returns (CctvConfigResponse);
 
 
@@ -59,10 +59,22 @@ service Configuration {
     // TAO IDL: 
     //          - ??????? int getAllEquipsConf(int stationId, listEquipsConfHolder lEquips); ??????
     // TODO: probably will required MORE developments in StvSa. There's no such API as "getAllEquips(..)"'
-    rpc GetAllEquipments(ListIds) returns (ListEquipments);
+    rpc GetAllEquipments(ListIds) returns (ListEquipmentsResponse);
 
+    //
+    // Used to obtain cameras presets.
+    // TAO IDL:
+    //          - int getAllPresets(int cameraId, listPresetsHolder);
+    rpc GetCamerasPresets(CamerasPresetsRequest) returns (CamerasPresetsResponse);
 
-
+    //
+    // Used to edit a cameras preset.
+    //
+    // NOTE: THIS METHOD WILL ONLY CHANGE THE STV DATABASE CAMERA PRESET DATA (it will not change anything in the equipment).
+    //
+    // TAO IDL:
+    //          - int storePreset(PresetConfigStv_);
+    rpc CamerasPresetsEdition(CamerasPresetsEditionRequest) returns (CamerasPresetsEditionResponse);
 
 
 
@@ -76,7 +88,7 @@ service Configuration {
     // it filters the result by ListIds identifications which relates to sequences identifications.
     // TAO IDL: 
     //          - int getAllVidSeqs(...);
-    rpc GetAllSequences(ListIds) returns (ListSequences);
+    rpc GetAllSequences(ListIds) returns (ListSequencesResponse);
 
     //
     // Used to add, basic and full edition, delete sequences and also edit and delete specific sequences operations (this last two must already exist).
@@ -94,7 +106,7 @@ service Configuration {
     // It can filter the results by setting the ListIds identifications which relates to sequences identifications.
     // TAO IDL:
     //          - int getAllVidSeqOperations(int vidSeqId, listVidSeqOpersHolder);
-    rpc GetSequencesConfiguration(ListIds) returns (ListSequenceFullData);
+    rpc GetSequencesConfiguration(ListIds) returns (ListSequenceFullDataResponse);
 
 
 
@@ -112,66 +124,114 @@ service Configuration {
     // the results by the ListIds configured identifications which relates to the macro owner identification.
     // TAO IDL:
     //          - int getMacroByID(int MacroID, MacroConfigStv_Holder);
-	//          - int getAllMacros(listMacrosHolder);
+    //          - int getAllMacros(listMacrosHolder);
     //          - int getAllMacrosFromUser(int userId, listMacrosHolder);
-    rpc GetAllMacros(ListIds) returns (ListMacros);
+    rpc GetAllMacros(ListIds) returns (ListMacrosResponse);
 
     //
     // Obtains macros configurations: macros, its actions and its actions parameters. 
     // It can be filtered by setting the request macro or owner id. If not set, or invalid, all macros are returned.
     // TAO IDL:
     //          - int getMacroByID(int MacroID, MacroConfigStv_Holder);
-	//          - int getAllMacros(listMacrosHolder);
-	//          - int getAllMacrosFromUser(int userId, listMacrosHolder);
-    rpc GetMacrosConfiguration(MacrosRequest) returns (ListMacrosFullData);
+    //          - int getAllMacros(listMacrosHolder);
+    //          - int getAllMacrosFromUser(int userId, listMacrosHolder);
+    rpc GetMacrosConfiguration(MacrosRequest) returns (ListMacrosFullDataResponse);
 
     //
     // From the given MacroActionParametersRequest, we can filter the returning data according to the given macro action parameter index. 
     // If no parameter index is given, all the macro action parameters are returned, otherwise, only the desired parameter, if exists, is returned.
     // TAOL IDL:
-    //          - int getActionParameter(int Macro_ID, int ActionNr, int ParamNr, ActionParameterConfigStv_Holder);
     //          - int getAllActionParameters(int macroId, int actionNr, listActionParametersHolder );
     rpc GetMacroActionParameters(MacroActionParametersRequest) returns (ListMacroActionParameter);
 
     //
-    // Used to configure macro actions parameters.
+    // Used to obtain macros actions.
     // TAO IDL:
-	//          - int saveActionParameter(com.efacec.es.inoss.stv.corba.jacorb.stv.tao.ActionParameterConfigStv_ Param);
-	//          - int deleteActionParameter(int MacroID, int ActionNr, int ParamNr);
-    rpc ExectMacroActionParameterConfiguration(MacroActionParameterConfigurationRequest) returns (MacroActionParameterConfigurationResponse);
-
-    //
-    // From the given MacroActionsRequest, we can filter the returning data according to the given macro action index. 
-    // If no action index is given, all the macro actions are returned, otherwise, only the desired action, if exists, is returned.
-    // If all data from a macro, i.e., its actions and its actions parameters is the desired bunch of data, the GetMacrosConfiguration(..) API should be used.
-    // TAO IDL:
-	//          - int getAction(int MacroID, int nActionNr, com.efacec.es.inoss.stv.corba.jacorb.stv.tao.ActionConfigStv_Holder Action);
-	//          - int getAllActions(int MacroId, com.efacec.es.inoss.stv.corba.jacorb.stv.tao.listActionsHolder lActions);
-    rpc GetMacroActions(MacroActionsRequest) returns (ListMacroAction);
+    //          - int getAllActions(int MacroId, listActionsHolder lActions);
+    rpc GetMacroActions(MacroActionsRequest) returns (ListMacroActionsResponse);
 
     //
     // Used to configure macro actions.
-    // If the configuration operation is a save and the MacroActionConfigurationRequest MacroActionFullData has the 
+    // If the configuration operation is a save and the MacroActionConfigurationRequest.MacroActionFullData has the 
     // macroActionParameters list set, then the save is considered a FULL macro action save.
     // For a deletion only the macro identification and its action index are required.
     // TAO IDL:
-	//          - int saveAction(ActionConfigStv_ Action);
-	//          - int deleteAction(int MacroID, int nActionNr);
+    //          - int saveAction(ActionConfigStv_ Action);
+    //          - int deleteAction(int MacroID, int nActionNr);
     //          - int saveActionFull(ActionConfigStv_, ActionParameterConfigStv_[]);
     rpc ExectMacroActionConfiguration(MacroActionConfigurationRequest) returns (MacroActionConfigurationResponse);
 
     //
     // Used to configure macros.
-    // If the configuration operation is a save and the MacroActionConfigurationRequest MacroActionFullData has the 
-    // macroActionParameters list set, then the save is considered a FULL macro action save.
-    // For a deletion only the macro identification and its action index are required.
+    // If the configuration operation is a save and the MacroActionConfigurationRequest has all its data holders set, i.e.,
+    // MacroFullData[.MacroActionFullData[.MacroActionParameter]], then we're' dealing with a FULL macro action save.
+    // For a deletion only the macro identification is required.
     // TAO IDL:
-	//          - int addNewMacro(workstationInformation_ logInfo, MacroConfigStv_ Macro);
-	//          - int saveMacro(workstationInformation_ logInfo, MacroConfigStv_ Macro);
-	//          - int saveMacroFull(workstationInformation_ logInfo, MacroConfigStv_, ActionConfigStv_[] lActions, ActionParameterConfigStv_[] lParams);
-	//          - int deleteMacro(workstationInformation_ logInfo, int MacroID);
+    //          - int addNewMacro(workstationInformation_, MacroConfigStv_);
+    //          - int saveMacro(workstationInformation_, MacroConfigStv_ );
+    //          - int saveMacroFull(workstationInformation_, MacroConfigStv_, ActionConfigStv_[], ActionParameterConfigStv_[]);
+    //          - int deleteMacro(workstationInformation_, MacroID);
     rpc ExectMacroConfiguration(MacroConfigurationRequest) returns (MacroConfigurationResponse);
 
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Timer scheduled, equipment and system events reaction configurations
+    //
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Equipment events reaction configurations
+    //
+    // TAO IDL:
+    //          - int getAllEvents(listEventConfigStvHolder); // for equipments and system events
+    rpc GetEquipmentEventReactions(WorkstationInformation) returns (EquipmentEventReactionsResponse);
+
+    //
+    //
+    // TAO IDL:
+    //          - int addNewEvent(EventConfigStv_); // for equipments and system events
+    //          - int saveEvent(EventConfigStv_); // for equipments and system events
+    //          - int deleteEvent(int eventId);
+    rpc ExecEquipmentEventReactionsConfiguration(EquipmentEventReactionsConfigurationRequest) returns (EquipmentEventReactionsConfigurationResponse);
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // System events reaction configurations
+    //
+    // TAO IDL:
+    //          - int getAllEvents(listEventConfigStvHolder); // for equipments and system events
+    rpc GetSystemEventReactions(WorkstationInformation) returns (SystemEventReactionsResponse);
+
+    //
+    //
+    // TAO IDL:
+    //          - int addNewEvent(EventConfigStv_); // for equipments and system events
+    //          - int saveEvent(EventConfigStv_); // for equipments and system events
+    //          - int deleteEvent(int eventId);
+    rpc ExecSystemEventReactionsConfiguration(SystemEventReactionsConfigurationRequest) returns (SystemEventReactionsConfigurationResponse);
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Timer scheduled events reaction configurations
+    //
+    // TAO IDL:
+    //          - 	int getAllScheduledActions(listScheduledActionConfigStvHolder); // for timer scheduled events
+    rpc GetTimerScheduledEventReactions(WorkstationInformation) returns (TimerScheduledEventReactionsResponse);
+
+    //
+    //
+    // TAO IDL:
+    //          - int saveScheduledAction(ScheduledActionConfigStv_); // for timer scheduled events
+    //          - int deleteEvent(int eventId);
+    rpc ExecTimerScheduledEventReactionsConfiguration(TimerScheduledEventReactionsConfigurationRequest) returns (TimerScheduledEventReactionsConfigurationResponse);
+
+
+
+    
 
 }
 

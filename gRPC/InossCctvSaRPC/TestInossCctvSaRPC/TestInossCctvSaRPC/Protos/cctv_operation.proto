@@ -45,7 +45,7 @@ service Operation {
     // TAO IDL:
     //          - void getAgentVersions(...);
     //          - void getStvSaVersion(...);
-    rpc GetVersions(VersionsRequest) returns (ListCctvVersions);
+    rpc GetVersions(VersionsRequest) returns (ListCctvVersionsResponse);
 
     // Obtains the given targets connection information, if any.
     // TAO IDL: 
@@ -73,7 +73,7 @@ service Operation {
     // Obtain ALL active alarms.
     // TAO IDL: 
     //          - void getAlarms(...);
-    rpc GetAlarms(WorkstationInformation) returns (ListAlarms);
+    rpc GetAlarms(WorkstationInformation) returns (ListAlarmsResponse);
 
     //
     // Normally used to acknowledge sensors and actuators alarms.
@@ -153,21 +153,21 @@ service Operation {
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
-    rpc GetSensorAlarmTypes(WorkstationInformation) returns (ListSensorAlarmTypes);
+    rpc GetSensorAlarmTypes(WorkstationInformation) returns (ListSensorAlarmTypesResponse);
 
     //
     // Returns sensor alarm subtypes. Normally used in the user alarms marking operations.
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
-    rpc GetSensorAlarmSubtypes(WorkstationInformation) returns (ListSensorAlarmSubtypes);
+    rpc GetSensorAlarmSubtypes(WorkstationInformation) returns (ListSensorAlarmSubtypesResponse);
 
     //
     // Returns sensor alarm subtype tags. Normally used in the user alarms marking operations.
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
-    rpc GetSensorAlarmSubtypesTags(WorkstationInformation) returns (ListSensorAlarmSubtypesTags);
+    rpc GetSensorAlarmSubtypesTags(WorkstationInformation) returns (ListSensorAlarmSubtypesTagsResponse);
 
 
 
@@ -223,11 +223,13 @@ service Operation {
 
     //
     // Execute all ptzf cameras presets operations: activate, add, update or delete.
+    //
+    // NOTE: THIS METHOD WILL CALL THE EQUIPMENT (not only the database).
+    //
     // TAO IDL:
     //          - int ptzfActivatePreset(int EqId, short nPreset);
     //          - int ptzfStorePreset(workstationInformation_ logInfo, int EqId, short nPreset);
-    //          and, for saving the real preset name, call the configuraion.idl API:
-    //          - int storePreset(PresetConfigStv_ Preset);
+    //          and, for saving the real preset name, call the configuraion.idl API "storePreset(PresetConfigStv_)";
     //          - int ptzfDeletePreset(workstationInformation_ logInfo, int EqId, short nPreset);
     rpc CamerasPtzfPresetsOperation(CameraPtzfSavePresetsRequest) returns (CameraPtzfSavePresetsResponse);
 
@@ -251,7 +253,7 @@ service Operation {
     // Returns all the "Go to Home Position" mobile cameras configurations.
     // TAO IDL:
     //          - int getMobileCamerasHomePosConfig(workstationInformation_, listMobileCamHomePosReturnHolder);
-    rpc GetMobileCamerasAutoHomePositionActConfig(WorkstationInformation) returns (ListMobileCameraAutoHomePositionActivations);
+    rpc GetMobileCamerasAutoHomePositionActConfig(WorkstationInformation) returns (ListMobileCameraAutoHomePositionActivationsResponse);
 
     // 
     // Used to delete mobile cameras "Go to Home Position" configurations.

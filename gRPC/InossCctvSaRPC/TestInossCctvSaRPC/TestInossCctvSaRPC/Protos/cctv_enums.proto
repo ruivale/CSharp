@@ -22,7 +22,11 @@ option java_package = "com.efacec.es.trp.efarail.cctv.grpc.enums.v1";
 //
 // CCTV enums
 //
-// NOTE: since we're dealing w/ OPEN enums, the first element must be zero (0);
+// NOTEs: 
+//          - since we're dealing w/ OPEN enums, the first element must be zero (0);
+//          - some UNDEF values, which are equal to -1 in the Cctv service, were moved to the end of 
+//            the enum values, normally 999. This way, the first elements in those enums are the REAL
+//            Cctv service first element, i.e., the value 0 (zero) matching the Cct vservice values.
 //
 
 // MsgVersionMod
@@ -103,124 +107,126 @@ enum ResponseValue {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
     R_OK = 0;
     R_ERROR = 1;
-    R_NOTIMPLEMENTED = 2;
-    R_NOTSUPPORTED = 3;
-    R_INVALIDPARAMETER = 4;
-    R_INVALIDEQUIPMENT = 5;
+    R_NOT_IMPLEMENTED = 2;
+    R_NOT_SUPPORTED = 3;
+    R_INVALID_PARAMETER = 4;
+    R_INVALID_EQUIPMENT = 5;
     R_CONFFILE_FAILOPEN = 6;
     R_IPC_CREATION = 7;
     R_IPC_COMMFAIL = 8;
     R_CORBA_EXCEPTION = 9;
     R_DB_ERROR = 10;
     R_DB_NODATABASE = 11;
-    R_DB_CONNECTIONTIMEDOUT = 12;
-    R_DB_NODATAFOUND = 13;
+    R_DB_CONNECTION_TIMEDOUT = 12;
+    R_DB_NO_DATA_FOUND = 13;
     R_EQUIP_INITIALIZING = 14;
     R_EQUIP_TERMINATING = 15;
     R_EQUIP_RESETING = 16;
     R_EQUIP_NOTINIT = 17;
-    R_EQUIP_ALREADYINIT = 18;
-    R_EQUIP_INVALIDSTATE = 19;
+    R_EQUIP_ALREADY_INIT = 18;
+    R_EQUIP_INVALID_STATE = 19;
     R_EQUIP_NOSTATION = 20;
     R_EQUIP_LOCKED = 21;
-    R_EQUIP_PROTOUNKNOWN = 22;
-    R_EQUIP_PROTONOPROTOCOL = 23;
-    R_EQUIP_PROTOTRYTIMEOUT = 24;
-    R_EQUIP_PROTOSENDFAIL = 25;
-    R_EQUIP_PROTOFAIL = 26;
-    R_EQUIP_PROTOACK = 27;
-    R_EQUIP_PROTOACKLASTMSG = 28;
-    R_EQUIP_EQDATAUNKNOWN = 29;
-    R_EQUIP_EQDATAINCOMPLETE = 30;
-    R_EQUIP_EQDATANOTOK = 31;
-    R_EQUIP_EQDATAOK = 32;
-    R_EQUIP_ANSWERINVALID = 33;
-    R_EQUIP_ANSWERINCOMPLETE = 34;
-    R_EQUIP_ANSWERNOTOK = 35;
-    R_EQUIP_ANSWEROK = 36;
-    R_EQUIP_ANSWERCOMMERROR = 37;
-    R_EQUIP_CAM_INVALIDPRESET = 38;
-    R_EQUIP_MPX_INVALIDCHANNEL = 39;
-    R_EQUIP_MPX_INVALIDPAGE = 40;
-    R_EQUIP_MATRIX_INVALIDCHANNELIN = 41;
-    R_EQUIP_MATRIX_INVALIDCHANNELOUT = 42;
-    R_VC_SERVERERROR = 43;
-    R_VC_PATHBROKEN = 44;
-    R_VC_PATHEMPTY = 45;
-    R_VC_PATHBOUNDERROR = 46;
-    R_VC_REFERENCEERROR = 47;
-    R_VC_OUTOFMEMORY = 48;
-    R_VC_STATUSERROR = 49;
-    R_VC_PATHNOTFOUND = 50;
-    R_VC_SOURCEERROR = 51;
-    R_VC_TARGETERROR = 52;
-    R_VC_UNKNOWNERROR = 53;
+    R_EQUIP_PROTO_UNKNOWN = 22;
+    R_EQUIP_PROTO_NO_PROTOCOL = 23;
+    R_EQUIP_PROTO_TRY_TIMEOUT = 24;
+    R_EQUIP_PROTO_SEND_FAIL = 25;
+    R_EQUIP_PROTO_FAIL = 26;
+    R_EQUIP_PROTO_ACK = 27;
+    R_EQUIP_PROTO_ACK_LAST_MSG = 28;
+    R_EQUIP_EQ_DATA_UNKNOWN = 29;
+    R_EQUIP_EQ_DATA_INCOMPLETE = 30;
+    R_EQUIP_EQ_DATA_NOT_OK = 31;
+    R_EQUIP_EQ_DATA_OK = 32;
+    R_EQUIP_ANSWER_INVALID = 33;
+    R_EQUIP_ANSWER_INCOMPLETE = 34;
+    R_EQUIP_ANSWER_NOT_OK = 35;
+    R_EQUIP_ANSWER_OK = 36;
+    R_EQUIP_ANSWER_COMM_ERROR = 37;
+    R_EQUIP_CAM_INVALID_PRESET = 38;
+    R_EQUIP_MPX_INVALID_CHANNEL = 39;
+    R_EQUIP_MPX_INVALID_PAGE = 40;
+    R_EQUIP_MATRIX_INVALID_CHANNEL_IN = 41;
+    R_EQUIP_MATRIX_INVALID_CHANNEL_OUT = 42;
+    R_VC_SERVER_ERROR = 43;
+    R_VC_PATH_BROKEN = 44;
+    R_VC_PATH_EMPTY = 45;
+    R_VC_PATH_BOUND_ERROR = 46;
+    R_VC_REFERENCE_ERROR = 47;
+    R_VC_OUT_OF_MEMORY = 48;
+    R_VC_STATUS_ERROR = 49;
+    R_VC_PATH_NOT_FOUND = 50;
+    R_VC_SOURCE_ERROR = 51;
+    R_VC_TARGET_ERROR = 52;
+    R_VC_UNKNOWN_ERROR = 53;
     R_SEQ_ERROR = 54;
-    R_SEQ_INVALIDSEQID = 55;
-    R_SEQ_NOTAVALIDSEQUENCE = 56;
-    R_SEQ_INVALIDTARGET = 57;
-    R_SEQ_COULDNOTSTART = 58;
-    R_SEQ_ALREADYPLAYING = 59;
-    R_SEQ_ALREADYPAUSED = 60;
-    R_SEQ_NOTPLAYING = 61;
-    R_SEQ_UNDEFSTATE = 62;
+    R_SEQ_INVALID_SEQ_ID = 55;
+    R_SEQ_NOT_AVALID_SEQUENCE = 56;
+    R_SEQ_INVALID_TARGET = 57;
+    R_SEQ_COULD_NOT_START = 58;
+    R_SEQ_ALREADY_PLAYING = 59;
+    R_SEQ_ALREADY_PAUSED = 60;
+    R_SEQ_NOT_PLAYING = 61;
+    R_SEQ_UNDEF_STATE = 62;
     R_MACRO_ERROR = 63;
-    R_MACRO_COULDNOTSTART = 64;
-    R_MACRO_NOTRUNNING = 65;
-    R_SCHED_INITERR = 66;
-    R_SCHED_SPAWNERR = 67;
-    R_EQUIPLOCK_INSUFICIENTPRIVILEGES = 68;
-    R_EQUIPLOCK_ALREADYLOCKED = 69;
-    R_STATIONUNAVAILABLE = 70;
+    R_MACRO_COULD_NOT_START = 64;
+    R_MACRO_NOT_RUNNING = 65;
+    R_SCHED_INIT_ERR = 66;
+    R_SCHED_SPAWN_ERR = 67;
+    R_EQUIP_LOCK_INSUFICIENT_PRIVILEGES = 68;
+    R_EQUIP_LOCK_ALREADY_LOCKED = 69;
+    R_STATION_UNAVAILABLE = 70;
 }
 
 // AlarmType
 // All alarm types
 enum AlarmType {
-    ALRTYP_UNDEFINED = 0;
-    ALRTYP_DBCOMMFAIL = 1;
-    ALRTYP_SACOMMFAIL = 2;
-    ALRTYP_SASTATECHANGE = 3;
-    ALRTYP_SAINITIALIZE = 4;
-    ALRTYP_SATERMINATE = 5;
-    ALRTYP_SESSIONBEGIN = 6;
-    ALRTYP_SESSIONEND = 7;
-    ALRTYP_OBJREFERROR = 8;
-    ALRTYP_VIDEOCONNECTERROR = 9;
-    ALRTYP_VIDEOSOURCEINVALID = 10;
-    ALRTYP_VIDEOTARGETINVALID = 11;
-    ALRTYP_VIDSEQSTATECHANGE = 12;
-    ALRTYP_MAXSEQUENCES = 13;
-    ALRTYP_MACROSTATECHANGE = 14;
-    ALRTYP_SCHEDULEDACTIONEXECUTED = 15;
-    ALRTYP_GUICOMMFAIL = 16;
-    ALRTYP_STATIONCOMMFAIL = 17;
-    ALRTYP_STATIONSTATECHANGE = 18;
-    ALRTYP_EQUIPCOMMFAIL = 19;
-    ALRTYP_EQUIPSTATECHANGED = 20;
-    ALRTYP_EQUIPSPECIFICSTATECHANGED = 21;
-    ALRTYP_EQUIPVIDEOINFAIL = 22;
-    ALRTYP_EQUIPVIDEOOUTFAIL = 23;
-    ALRTYP_IOACTIVE = 24;
-    ALRTYP_CLOCKSYNCARRIVED = 25;
-    ALRTYP_EQUIPVIDEOINTAMPER = 26;
-    ALRTYP_EQUIPMOTIONDETECTED = 27;
-    ALRTYP_VRNOSPACELEFT = 28;
-    ALRTYP_VRRECORDFAILURE = 29;
-    ALRTYP_VIDSEQADDED = 30;
-    ALRTYP_VIDSEQREMOVED = 31;
-    ALRTYP_VIDSEQCHANGE = 32;
-    ALRTYP_MACROADDED = 33;
-    ALRTYP_MACROREMOVED = 34;
-    ALRTYP_MACROCHANGE = 35;
-    ALRTYP_AGENTCOMMFAIL = 36;
-    ALRTYP_EQUIPLOCKFAIL = 37;
-    ALRTYP_RECQUALITYCHANGE = 38;
-    ALRTYP_MONITORGROUPCHANGED = 39;
-    ALRTYP_AUTOVIDEOCONNECTERROR = 40;
-    ALRTYP_USERALARM = 41;
-    ALRTYP_REPLAYSTOPED = 42;
-    ALRTYP_HQRECQUOTAEXCEEDED = 43;
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    //ALRTYP_UNDEFINED = 0;
+    ALRTYP_DB_COMM_FAIL = 0;
+    ALRTYP_SA_COMM_FAIL = 1;
+    ALRTYP_SA_STATE_CHANGE = 2;
+    ALRTYP_SA_INITIALIZE = 3;
+    ALRTYP_SA_TERMINATE = 4;
+    ALRTYP_SESSION_BEGIN = 5;
+    ALRTYP_SESSION_END = 6;
+    ALRTYP_OBJ_REF_ERROR = 7;
+    ALRTYP_VIDEO_CONNECT_ERROR = 8;
+    ALRTYP_VIDEO_SOURCE_INVALID = 9;
+    ALRTYP_VIDEO_TARGET_INVALID = 10;
+    ALRTYP_VID_SEQ_STATE_CHANGE = 11;
+    ALRTYP_MAX_SEQUENCES = 12;
+    ALRTYP_MACRO_STATE_CHANGE = 13;
+    ALRTYP_SCHEDULED_ACTION_EXECUTED = 14;
+    ALRTYP_GUI_COMM_FAIL = 15;
+    ALRTYP_STATION_COMM_FAIL = 16;
+    ALRTYP_STATION_STATE_CHANGE = 17;
+    ALRTYP_EQUIP_COMM_FAIL = 18;
+    ALRTYP_EQUIP_STATE_CHANGED = 19;
+    ALRTYP_EQUIP_SPECIFIC_STATE_CHANGED = 20;
+    ALRTYP_EQUIP_VIDEO_IN_FAIL = 21;
+    ALRTYP_EQUIP_VIDEO_OUTF_AIL = 22;
+    ALRTYP_IO_ACTIVE = 23;
+    ALRTYP_CLOCK_SYNC_ARRIVED = 24;
+    ALRTYP_EQUIP_VIDEO_IN_TAMPER = 25;
+    ALRTYP_EQUIP_MOTION_DETECTED = 26;
+    ALRTYP_VR_NO_SPACE_LEFT = 27;
+    ALRTYP_VR_RECORD_FAILURE = 28;
+    ALRTYP_VID_SEQ_ADDED = 29;
+    ALRTYP_VID_SEQ_REMOVED = 30;
+    ALRTYP_VID_SEQ_CHANGE = 31;
+    ALRTYP_MACRO_ADDED = 32;
+    ALRTYP_MACRO_REMOVED = 33;
+    ALRTYP_MACRO_CHANGE = 34;
+    ALRTYP_AGENT_COMM_FAIL = 35;
+    ALRTYP_EQUIP_LOCK_FAIL = 36;
+    ALRTYP_REC_QUALITY_CHANGE = 37;
+    ALRTYP_MONITOR_GROUP_CHANGED = 38;
+    ALRTYP_AUTO_VIDEO_CONNECT_ERROR = 39;
+    ALRTYP_USER_ALARM = 40;
+    ALRTYP_REPLAY_STOPED = 41;
+    ALRTYP_HQ_REC_QUOTA_EXCEEDED = 42;
+    ALRTYP_UNDEFINED = 999;
 }
 
 //
@@ -235,45 +241,47 @@ enum LockUnlockType {
 // The equipments generic state.
 enum EquipGenericState {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    EGS_UNDEF = 0;
-    EGS_OK = 1;
-    EGS_ERROR = 2;
-    EGS_LOCKED = 3;
+    //EGS_UNDEF = 0;
+    EGS_OK = 0;
+    EGS_ERROR = 1;
+    EGS_LOCKED = 2;
+    EGS_UNDEF = 999;
 }
 
 //
 // The equipments specific state.
 enum EquipSpecificState {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    ESS_UNDEFINED = 0;
-    ESS_CAM_IDLE = 1;
-    ESS_CAM_AUTOPAN = 2;
-    ESS_CAM_RESETING = 3;
-    ESS_VR_NOMEDIA = 4;
-    ESS_VR_PLAYBACK = 5;
-    ESS_VR_RECORD = 6;
-    ESS_VR_STOP = 7;
-    ESS_VR_PAUSE = 8;
-    ESS_VR_FASTFORWARD = 9;
-    ESS_VR_REWIND = 10;
-    ESS_VR_REVERSEPLAY = 11;
-    ESS_VR_TIMEDATESEARCH = 12;
-    ESS_MPX_MULTIPLEX = 13;
-    ESS_MPX_FULLSCREEN = 14;
-    ESS_MPX_CYCLE = 15;
-    ESS_MPX_FREEZE = 16;
-    ESS_MPX_VCR = 17;
-    ESS_CODEC_DISCONNECTED = 18;
-    ESS_CODEC_CONNECTED = 19;
-    ESS_CODEC_CONNECTING = 20;
-    ESS_CODEC_DISCONNECTING = 21;
-    ESS_SENSOR_IDLE = 22;
-    ESS_SENSOR_ACTIVE = 23;
-    ESS_ACTUATOR_IDLE = 24;
-    ESS_ACTUATOR_ACTUATED = 25;
-    ESS_ACTUATOR_ACTIVE = 26;
-    ESS_WATCHDOG_ENABLED = 27;
-    ESS_WATCHDOG_DISABLED = 28;
+    //ESS_UNDEFINED = 0;
+    ESS_CAM_IDLE = 0;
+    ESS_CAM_AUTO_PAN = 1;
+    ESS_CAM_RESETING = 2;
+    ESS_VR_NO_MEDIA = 3;
+    ESS_VR_PLAYBACK = 4;
+    ESS_VR_RECORD = 5;
+    ESS_VR_STOP = 6;
+    ESS_VR_PAUSE = 7;
+    ESS_VR_FAST_FORWARD = 8;
+    ESS_VR_REWIND = 9;
+    ESS_VR_REVERSE_PLAY = 10;
+    ESS_VR_TIMEDATE_SEARCH = 11;
+    ESS_MPX_MULTIPLEX = 12;
+    ESS_MPX_FULLSCREEN = 13;
+    ESS_MPX_CYCLE = 14;
+    ESS_MPX_FREEZE = 15;
+    ESS_MPX_VCR = 16;
+    ESS_CODEC_DISCONNECTED = 17;
+    ESS_CODEC_CONNECTED = 18;
+    ESS_CODEC_CONNECTING = 19;
+    ESS_CODEC_DISCONNECTING = 20;
+    ESS_SENSOR_IDLE = 21;
+    ESS_SENSOR_ACTIVE = 22;
+    ESS_ACTUATOR_IDLE = 23;
+    ESS_ACTUATOR_ACTUATED = 24;
+    ESS_ACTUATOR_ACTIVE = 25;
+    ESS_WATCHDOG_ENABLED = 26;
+    ESS_WATCHDOG_DISABLED = 27;
+    ESS_UNDEFINED = 999;
 }
 
 //
@@ -304,6 +312,9 @@ enum UserAccessType {
 
 // MacrosMode
 // Macros mode, i.e., ciclic or no ciclic.
+//
+// NOTE: THE FIRST ITEM IS -1 IN THE CCTV SERVICE.
+//
 enum MacroMode {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
     MACMOD_CICLIC = 0;
@@ -314,39 +325,40 @@ enum MacroMode {
 // Macros permissions
 enum MacroPermission {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    MACPER_UNKNOWN = 0;
-    MACPER_PRIVATE = 1;
-    MACPER_EDIT_EXECUTE = 2;
-    MACPER_EXECUTE = 3;
+    //MACPER_UNKNOWN = 0;
+    MACPER_PRIVATE = 0;
+    MACPER_EDIT_EXECUTE = 1;
+    MACPER_EXECUTE = 2;
 }
 
 //
 // Macros scope
 enum MacroScope {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    MACSCP_UNKNOWN = 0;
-    MACSCP_ANY = 1;
-    MACSCP_MANUAL = 2;
-    MACSCP_EVENT = 3;
+    //MACSCP_UNKNOWN = 0;
+    MACSCP_ANY = 0;
+    MACSCP_MANUAL = 1;
+    MACSCP_EVENT = 2;
 }
 
 //
 // Macros action codes, i.e., the tyoe of macro action.
 enum MacroActionCode {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    MACAC_UNKNOWN = 0;
-    MACAC_CAM_SELECT = 1;
-    MACAC_MULTIPLEX = 2;
-    MACAC_SEQUENCE = 3;
-    MACAC_PLAY = 4;
-    MACAC_RECORD = 5;
-    MACAC_STOP_VR = 6;
-    MACAC_ACTUATE = 7;
-    MACAC_DEACTUATE = 8;
-    MACAC_SLEEP = 9;
-    MACAC_DISCONNECT = 10;
-    MACAC_SET_STATION_STATE = 11;
-    MACAC_MARK_ALARM = 12;
+    //MACAC_UNKNOWN = 0;
+    MACAC_CAM_SELECT = 0;
+    MACAC_MULTIPLEX = 1;
+    MACAC_SEQUENCE = 2;
+    MACAC_PLAY = 3;
+    MACAC_RECORD = 4;
+    MACAC_STOP_VR = 5;
+    MACAC_ACTUATE = 6;
+    MACAC_DEACTUATE = 7;
+    MACAC_SLEEP = 8;
+    MACAC_DISCONNECT = 9;
+    MACAC_SET_STATION_STATE = 10;
+    MACAC_MARK_ALARM = 11;
+    MACAC_UNKNOWN = 999;
 }
 
 //
@@ -366,6 +378,61 @@ enum MacroGenericConfigOper {
     MACGENCONFOPER_DELETE = 2;
 }
 
+//
+// The scheduled, equipment and system events reaction configurations type.
+enum EventsReactionType {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    ERT_TIMER_SCHEDULED = 0;
+    ERT_EQUIPMENT = 1;
+    ERT_SYSTEM = 2;
+}
+//
+// The scheduled, equipment and system events reaction configurations operations.
+enum EventsReactionConfigOper {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    ERCO_SAVE = 0;
+    ERCO_DELETE = 1;
+}
 
+//
+// The scheduled periodicity type.
+enum TimerScheduledEventPeriodicityType {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    //SEPT_UNDEF = 0;
+    SEPT_ONCE = 0;
+    SEPT_HOUR = 1;
+    SEPT_DAILY = 2;
+    SEPT_WEEK = 3;
+    SEPT_UNDEF = 999;
+}
+
+//
+// The equipments event reaction alarm type;
+enum EquipmentEventReactionAlarm {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    EER_UNDEF = 0;
+    EER_EQUIP_COMM_FAIL = 19;
+    EER_EQUIP_STATE_CHANGED = 20;
+    EER_EQUIP_SPECIFIC_STATE_CHANGED = 21;
+    EER_EQUIP_VIDEO_IN_FAIL = 22;
+    EER_EQUIP_VIDEO_OUTF_AIL = 23;
+    EER_IO_ACTIVE = 24;
+    EER_CLOCK_SYNC_ARRIVED = 25;
+    EER_EQUIP_VIDEO_IN_TAMPER = 26;
+    EER_EQUIP_MOTION_DETECTED = 27;
+}
+
+//
+// The equipments event reaction alarm type;
+enum SystemEventReactionAlarm {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    SER_UNDEF = 0;
+    SER_SA_INITIALIZE = 4;
+    SER_SA_TERMINATE = 5;
+    SER_SESSION_BEGIN = 6;
+    SER_SESSION_END = 7;
+    SER_STATION_COMM_FAIL = 17;
+    SER_STATION_STATE_CHANGE = 18;
+}
 
 

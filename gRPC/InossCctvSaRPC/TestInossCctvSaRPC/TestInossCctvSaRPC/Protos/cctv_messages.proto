@@ -41,7 +41,7 @@ message Empty {}
 // Generic numeric reply
 message Response {
     // The numeric value to return to the caller.
-    ResponseValue value = 1;
+    ResponseValue responseValue = 1;
     // A description of the returned value, if needed/wanted (can be left empty).
     string desc = 2;
 }
@@ -98,14 +98,16 @@ message CctvVersion {
     // A description of the returned value, if needed/wanted (can be left empty).
     string desc = 5;
     // The module.
-    VersionMod module = 6;
+    VersionMod versionMod = 6;
 }
 
 //
 // Generic multiple versions reply
-message ListCctvVersions {
+message ListCctvVersionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
     // The requested modules versions.
-    repeated CctvVersion versions = 1;
+    repeated CctvVersion cctvVersions = 2;
 }
 
 //
@@ -123,9 +125,9 @@ message WorkstationInformation {
 // Message used when version are requested.
 message VersionsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The requested module.
-    VersionMod module = 2;
+    VersionMod versionMod = 2;
 }
 
 // Basic message holder for connections, i.e., only the source and target data. 
@@ -153,16 +155,25 @@ message ConnectionRequest {
 // and targets, normally monitors.
 message ConnectionsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // List of connections to attempt.
-    repeated ConnectionRequest connectionRequest = 2;
+    repeated ConnectionRequest connectionRequests = 2;
 }
 
 //
 // Message used when a list of IDs is needed.
 message ListIds {
     // The workstation information, if needed.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
+    // Items Ids, whatever tey mean, i.e., sources equipments, targets equipments, 
+    // sequences ids, active sequences handles, etc.
+    repeated google.protobuf.Int64Value ids = 2;
+}
+//
+// Message used when a list of IDs is needed.
+message ListIdsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
     // Items Ids, whatever tey mean, i.e., sources equipments, targets equipments, 
     // sequences ids, active sequences handles, etc.
     repeated google.protobuf.Int64Value ids = 2;
@@ -192,7 +203,7 @@ message DetailedConnectionsInfoResponse {
     // The request reply.
     Response response = 1;
     // the list of targets connection information.
-    repeated DetailedConnectionInfo detailedConnInfo = 2;
+    repeated DetailedConnectionInfo detailedConnectionInfos = 2;
 }
 
 //
@@ -219,9 +230,9 @@ message SequenceConnInfo {
 // The sequences starting command request.
 message StartSequencesRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The sequences information.
-    repeated SequenceConnInfo sequenceConnInfo = 2;
+    repeated SequenceConnInfo sequenceConnInfos = 2;
 }
 
 //
@@ -237,9 +248,11 @@ message Sequence {
 
 //
 // Reply message when all sequences are requested.
-message ListSequences {
+message ListSequencesResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
     // All the sequences
-    repeated Sequence sequences = 1;
+    repeated Sequence sequences = 2;
 }
 
 //
@@ -263,7 +276,7 @@ message RunningSequence {
 // The running sequences data holder 
 message RunningSequencesRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The running sequencse handles, i.e., the running sequence identification
     repeated RunningSequence runningSequences = 2;	
 }
@@ -289,7 +302,7 @@ message RunningSequencesResponse {
 // Only a single SequenceOper can be applied to the given list of sequences or targets.
 message SequencesOperationRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The sequence oper: stop, pause, restart, next or previous step.
     SequenceOper sequenceOper = 2;
     // Items Ids, whatever they mean, i.e., targets equipments or sequences handles 
@@ -302,7 +315,7 @@ message SequencesOperationRequest {
 // Only a single MacroOper can be applied to the given list of macros.
 message MacrosOperationRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The macro oper, i.e., start or stop.
     MacroOper macroOper = 2;
     // Macros Ids.
@@ -332,14 +345,23 @@ message ListAlarms {
 }
 
 //
+// List of alarms, normally used when obtaing the list of ALL active alarms.
+message ListAlarmsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of alarms.
+    repeated Alarm alarms = 2;
+}
+
+//
 // Message used when a lock, or unlock, equipments request is invoked.
 message LockUnlockEquipsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The list of identifications, normally from cameras.
     ListIds ids = 2;
     // The lock or unlock Operation.
-    LockUnlockType LockUnlock = 3;
+    LockUnlockType lockUnlockType = 3;
 }
 
 //
@@ -348,13 +370,13 @@ message EquipmentGenericState {
     // The equipment identification
     int64 equipId = 1;
     // The generic state.
-    EquipGenericState state = 2;
+    EquipGenericState equipGenericState = 2;
 }
 
 //
 // The equipments generic state response
 message EquipmentsGenericStateResponse {
-    repeated EquipmentGenericState equipsGenericStates = 1;
+    repeated EquipmentGenericState equipmentGenericStates = 1;
 }
 
 //
@@ -363,13 +385,13 @@ message EquipmentSpecificState {
     // The equipment identification
     int64 equipId = 1;
     // The generic state.
-    EquipSpecificState state = 2;
+    EquipSpecificState equipSpecificState = 2;
 }
 
 //
 // The equipments specific state response
 message EquipmentsSpecificStateResponse {
-    repeated EquipmentSpecificState equipsSpecificStates = 1;
+    repeated EquipmentSpecificState equipmentSpecificStates = 1;
 }
 
 //
@@ -401,8 +423,11 @@ message Equipment {
 
 //
 // The equipments response
-message ListEquipments {
-    repeated Equipment equipments = 1;
+message ListEquipmentsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of equipments.
+    repeated Equipment equipments = 2;
 }
 
 //
@@ -421,29 +446,29 @@ message EquipmentConfiguration {
 //
 // The equipments configuration response
 message EquipmentsConfigurationResponse {
-    repeated EquipmentConfiguration equipsConfig = 1;
+    repeated EquipmentConfiguration equipmentConfigurations = 1;
 }
 
 //
 // A camera preset CRUD operation message.
-message CameraPtzfSavePreset {
+message CameraPtzfPreset {
     // The camera identification.
-    google.protobuf.Int64Value camId = 1;
+    google.protobuf.Int64Value cameraId = 1;
     // The ptzf camera preset slot index.
-    google.protobuf.Int64Value presetIdx = 2;
+    google.protobuf.Int64Value index = 2;
     // The ptzf camera preset name.
-    google.protobuf.StringValue presetName = 3;
+    google.protobuf.StringValue name = 3;
 }
 
 //
 // The cameras preset CRUD operations request.
 message CameraPtzfSavePresetsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The camera identification.
-    repeated CameraPtzfSavePreset camerasPtzfSavePresets = 2;
+    repeated CameraPtzfPreset cameraPtzfPresets = 2;
     // The request operation: add, update and delete
-    CameraPtzfPresetOperation camPtzfPresetOper = 3;
+    CameraPtzfPresetOperation cameraPtzfPresetOperation = 3;
 }
 
 //
@@ -452,14 +477,14 @@ message CameraPtzfSavePresetResponse {
     // The response.
     Response response = 1;
     // The camera preset saving information.
-    CameraPtzfSavePreset camPtzfSavePreset = 2;
+    CameraPtzfPreset cameraPtzfPreset = 2;
 }
 
 //
 // The cameras preset CRUD operations request.
 message CameraPtzfSavePresetsResponse {
     // The list of saving cameras presets responses.
-    repeated CameraPtzfSavePresetResponse camPtzfSavePresetResponse = 1;
+    repeated CameraPtzfSavePresetResponse cameraPtzfSavePresetResponses = 1;
 }
 
 //
@@ -468,16 +493,16 @@ message ActuatorOperationRequest {
     // The actuator identification.
     google.protobuf.Int64Value actuatorId = 1;
     // The actuator operation.
-    ActuatorOperation oper = 2;
+    ActuatorOperation actuatorOperation = 2;
 }
 
 //
 // The actuator operations request.
 message ActuatorOperationsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The list of actuator operations.
-    repeated ActuatorOperationRequest actuatorsOperRequest = 2;
+    repeated ActuatorOperationRequest actuatorOperationRequests = 2;
 }
 
 //
@@ -486,14 +511,14 @@ message ActuatorOperationResponse {
     // The response.
     Response response = 1;
     // The actuator operation.
-    ActuatorOperation actuatorOper = 2;
+    ActuatorOperation actuatorOperation = 2;
 }
 
 //
 // Actuators operations requests response.
 message ActuatorOperationsResponse {
     // The response.
-    repeated ActuatorOperationResponse actuatorsOpersResponse = 1;
+    repeated ActuatorOperationResponse actuatorOperationResponses = 1;
 }
 
 //
@@ -525,16 +550,16 @@ message AcknowledgeAlarmsResponse {
 // The "Set Alarms On Monitor" request. Basically is a list of NotAcknowledgeAlarms identifications and target equipments, normally monitors, identifications.
 message SetAlarmsOnMonitorRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The connections info, i.e., source and target identifications pairs.
-    repeated ConnectionInfo connectionsInfo = 2;
+    repeated ConnectionInfo connectionInfos = 2;
 }
 
 //
 // The mark an user alarm message associated with the given source identification. 
 message MarkUserAlarmRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The user identification.
     google.protobuf.Int64Value userId = 2;
     // The source equipment identification.
@@ -566,6 +591,15 @@ message ListSensorAlarmTypes {
 }
 
 //
+// A list of sensor alarm types.
+message ListSensorAlarmTypesResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of SensorAlarmType.
+    repeated SensorAlarmType sensorAlarmTypes = 2;
+}
+
+//
 // A sensor alarm subtype.
 message SensorAlarmSubtype {
     // The sensor alarm type identifiction.
@@ -585,6 +619,15 @@ message SensorAlarmSubtype {
 message ListSensorAlarmSubtypes {
     // The list of SensorAlarmSubtype.
     repeated SensorAlarmSubtype sensorAlarmSubtypes = 1;
+}
+
+//
+// A list of sensor alarm subtypes.
+message ListSensorAlarmSubtypesResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of SensorAlarmSubtype.
+    repeated SensorAlarmSubtype sensorAlarmSubtypes = 2;
 }
 
 //
@@ -614,11 +657,22 @@ message ListSensorAlarmSubtypesTags {
 }
 
 //
+// A list of sensor alarm subtype tags.
+message ListSensorAlarmSubtypesTagsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of SensorAlarmSubtype.
+    repeated SensorAlarmSubtypesTag sensorAlarmSubtypesTags = 2;
+}
+
+
+
+//
 // The message used to edit an already user/manual alarm marking.
 //workstationInformation_ logInfo, int alarmId, int userId, String sTag, String sSensorAlarmSubtypeTagId, String notes, boolean isMarkingEnd
 message MarkUserAlarmEditRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The alarm identification.
     google.protobuf.Int64Value alarmId = 2;
     // The user identification.
@@ -637,11 +691,11 @@ message MarkUserAlarmEditRequest {
 // The "normal" acknowledge alarms message, Normally used to acknowledge sensors and actuators alarms.
 message AckAlarmsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The equipment identification.
     google.protobuf.Int64Value equipId = 2;
     // The list os alarms to acknowledge.
-    repeated google.protobuf.Int64Value alarmsIds = 3;
+    repeated google.protobuf.Int64Value alarmIds = 3;
 }
 
 //
@@ -671,19 +725,26 @@ message MobileCameraAutoHomePositionActivation {
 // The "Go to Home Position" oper/config request message.
 message MobileCameraAutoHomePositionActivationsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The PTZF operations.
-    repeated MobileCameraAutoHomePositionActivation mobCamAutoHomePosActs = 2;
+    repeated MobileCameraAutoHomePositionActivation mobileCameraAutoHomePositionActivations = 2;
 }
 
 //
 // The list of PtzfOperation.
 message ListMobileCameraAutoHomePositionActivations {
     // The list of PtzfOperations.
-    repeated MobileCameraAutoHomePositionActivation mobCamAutoHomePosActs = 1;
+    repeated MobileCameraAutoHomePositionActivation mobileCameraAutoHomePositionActivations = 1;
 }
 
-
+//
+// The list of PtzfOperation.
+message ListMobileCameraAutoHomePositionActivationsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of PtzfOperations.
+    repeated MobileCameraAutoHomePositionActivation mobileCameraAutoHomePositionActivations = 2;
+}
 
 //
 // The Cctv agent data.
@@ -756,9 +817,9 @@ message CctvConfig {
     // The agent stations.
     repeated Station stations = 2;
     // The agent equipment classes.
-    repeated EquipmentClass equipClasses = 3;
+    repeated EquipmentClass equipmentClasses = 3;
     // The agent equipment types.
-    repeated EquipmentType equipTypes = 4;
+    repeated EquipmentType equipmentTypes = 4;
     // The agent equipments.
     repeated Equipment equipments = 5;
 }
@@ -766,10 +827,12 @@ message CctvConfig {
 //
 // The Cctv basic network configuration grouped by Cctv agents.
 message CctvConfigResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 2;
     // The agents configurations.
-    repeated CctvConfig cctvConfigs = 2;
+    repeated CctvConfig cctvConfigs = 3;
 }
 
 //
@@ -802,27 +865,37 @@ message SequenceFullData {
 // The sequence basic info and its operations.
 message ListSequenceFullData {
     // Th elist of complete sequnce data, i.e., its basic data and its operations.
-    repeated SequenceFullData sequenceFullData = 1;
+    repeated SequenceFullData sequenceFullDatas = 1;
 }
+
+//
+// The sequence basic info and its operations.
+message ListSequenceFullDataResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // Th elist of complete sequnce data, i.e., its basic data and its operations.
+    repeated SequenceFullData sequenceFullDatas = 2;
+}
+
 
 //
 // The sequences configurations request.
 message SequenceConfigRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The sequence configuration operation: add, basic edit, full edit and delete.
     SequenceConfig sequenceConfig = 2;
     // The sequences configurations to perform.
-    repeated SequenceFullData sequenceFullData = 3;
+    repeated SequenceFullData sequenceFullDatas = 3;
 }
 
 //
 // The sequences configurations responses.
 message SequenceConfigResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
-    Response globalResponse = 1;
+    Response response = 1;
     // The SequenceConfigurations which were not correctly configured. The ones that went well are absent from this list.
-    repeated SequenceFullData sequenceFullData = 2;
+    repeated SequenceFullData sequenceFullDatas = 2;
 }
 
 
@@ -843,20 +916,29 @@ message MacroActionParameter {
 //
 // A list of macro action parameters.
 message ListMacroActionParameter {
-    repeated MacroActionParameter parameters = 1;
+    repeated MacroActionParameter macroActionParameters = 1;
+}
+
+//
+// A list of macro action parameters.
+message ListMacroActionParameterResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of macro actions parameters.
+    repeated MacroActionParameter macroActionParameters = 2;
 }
 
 //
 // The macro action data.
 message MacroAction {
-	// The associated macro identification.
+    // The associated macro identification.
     google.protobuf.Int64Value macroId = 1;
-	// The associated macro identification.
+    // The associated macro identification.
     google.protobuf.Int64Value actionIdx = 2;
-	// The associated macro action code identification.
-    MacroActionCode code = 3;
+    // The associated macro action code identification.
+    MacroActionCode macroActionCode = 3;
     // True is the macro action is enabled.
-	google.protobuf.BoolValue isEnabled = 4;
+    google.protobuf.BoolValue isEnabled = 4;
 }
 
 //
@@ -896,14 +978,14 @@ message MacroFullData {
     // The basic macro data.
     Macro macro = 1;
     // The macros actions and all its parameters.
-    repeated MacroActionFullData actions = 2;
+    repeated MacroActionFullData macroActionFullDatas = 2;
 }
 
 //
 // The request message when trying to obtain macros, filtered or not, configuration data.
 message MacrosRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The macro identification. If its an invalid value, it means there's no filter for macro x, i.e., all macros configurations should be returned.
     google.protobuf.Int64Value id = 2;
     // The user/owner which added the macro. If its an invalid value, it means there's no owner id filter set so, should return all macros configurations.
@@ -914,20 +996,27 @@ message MacrosRequest {
 // The request message when trying to obtain macros, filtered or not, configuration data.
 message MacroActionParametersRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The macro identification. If its an invalid value, it means there's no filter for macro x, i.e., all macros configurations should be returned.
     google.protobuf.Int64Value macroId = 2;
     // The macro action index. If its an invalid value, it means there's no filter for macro action index actionIdx.
     google.protobuf.Int64Value actionIdx = 3;
-    // The macro action parameter index. If its an invalid value, it means there's no filter for macro action parameter index actionParamIdx.
-    google.protobuf.Int64Value actionParamIdx = 4;
 }
 
 //
 // The list of macros full data, i.e., macros, its actions and its actions parameters.
 message ListMacrosFullData {
     // The list of macros.
-    repeated MacroFullData macros = 1;
+    repeated MacroFullData macroFullDatas = 1;
+}
+
+//
+// The list of macros full data, i.e., macros, its actions and its actions parameters.
+message ListMacrosFullDataResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of macros.
+    repeated MacroFullData macroFullDatas = 2;
 }
 
 //
@@ -938,74 +1027,278 @@ message ListMacros {
 }
 
 //
-// The message used to configure a macro action parameter(s).
-message MacroActionParameterConfigurationRequest {
-    // The workstation information.
-    WorkstationInformation workStationInfo = 1;
-    // The operation: save or delete.
-    MacroConfigOper macroConfigOper = 2;
-    // The list of parameters. If it's a save operation or a delete one, we can obtain all the data from the given list of MacroActionParameters.
-    repeated MacroActionParameter macroActionParameters = 3;
-}
-
-//
-// The message used to configure a macro action parameter(s).
-message MacroActionParameterConfigurationResponse {
+// The list of macros.
+message ListMacrosResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
-    Response globalResponse = 1;
-    // The MacroActionParameter which were not correctly configured. The ones that went well are absent from this list.
-    repeated MacroActionParameter macroActionParameters = 2;
+    Response response = 1;
+    // The list of macros.
+    repeated Macro macros = 2;
 }
 
 //
-//
+// The message used when a macro actions are requested.
 message MacroActionsRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The macro identification. If its an invalid value, it means there's no filter for macro x, i.e., all macros configurations should be returned.
     google.protobuf.Int64Value macroId = 2;
-    // The macro action index. If its an invalid value, it means there's no filter for macro action index actionIdx.
-    google.protobuf.Int64Value actionIdx = 3;
 }
 
 //
 // A list of macro action parameters.
-message ListMacroAction {
-    // 
+message ListMacroActions {
+    // Teh list of macro actions.
     repeated MacroAction macroActions = 1;
+}
+
+//
+// A list of macro action parameters.
+message ListMacroActionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // Teh list of macro actions.
+    repeated MacroAction macroActions = 2;
 }
 
 //
 // The message used to configure macro action(s).
 message MacroActionConfigurationRequest {
     // The workstation information.
-    WorkstationInformation workStationInfo = 1;
+    WorkstationInformation workstationInfo = 1;
     // The operation: save or delete.
     MacroConfigOper macroConfigOper = 2;
     // The list of action. If it's a save action operation, a full action and parameters save operation 
     // or a delete one, we can obtain all the data from the given list of MacroAction.
-    repeated MacroActionFullData macroActionFullData = 3;
+    repeated MacroActionFullData macroActionFullDatas = 3;
 }
 
 //
 // The message used to configure macro action(s).
 message MacroActionConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
-    Response globalResponse = 1;
+    Response response = 1;
     // The MacroAction which were not correctly configured. The ones that went well are absent from this list.
     repeated MacroAction macroActions = 2;
 }
 
 //
-//
+// The macros configurations request.
 message MacroConfigurationRequest {
-
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The operation: add, save or delete.
+    MacroGenericConfigOper macroGenericConfigOper = 2;
+    // The macro complete list of data.
+    MacroFullData macroFullData = 3;
 }
 
 //
-//
+// The macros configurations response.
 message MacroConfigurationResponse {
-
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The MacroFullData which were not correctly configured. The ones that went well are absent from this list.
+    repeated MacroFullData macroFullDatas = 2;
 }
+
+//
+// The message used to obtain cameras presets.
+message CamerasPresetsRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The list of cameras identifications.
+    repeated google.protobuf.Int64Value cameraIds = 2;
+}
+
+//
+// The message used when cameras presets are requested. 
+message CamerasPresetsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of cameras presets.
+    repeated CameraPtzfPreset cameraPtzfPresets = 2;
+}
+
+//
+// The cameras presets basic edition request (i.e., the STV DB data edition only)
+message CamerasPresetsEditionRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The list of cameras presets.
+    repeated CameraPtzfPreset cameraPtzfPresets = 2;
+}
+
+//
+// The cameras presets basic edition request response (i.e., the STV DB data edition only)
+message CamerasPresetsEditionResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of cameras presets which were not correctly configured. The ones that went well are absent from this list.
+    repeated CameraPtzfPreset cameraPtzfPresets = 2;
+}
+
+//
+// An events reaction i18n message data. 
+message I18nMessage {
+    // The i18n message language, like: en_GB, pt_PT, nb_NO, etc.
+    google.protobuf.StringValue lang = 1;
+    // The message itself.
+    google.protobuf.StringValue message = 2;
+}
+
+//
+// The equipment and system event reaction data.
+message EquipmentOrSystemEventReaction {
+    // The event identification.
+    google.protobuf.Int64Value id = 1;
+    // The event description.
+    google.protobuf.StringValue description = 2;
+    // The event reaction configured i18n messages.
+    repeated I18nMessage i18nMessages = 3;
+    // True if the event reaction is enabled.
+    google.protobuf.BoolValue isEnabled = 4;
+    // The reaction parameters.
+    google.protobuf.StringValue params = 5;
+    // The reaction associated macro identification.
+    google.protobuf.Int64Value macroId = 6;
+}
+
+//
+// The equipment event reaction data.
+message EquipmentEventReaction {
+    // The basic equipment event reaction data.
+    EquipmentOrSystemEventReaction equipmentOrSystemEventReaction = 1;
+    // The equipment event reaction alarm type.
+    EquipmentEventReactionAlarm equipmentEventReactionAlarm = 2;
+}
+
+//
+// The system event reaction data.
+message SystemEventReaction {
+    // The basic system event reaction data.
+    EquipmentOrSystemEventReaction equipmentOrSystemEventReaction = 1;
+    // The system event reaction alarm type.
+    SystemEventReactionAlarm systemEventReactionAlarm = 2;
+}
+
+//
+// The message used to return all equipment event reactions.
+message EquipmentEventReactionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of equipment event reactions.
+    repeated EquipmentEventReaction equipmentEventReactions = 2;
+}
+
+//
+// The message used to return all system event reactions.
+message SystemEventReactionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of system event reactions.
+    repeated SystemEventReaction systemEventReactions = 2;
+}
+
+//
+// The equipment event reactions configuration request.
+// If it's a save and the EquipmentEventReaction.EquipmentOrSystemEventReaction.id 
+// is an invalid one, it means it's an addition; otherwise it will be treated as an edition.
+message EquipmentEventReactionsConfigurationRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The type of configuration operation: save or delete.
+    EventsReactionConfigOper eventsReactionConfigOper = 2;
+    // The list of equipment event reactions to process.
+    repeated EquipmentEventReaction equipmentEventReactions = 3;
+}
+
+//
+// The system event reactions configuration request.
+// If it's a save and the EquipmentEventReaction.EquipmentOrSystemEventReaction.id 
+// is an invalid one, it means it's an addition; otherwise it will be treated as an edition.
+message SystemEventReactionsConfigurationRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The type of configuration operation: save or delete.
+    EventsReactionConfigOper eventsReactionConfigOper = 2;
+    // The list of equipment event reactions to process.
+    repeated SystemEventReaction systemEventReactions = 3;
+}
+
+//
+// The equipment event reactions configuration request response.
+message EquipmentEventReactionsConfigurationResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of equipment event reactions which were not correctly configured. The ones that went well are absent from this list.
+    repeated EquipmentEventReaction equipmentEventReactions = 2;
+}
+
+//
+// The system event reactions configuration request response.
+message SystemEventReactionsConfigurationResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of system event reactions which were not correctly configured. The ones that went well are absent from this list.
+    repeated SystemEventReaction systemEventReactions = 2;
+}
+
+//
+// The timer scheduled event reaction data.
+message TimerScheduledEventReaction {
+    //
+    google.protobuf.Int64Value id = 1;
+    //
+    google.protobuf.StringValue description = 2;
+    //
+    google.protobuf.BoolValue isEnabled = 3;
+    //
+    google.protobuf.Int64Value day = 4;
+    //
+    google.protobuf.Int64Value month = 5;
+    //
+    google.protobuf.Int64Value year = 6;
+    //
+    google.protobuf.Int64Value hour = 7;
+    //
+    google.protobuf.Int64Value minute = 8;
+    //
+    TimerScheduledEventPeriodicityType timerScheduledEventPeriodicityType = 9;
+    //
+    google.protobuf.Int64Value macroId = 10;
+}
+
+//
+// The message used to return all timer scheduled event reactions.
+message TimerScheduledEventReactionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of timer scheduled event reactions.
+    repeated TimerScheduledEventReaction timerScheduledEventReactions = 2;
+}
+
+//
+// The timer scheduled event reactions configuration request.
+// If it's a save and the TimerScheduledEventReaction.id is an invalid one, 
+// it means it's an addition; otherwise it will be treated as an edition.
+message TimerScheduledEventReactionsConfigurationRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The type of configuration operation: save or delete.
+    EventsReactionConfigOper eventsReactionConfigOper = 2;
+    // The list of timer scheduled event reactions to process.
+    repeated TimerScheduledEventReaction timerScheduledEventReactions = 3;
+}
+
+//
+// The timer scheduled event reactions configuration request response.
+message TimerScheduledEventReactionsConfigurationResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The list of timer scheduled event reactions which were not correctly configured. The ones that went well are absent from this list.
+    repeated TimerScheduledEventReaction timerScheduledEventReactions = 2;
+}
+
+
 
 
