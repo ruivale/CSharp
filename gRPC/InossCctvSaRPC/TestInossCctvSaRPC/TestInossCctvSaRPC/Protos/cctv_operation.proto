@@ -79,7 +79,7 @@ service Operation {
     // Normally used to acknowledge sensors and actuators alarms.
     // TAO IDL:
     //          - int ackAlarm(workstationInformation_ logInfo, int nEquipId, int[] listAlarmIds, ...);
-    rpc ackAlarms(AckAlarmsRequest) returns (MultipleRequestsResponse);
+    rpc AckAlarms(AckAlarmsRequest) returns (MultipleRequestsResponse);
 
 
 
