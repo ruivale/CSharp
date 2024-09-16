@@ -87,7 +87,7 @@ service Configuration {
     // If the given ListIds is empty, or null, this method returns ALL sequences basic data otherwise, 
     // it filters the result by ListIds identifications which relates to sequences identifications.
     // TAO IDL: 
-    //          - int getAllVidSeqs(...);
+    //          - int getAllVidSeqs(listVidSeqsHolder);
     rpc GetAllSequences(ListIds) returns (ListSequencesResponse);
 
     //

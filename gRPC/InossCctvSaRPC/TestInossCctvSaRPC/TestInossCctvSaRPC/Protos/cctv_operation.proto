@@ -52,16 +52,16 @@ service Operation {
     //          - int getSourcesInTargets(int[] targets, ...);
     rpc GetDetailedConnectionsInfo(ListIds) returns (DetailedConnectionsInfoResponse);
     
-    // Setting connections between sources equipments, normally cameras, and targets, normally monitors.
+    // Setting connections between source equipments, normally cameras, and targets, normally monitors.
     // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific target response item.
+    //       is OK, there's no need to use the specific target response item.
     // TAO IDL: 
     //          - int setSourceinTarget(...);
     rpc Connect(ConnectionsRequest) returns (MultipleRequestsResponse);
 
     // Disconnects all the given targets. Returns a list of results for each given target.
     // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific target response item.
+    //       is OK, there's no need to use the specific target response item.
     // TAO IDL: 
     //          - int disconnectVideoFromTarget(workstationInformation_ logInfo, int targetId);
     //          - int disconnectVideoFromTargetEx(workstationInformation_ logInfo, int[] targetIds, ...);
@@ -153,6 +153,7 @@ service Operation {
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    //       DB access???
     rpc GetSensorAlarmTypes(WorkstationInformation) returns (ListSensorAlarmTypesResponse);
 
     //
@@ -160,6 +161,7 @@ service Operation {
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    //       DB access???
     rpc GetSensorAlarmSubtypes(WorkstationInformation) returns (ListSensorAlarmSubtypesResponse);
 
     //
@@ -167,6 +169,7 @@ service Operation {
     // TAO IDL:
     //          - ???????
     // NOTE: probably we need to implement this in the CCTV module or adding a TAO API in the configuration IDL.
+    //       DB access???
     rpc GetSensorAlarmSubtypesTags(WorkstationInformation) returns (ListSensorAlarmSubtypesTagsResponse);
 
 
@@ -184,15 +187,16 @@ service Operation {
     // 
     // Lock/Unlock equipments, normally cameras. The r
     // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific lock/unlock response item.
+    //       is OK, there's no need to use the specific lock/unlock response item.
     // 
     //  Param:
     //
-    //  Returns:
+    //  Returns: the return is a little bit tricky. To really check for the operation "ping" 
+    //           return success this method MUST be called w/ an array of equips with ONLY ONE element.    
     //
     // TAO IDL: 
     //          - int ping(int IG, int priorityLevel, int[] lockedEquips, int IGTimeout);
-    //          - int releaseEquipment(...);
+    //          - int releaseEquipment(workstationInformation_ logInfo, int equipId, int IG, int priorityLevel);
     rpc LockUnlockEquipments(LockUnlockEquipsRequest) returns (MultipleRequestsResponse);
 
     // 
@@ -202,23 +206,26 @@ service Operation {
     rpc GetLockedEquipments(WorkstationInformation) returns (NumericsResponse);
 
     //
-    // From the given list of equipments, obtain all its state.
+    // From the given list of equipments, obtain all its states.
     // TAO IDL: 
     //          - int getState(int EqId);
     rpc GetEquipmentsGenericState(ListIds) returns (EquipmentsGenericStateResponse);
 
     //
-    // From the given list of equipments, obtain all its specific state.
+    // From the given list of equipments, obtain all its specific states.
     // TAO IDL: 
     //          - int getSpecificState(int EqId);
     rpc GetEquipmentsSpecificState(ListIds) returns (EquipmentsSpecificStateResponse);
 
     //
-    // From the given list of equipments, return all its connection information, generic and specific onfiguration
+    // From the given list of equipments, return all its connection information, generic and specific configuration
     // TAO IDL: 
     //          - String getGenericConfiguration(int EqId);
     //          - String getSpecificConfiguration(int EqId);
-    //          - String getCommunicationSettings(int EqId); TODO: NEEDS IMPLEMENTATION ON THE StvSa!!!!
+    //          - String getCommunicationSettings(int EqId); 
+    //
+    // TODO: NEEDS IMPLEMENTATION ON THE StvSa!!!!
+    //
     rpc GetEquipmentsConfiguration(ListIds) returns (EquipmentsConfigurationResponse);
 
     //
@@ -237,6 +244,7 @@ service Operation {
     // Execute all actuator operations: actuate or deactuate.
     // TAO IDL:
     //          - int actuate(workstationInformation_ logInfo, int EqId, int lDuration);
+    //          - int deactuate(workstationInformation_ logInfo, int EqId);
     rpc ExecActuatorOperation(ActuatorOperationsRequest) returns (ActuatorOperationsResponse);
 
     //
@@ -270,34 +278,34 @@ service Operation {
     //
 
     // Starting sequences in the targets, normally monitors, all given in the StartSeqsInTargetsRequest message.
-    // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific target response item.
     // TAO IDL: 
     //          - int setSequenceinTarget(workstationInformation_ logInfo, int SeqID, int TargetID);
-    rpc StartSequences(StartSequencesRequest) returns (MultipleRequestsResponse);
+    rpc StartSequences(StartSequencesRequest) returns (RunningSequencesResponse);
 
     // For all given sequences, executes the given operation: stop, pause, restart and steps forward and backward.
-    // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific target response item.
     // TAO IDL:
     //          - int stopSequence(workstationInformation_ logInfo, int SeqHdl);
-    //          - int stopAllSequences(workstationInformation_ logInfo, int SeqID);
     //          - int startSequence(workstationInformation_ logInfo, int SeqHdl);
     //          - int pauseSequence(workstationInformation_ logInfo, int SeqHdl);
-    rpc ExecSequencesOperation(SequencesOperationRequest) returns (MultipleRequestsResponse);
+	//          - int showNextStep(int SeqHdl);
+	//          - int showPreviousStep(int SeqHdl);
+    //          or if we desire to stop all running sequences using the given sequence id:
+    //          - int stopAllSequences(workstationInformation_ logInfo, int SeqId);
+    rpc ExecSequencesOperation(SequencesOperationRequest) returns (RunningSequencesResponse);
 
     // Obtain all running sequences. 
     // The request can be filter by the given WorkStation, targets, sequences handles, etc, 
     // configured in the RunningSequencesRequest parameter, if any.
     // Can be used to obtain:
-    //		- all running sequences, if the given parameter is unset; 
-    //		- sequences states; 
-    //		- which, if any, sequences are active in the given targets;
-    //		- etc.    
+    //      - all running sequences, if the given parameter is unset; 
+    //      - sequences states; 
+    //      - which, if any, sequences are active in the given targets;
+    //      - etc.
+    // 
     // TAO IDL: 
-    //          - void getRunningSeqs(...); - returns ALL running sequences which may not be what was requested.
-    //          - int getSequenceInTargetData(int targetId, ...);
-    //          - int getSequenceInTarget(int targetId);
+    //      - void getRunningSeqs(...); (returns ALL running seqs BUT NO HANDLE)
+    //      - int getSequenceInTargetData(int targetId, ...); (returns all info)
+    //      - int getSequenceInTarget(int targetId); (we returns the sequence handle)
     rpc GetRunningSequences(RunningSequencesRequest) returns (RunningSequencesResponse);
 
 
@@ -318,10 +326,11 @@ service Operation {
 
     // For all given macros, executes the given operation, i.e., start or stop.
     // NOTE: if the globalResponse, present in the returned MultipleRequestsResponse, 
-    //       is OK, there's' no need to use the specific macro response item.
+    //       is OK, there's no need to use the specific macro response item.
     // TAO IDL: 
-    //          - int runMacro(...);
-    rpc ExecMacrosOperation(MacrosOperationRequest) returns (MultipleRequestsResponse);
+    //          - int runMacro(workstationInformation_ logInfo, int macroId); (return the macro handle)
+    //          - stopMacro(macroHandle)
+    rpc ExecMacrosOperation(MacrosOperationRequest) returns (MacroOperationsResponse);
 
 }
     
