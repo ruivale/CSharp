@@ -88,6 +88,7 @@ service Configuration {
     // it filters the result by ListIds identifications which relates to sequences identifications.
     // TAO IDL: 
     //          - int getAllVidSeqs(listVidSeqsHolder);
+    //          - getVidSeqByID(VidSeqID, VideoSequenceConfigStv);
     rpc GetAllSequences(ListIds) returns (ListSequencesResponse);
 
     //
@@ -102,8 +103,7 @@ service Configuration {
     rpc ExecSequenceConfiguration(SequenceConfigRequest) returns (SequenceConfigResponse);
 
     // 
-    // Obtains, for given sequences and its list of operations. 
-    // It can filter the results by setting the ListIds identifications which relates to sequences identifications.
+    // Obtains, for the given sequences, its list of operations. 
     // TAO IDL:
     //          - int getAllVidSeqOperations(int vidSeqId, listVidSeqOpersHolder);
     rpc GetSequencesConfiguration(ListIds) returns (ListSequenceFullDataResponse);
@@ -119,11 +119,10 @@ service Configuration {
     
     //
     // Obtain ALL configured macros in the system. 
-    // It returns macros basic data, i.e., not macros actions and its parameters; for this use the GetMacrosConfiguration(..) API.
+    // Returns macros basic data (not its actions and parameters); for this, use the GetMacrosConfiguration(..) API.
     // If the given ListIds is empty, or null, this method returns ALL macros otherwise, it filters 
-    // the results by the ListIds configured identifications which relates to the macro owner identification.
+    // the results using ListIds configured identifications which relates to the macro owner identification.
     // TAO IDL:
-    //          - int getMacroByID(int MacroID, MacroConfigStv_Holder);
     //          - int getAllMacros(listMacrosHolder);
     //          - int getAllMacrosFromUser(int userId, listMacrosHolder);
     rpc GetAllMacros(ListIds) returns (ListMacrosResponse);
@@ -142,7 +141,7 @@ service Configuration {
     // If no parameter index is given, all the macro action parameters are returned, otherwise, only the desired parameter, if exists, is returned.
     // TAOL IDL:
     //          - int getAllActionParameters(int macroId, int actionNr, listActionParametersHolder );
-    rpc GetMacroActionParameters(MacroActionParametersRequest) returns (ListMacroActionParameter);
+    rpc GetMacroActionParameters(MacroActionParametersRequest) returns (ListMacroActionParameterResponse);
 
     //
     // Used to obtain macros actions.
@@ -159,7 +158,7 @@ service Configuration {
     //          - int saveAction(ActionConfigStv_ Action);
     //          - int deleteAction(int MacroID, int nActionNr);
     //          - int saveActionFull(ActionConfigStv_, ActionParameterConfigStv_[]);
-    rpc ExectMacroActionConfiguration(MacroActionConfigurationRequest) returns (MacroActionConfigurationResponse);
+    rpc ExecMacroActionConfiguration(MacroActionConfigurationRequest) returns (MacroActionConfigurationResponse);
 
     //
     // Used to configure macros.
@@ -171,7 +170,7 @@ service Configuration {
     //          - int saveMacro(workstationInformation_, MacroConfigStv_ );
     //          - int saveMacroFull(workstationInformation_, MacroConfigStv_, ActionConfigStv_[], ActionParameterConfigStv_[]);
     //          - int deleteMacro(workstationInformation_, MacroID);
-    rpc ExectMacroConfiguration(MacroConfigurationRequest) returns (MacroConfigurationResponse);
+    rpc ExecMacroConfiguration(MacroConfigurationRequest) returns (MacroConfigurationResponse);
 
 
 

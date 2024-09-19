@@ -926,10 +926,9 @@ message ListSequenceFullData {
 message ListSequenceFullDataResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
-    // Th elist of complete sequnce data, i.e., its basic data and its operations.
-    repeated SequenceFullData sequenceFullDatas = 2;
+    // The list of complete sequnce data, i.e., its basic data and its operations.
+    repeated SequenceFullData sequencesFullData = 2;
 }
-
 
 //
 // The sequences configurations request.
@@ -939,7 +938,7 @@ message SequenceConfigRequest {
     // The sequence configuration operation: add, basic edit, full edit and delete.
     SequenceConfig sequenceConfig = 2;
     // The sequences configurations to perform.
-    repeated SequenceFullData sequenceFullDatas = 3;
+    repeated SequenceFullData sequencesFullData = 3;
 }
 
 //
@@ -948,7 +947,7 @@ message SequenceConfigResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The SequenceConfigurations which were not correctly configured. The ones that went well are absent from this list.
-    repeated SequenceFullData sequenceFullDatas = 2;
+    repeated ListSequenceFullDataResponse sequencesFullDataResponse = 2;
 }
 
 
@@ -1141,8 +1140,8 @@ message MacroConfigurationRequest {
     WorkstationInformation workstationInfo = 1;
     // The operation: add, save or delete.
     MacroGenericConfigOper macroGenericConfigOper = 2;
-    // The macro complete list of data.
-    MacroFullData macroFullData = 3;
+    // The macros complete list of data.
+    repeated MacroFullData macroFullData = 3;
 }
 
 //
