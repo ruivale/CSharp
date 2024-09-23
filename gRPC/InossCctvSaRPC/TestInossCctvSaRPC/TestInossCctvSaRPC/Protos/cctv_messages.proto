@@ -1235,11 +1235,29 @@ message SystemEventReaction {
 
 //
 // The message used to return all equipment event reactions.
+message EquipmentEventReactionResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The equipment event reaction.
+    EquipmentEventReaction equipmentEventReaction = 2;
+}
+
+//
+// The message used to return all equipment event reactions.
 message EquipmentEventReactionsResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of equipment event reactions.
     repeated EquipmentEventReaction equipmentEventReactions = 2;
+}
+
+//
+// The message used to return all system event reactions.
+message SystemEventReactionResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The system event reaction.
+    SystemEventReaction systemEventReaction = 2;
 }
 
 //
@@ -1283,7 +1301,16 @@ message EquipmentEventReactionsConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of equipment event reactions which were not correctly configured. The ones that went well are absent from this list.
-    repeated EquipmentEventReaction equipmentEventReactions = 2;
+    repeated EquipmentEventReactionResponse equipmentEventReactionsResponses = 2;
+}
+
+//
+// The system event reactions configuration request response.
+message SystemEventReactionConfigurationResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The system event reaction which was not correctly configured.
+    SystemEventReaction systemEventReaction = 2;
 }
 
 //
@@ -1292,7 +1319,7 @@ message SystemEventReactionsConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of system event reactions which were not correctly configured. The ones that went well are absent from this list.
-    repeated SystemEventReaction systemEventReactions = 2;
+    repeated SystemEventReactionResponse systemEventReactions = 2;
 }
 
 //
@@ -1318,6 +1345,15 @@ message TimerScheduledEventReaction {
     TimerScheduledEventPeriodicityType timerScheduledEventPeriodicityType = 9;
     //
     google.protobuf.Int64Value macroId = 10;
+}
+
+//
+// The message used to return all timer scheduled event reactions.
+message TimerScheduledEventReactionResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The timer scheduled event reactions.
+    TimerScheduledEventReaction timerScheduledEventReaction = 2;
 }
 
 //
@@ -1348,7 +1384,7 @@ message TimerScheduledEventReactionsConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of timer scheduled event reactions which were not correctly configured. The ones that went well are absent from this list.
-    repeated TimerScheduledEventReaction timerScheduledEventReactions = 2;
+    repeated TimerScheduledEventReactionResponse timerScheduledEventReactions = 2;
 }
 
 

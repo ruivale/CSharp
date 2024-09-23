@@ -391,8 +391,9 @@ enum EventsReactionType {
 // The scheduled, equipment and system events reaction configurations operations.
 enum EventsReactionConfigOper {
     // since we're dealing w/ OPEN enums, the first element must be zero (0);
-    ERCO_SAVE = 0;
-    ERCO_DELETE = 1;
+    ERCO_ADD = 0;
+    ERCO_SAVE = 1;
+    ERCO_DELETE = 2;
 }
 
 //

@@ -183,46 +183,46 @@ service Configuration {
     //
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Equipment events reaction configurations
     //
+    // Equipment events reaction configurations
     // TAO IDL:
     //          - int getAllEvents(listEventConfigStvHolder); // for equipments and system events
     rpc GetEquipmentEventReactions(WorkstationInformation) returns (EquipmentEventReactionsResponse);
 
     //
-    //
+    // Configure equipment event reactions.
     // TAO IDL:
-    //          - int addNewEvent(EventConfigStv_); // for equipments and system events
+    //          - int addNewEvent(EventConfigStv_); // for equipments and system events (returns the new evt id)
     //          - int saveEvent(EventConfigStv_); // for equipments and system events
     //          - int deleteEvent(int eventId);
     rpc ExecEquipmentEventReactionsConfiguration(EquipmentEventReactionsConfigurationRequest) returns (EquipmentEventReactionsConfigurationResponse);
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // System events reaction configurations
     //
+    // System events reaction configurations
     // TAO IDL:
     //          - int getAllEvents(listEventConfigStvHolder); // for equipments and system events
     rpc GetSystemEventReactions(WorkstationInformation) returns (SystemEventReactionsResponse);
 
     //
-    //
+    // Configure system event reactions.
     // TAO IDL:
-    //          - int addNewEvent(EventConfigStv_); // for equipments and system events
+    //          - int addNewEvent(EventConfigStv_); // for equipments and system events (returns the new evt id)
     //          - int saveEvent(EventConfigStv_); // for equipments and system events
     //          - int deleteEvent(int eventId);
     rpc ExecSystemEventReactionsConfiguration(SystemEventReactionsConfigurationRequest) returns (SystemEventReactionsConfigurationResponse);
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Timer scheduled events reaction configurations
     //
+    // Timer scheduled events reaction configurations
     // TAO IDL:
     //          - 	int getAllScheduledActions(listScheduledActionConfigStvHolder); // for timer scheduled events
     rpc GetTimerScheduledEventReactions(WorkstationInformation) returns (TimerScheduledEventReactionsResponse);
 
     //
-    //
+    // Configure scheduled event reactions.
     // TAO IDL:
     //          - int saveScheduledAction(ScheduledActionConfigStv_); // for timer scheduled events
     //          - int deleteEvent(int eventId);
