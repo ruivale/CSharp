@@ -3,6 +3,9 @@ using Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation;
 
 namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class CctvServiceTests : Operation.OperationBase
     {
         private readonly long nVersion = 0;
@@ -11,6 +14,9 @@ namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
         private readonly long nBuild = 2;
 
         private readonly ILogger<CctvServiceTests> _logger;
+
+
+
 
         /// <summary>
         /// 
@@ -22,6 +28,12 @@ namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override Task<VersionsReply> GetSimpleVersion(EmptyRequest request, ServerCallContext context)
         {
             Console.WriteLine("CctvServiceTests.GetSimpleVersion() GET GET GET ...");
@@ -91,6 +103,13 @@ namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
         //    });
         //}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override Task<VersionsReply> GetVersionsWithNoBound(VersionRequestMsg request, ServerCallContext context)
         {
             Console.WriteLine("CctvServiceTests.GetVersionsWithNoBound() GET GET GET ...");
@@ -131,6 +150,13 @@ namespace Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services
             });
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public override Task<VersionsReply> GetVersionsThroughPost(VersionRequestMsg request, ServerCallContext context)
         {
             Console.WriteLine("CctvServiceTests.GetVersionsThroughPost() POST POST POST...");

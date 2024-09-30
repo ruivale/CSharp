@@ -569,17 +569,17 @@ message NotAcknowledgedAlarm {
     // The associated monitors list identification.
     int64 groupId = 1;
     // The monitor identification (of course, the given monitor identification, if valid, must be a monitor "belonging" to the group set. ).
-    int64 nMonId = 2;
+    int64 monId = 2;
     // The not acknowledged alarm identification.
-    int64 nAlarmId = 3;
+    int64 alarmId = 3;
     // The not acknowledged alarm position "inside" the alarms stack list.
-    int64 nPos = 4;
+    int64 pos = 4;
     // The not acknowledged alarm description.
-    string sDescription = 5;
+    string description = 5;
     // The not acknowledged alarm source equipment identification, normally pointing to a camera.
-    int64 nSourceId = 6;
+    int64 sourceId = 6;
     // The not acknowledged alarm source equipment, normally a camera, preset, if set and if the camera is a PTZ one.
-    int64 nPrePos = 7;
+    int64 prePos = 7;
 }
 
 //
@@ -595,7 +595,7 @@ message AcknowledgeAlarmsResponse {
 // The "Set Alarms On Monitor" connection request. 
 message AlarmMonitorConnectionInfo {
     // if true, the operation is directed to a monitor in a group, aka alarm monitor.
-    google.protobuf.BoolValue isMonitorInGroup = 1;
+    google.protobuf.BoolValue monitorInGroup = 1;
     // the source & target info.
     ConnectionInfo connectionInfo = 2;
 }
@@ -663,7 +663,7 @@ message SensorAlarmSubtype {
     // The sensor alarm type.
     SensorAlarmType sensorAlarmType = 3;
     // Indicates if the sensor alarm subtype can be searchable in any searchable GUI.
-    bool isGuiSearchable = 4;
+    bool guiSearchable = 4;
     // The sensor alarm subtype priority.
     int64 priority = 5;
 }
@@ -700,7 +700,7 @@ message SensorAlarmSubtypesTag {
     // The sensor alarm subtype tag associated subtype.
     SensorAlarmSubtype sensorAlarmSubtype = 6;
     // Trie if the sensor alarm subtype tag is te default one in the system.
-    bool isDefault = 7;
+    bool default = 7;
 }
 
 //
@@ -737,7 +737,7 @@ message MarkUserAlarmEditRequest {
     // The marking notes. (from STV DB: t_video_recalarm_params)
     google.protobuf.StringValue notes = 6;
     // If true it means the marking just occurred. False for all other usages.
-    google.protobuf.BoolValue isMarkingEnd =  7;
+    google.protobuf.BoolValue arkingEnd =  7;
 }
 
 //
@@ -759,19 +759,19 @@ message MobileCameraAutoHomePositionActivation {
     // The camera identification.
     google.protobuf.Int64Value camId = 1;
     // If true it means the camera has the "Go To Home Position" feature enabled.
-    google.protobuf.BoolValue isEnabled =  2;
+    google.protobuf.BoolValue enabled =  2;
     // The "Return to Home Position" timeout, i.e., the ammount of seconds before moving 
     // the camera to its configured home position after the last PTZF operation was performed.
-    google.protobuf.Int64Value nTimeout = 3;
+    google.protobuf.Int64Value timeout = 3;
     // The camera preset index used to set the home position.
-    google.protobuf.Int64Value nPreset = 4;
+    google.protobuf.Int64Value preset = 4;
     // True if the home position is set by a PreSet, 
     // false if the home position is set by a pre-configured value (stored in T_OPTIONSSTV [PRESETS_HOME oprtion]).
     google.protobuf.BoolValue hasHomePosSet =  5;
     // If 1 (true), a sequence start will disable the feature for the camera until the sequence is stopped (the camera must be present in the sequence list of operations).
-    google.protobuf.BoolValue isSequenceMng =  6;
+    google.protobuf.BoolValue sequenceMng =  6;
     // If 1 (true), a alarm reaction, which has the camera in its associated macro actions, will disable the feature. For it to be enabled again, the user must start it.
-    google.protobuf.BoolValue isAlarmMng =  7;
+    google.protobuf.BoolValue alarmMng =  7;
 }
 
 //
@@ -807,7 +807,7 @@ message Agent {
     // The agente address.
     string address = 2;
     // True if the agent is enabled.
-    bool isEnabled = 3;
+    bool enabled = 3;
     // The agent server identification.
     int64 serverId = 4;
 }
@@ -822,7 +822,7 @@ message Station {
     // The station status.
     int64 status = 3;
     // True if the station is enabled.
-    bool isEnabled = 4;
+    bool enabled = 4;
     // The station polling timeout. (?????)
     int64 pollingTimeout = 5;
     // The station identification
@@ -896,7 +896,7 @@ message SequenceOperation {
     // 
     google.protobuf.Int64Value position = 2;
     // 
-    google.protobuf.BoolValue isEnabled = 3;
+    google.protobuf.BoolValue enabled = 3;
     // 
     google.protobuf.Int64Value equipmentId = 4;
     // 
@@ -990,7 +990,7 @@ message MacroAction {
     // The associated macro action code identification.
     MacroActionCode macroActionCode = 3;
     // True is the macro action is enabled.
-    google.protobuf.BoolValue isEnabled = 4;
+    google.protobuf.BoolValue enabled = 4;
 }
 
 //
@@ -1021,7 +1021,7 @@ message Macro {
     // has the user configuring the macro or if the macro permission is "Edit & Execute";
     google.protobuf.BoolValue canEdit = 7;
     // If true, means the macro does not send a notification when it starts.
-    google.protobuf.BoolValue isSilent = 8;
+    google.protobuf.BoolValue silent = 8;
 }
 
 //
@@ -1208,7 +1208,7 @@ message EquipmentOrSystemEventReaction {
     // The event reaction configured i18n messages.
     repeated I18nMessage i18nMessages = 3;
     // True if the event reaction is enabled.
-    google.protobuf.BoolValue isEnabled = 4;
+    google.protobuf.BoolValue enabled = 4;
     // The reaction parameters.
     google.protobuf.StringValue params = 5;
     // The reaction associated macro identification.
@@ -1330,7 +1330,7 @@ message TimerScheduledEventReaction {
     //
     google.protobuf.StringValue description = 2;
     //
-    google.protobuf.BoolValue isEnabled = 3;
+    google.protobuf.BoolValue enabled = 3;
     //
     google.protobuf.Int64Value day = 4;
     //
