@@ -737,7 +737,7 @@ message MarkUserAlarmEditRequest {
     // The marking notes. (from STV DB: t_video_recalarm_params)
     google.protobuf.StringValue notes = 6;
     // If true it means the marking just occurred. False for all other usages.
-    google.protobuf.BoolValue arkingEnd =  7;
+    google.protobuf.BoolValue markingEnd =  7;
 }
 
 //
