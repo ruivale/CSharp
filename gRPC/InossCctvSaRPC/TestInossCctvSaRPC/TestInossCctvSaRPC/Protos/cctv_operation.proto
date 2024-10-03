@@ -331,7 +331,7 @@ service Operation {
     //          - int runMacro(workstationInformation_ logInfo, int macroId); (return the macro handle)
     //          - stopMacro(macroHandle)
     rpc ExecMacrosOperation(MacrosOperationRequest) returns (MacroOperationsResponse);
-
+    
 }
     
 

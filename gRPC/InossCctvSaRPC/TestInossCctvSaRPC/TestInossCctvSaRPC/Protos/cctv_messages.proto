@@ -1319,7 +1319,7 @@ message SystemEventReactionsConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of system event reactions which were not correctly configured. The ones that went well are absent from this list.
-    repeated SystemEventReactionResponse systemEventReactions = 2;
+    repeated SystemEventReactionResponse systemEventReactionsResponses = 2;
 }
 
 //
@@ -1384,7 +1384,7 @@ message TimerScheduledEventReactionsConfigurationResponse {
     // Global reply for the request. If this is OK, then ALL requests were successful. 
     Response response = 1;
     // The list of timer scheduled event reactions which were not correctly configured. The ones that went well are absent from this list.
-    repeated TimerScheduledEventReactionResponse timerScheduledEventReactions = 2;
+    repeated TimerScheduledEventReactionResponse timerScheduledEventReactionsResponses = 2;
 }
 
 
