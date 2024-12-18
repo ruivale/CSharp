@@ -17,12 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\cctv_configuration.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\cctv_operation.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\cctv_enums.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\cctv_messages.proto">
-      <GrpcServices>Server</GrpcServices>
-    </Protobuf>
+    <Protobuf Include="Protos\cctv_configuration.proto" GrpcServices="Both" />
+    <Protobuf Include="Protos\cctv_operation.proto" GrpcServices="Both" />
+    <Protobuf Include="Protos\cctv_enums.proto" GrpcServices="Both" />
+    <Protobuf Include="Protos\cctv_messages.proto" GrpcServices="Both" />
     <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\test_cctv.proto" GrpcServices="Both" />
   </ItemGroup>

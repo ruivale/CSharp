@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.v1";
+option java_package = "com.efacec.es.trp.efarail.cctv.grpc.operation.v1";
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// MsgVersionMod
+// Normally used when version are requested
+enum VersionMod {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    VERMOD_ALL = 0;
+    VERMOD_GRPC = 1;
+    VERMOD_SA = 2;
+    VERMOD_AGENT = 3;
+    VERMOD_PROXY = 4;
+}
+
+// ReplyValue
+// All possible reply values
+enum ResponseValue {
+    // since we're dealing w/ OPEN enums, the first element must be zero (0);
+    R_OK = 0;
+    R_ERROR = 1;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// The current WorkStation information. Normally used by the auditing system.
+message WorkstationInformation {
+    // The user name of the logged user, i.e., the user login.
+    google.protobuf.StringValue userName = 1;
+    // The workstation identification.
+    google.protobuf.Int64Value id = 2;
+    //
+    // TODO: should we add the user id?
+}
+
+//
+// Message used when version are requested.
+message VersionsRequest {
+    // The workstation information.
+    WorkstationInformation workstationInfo = 1;
+    // The requested module.
+    VersionMod versionMod = 2;
+}
+
+//
+// Generic numeric reply
+message Response {
+    // The numeric value to return to the caller.
+    ResponseValue responseValue = 1;
+    // A description of the returned value, if needed/wanted (can be left empty).
+    string desc = 2;
+}
+
+//
+// Generic version reply
+message CctvVersion {
+    // The version value.
+    int64 version = 1;
+    // The subversion value.
+    int64 subVersion = 2;
+    // The revision value.
+    int64 revision = 3;
+    // The build value.
+    int64 build = 4;
+    // A description of the returned value, if needed/wanted (can be left empty).
+    string desc = 5;
+    // The module.
+    VersionMod versionMod = 6;
+}
+//
+// Generic multiple versions reply
+message ListCctvVersionsResponse {
+    // Global reply for the request. If this is OK, then ALL requests were successful. 
+    Response response = 1;
+    // The requested modules versions.
+    repeated CctvVersion cctvVersions = 2;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// CCTV operation interface (TAO IDL: operation.idl)
+//
+//
+service Operation {
+
+    // Obtain the Operation service version
+    // TAO IDL:
+    //          - void getAgentVersions(...);
+    //          - void getStvSaVersion(...);
+    rpc GetVersions(VersionsRequest) returns (ListCctvVersionsResponse);
+
+}
