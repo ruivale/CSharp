@@ -182,43 +182,86 @@ namespace MyOwnMilestoneTests.Login
         /// <summary>
         /// This method will ask for the necessary parameters.
         /// </summary>
-        private static ConnInfo GetLoginParams()
+        private static ConnInfo GetLoginParams(string[] args)
         {
-            ConnInfo connInfo = new ConnInfo
+
+            bool mayUseGivenParams = false;
+
+            Console.WriteLine("GetLoginParams. May use the given parameters? Press \"Enter\" for yes (y)...");
+            for (int i = 0; i < args.Length; i++)
             {
-                // change to false to connect to servers older than 2021 R1 or servers not running HTTPS on the Identity/Management Server communication
-                SecureOnly = true
-            };
-
-            Console.Write("XProtect server (url): ");
-            connInfo.URL = Console.ReadLine();
-            
-            if (!connInfo.URL.StartsWith("http://", true, null) && !connInfo.URL.StartsWith("https://", true, null)) {
-                connInfo.URL = "http://" + connInfo.URL;
+                Console.WriteLine("\t" + args[i]);
             }
+            string strMayUseParams = Console.ReadLine();
+            mayUseGivenParams = string.IsNullOrEmpty(strMayUseParams) || strMayUseParams.Equals("y");
 
-
-            Console.Write("Authentication: Windows Default, Windows or Basic (D/W/B) (Enter for \"Basic\")");
-            string str = Console.ReadLine();
-            connInfo.AuthorizationMode =
-                str != null && str.Length > 0 && (str.StartsWith("W", true, null) || str.StartsWith("D", true, null))?
-                    str.StartsWith("W", true, null)?
-                        AuthorizationMode.Windows :
-                        AuthorizationMode.DefaultWindows :
-                    AuthorizationMode.Basic;
-
-
-            if (connInfo.AuthorizationMode != AuthorizationMode.DefaultWindows)
+            if (mayUseGivenParams &&
+                args.Length > 2 &&
+                !string.IsNullOrEmpty(args[0]) &&
+                !string.IsNullOrEmpty(args[1]) &&
+                !string.IsNullOrEmpty(args[2]))
             {
-                Console.Write("Username: ");
-                connInfo.UserName = Console.ReadLine();
+                Console.Write("Authentication: Windows Default, Windows or Basic (D/W/B)? Press \"Enter\" for \"Basic\"...");
+                string str = Console.ReadLine();
 
-                connInfo.Password = GetPasswordFromConsole();
-                
-                Console.WriteLine();
+                ConnInfo connInfo = new ConnInfo
+                {
+                    URL = args[0],
+                    AuthorizationMode =
+                        str != null && str.Length > 0 && (str.StartsWith("W", true, null) || str.StartsWith("D", true, null)) ?
+                            str.StartsWith("W", true, null) ?
+                                AuthorizationMode.Windows :
+                                AuthorizationMode.DefaultWindows :
+                            AuthorizationMode.Basic,
+                    UserName = args[1],
+                    Password = ConvertToSecureString(args[2])
+                };
+
+                Console.WriteLine("GetLoginParams: " + connInfo.ToString());
+
+                return connInfo;
             }
+            else
+            {
+                ConnInfo connInfo = new ConnInfo
+                {
+                    // change to false to connect to servers older than 2021 R1 or servers not running HTTPS on the Identity/Management Server communication
+                    SecureOnly = false
+                };
 
-            return connInfo;
+                Console.Write("XProtect server (url): ");
+                connInfo.URL = Console.ReadLine();
+
+                if (!connInfo.URL.StartsWith("http://", true, null) && !connInfo.URL.StartsWith("https://", true, null))
+                {
+                    connInfo.URL = "http://" + connInfo.URL;
+                }
+
+
+                Console.Write("Authentication: Windows Default, Windows or Basic (D/W/B)? Press \"Enter\" for \"Basic\"...");
+                string str = Console.ReadLine();
+                connInfo.AuthorizationMode =
+                    str != null && str.Length > 0 && (str.StartsWith("W", true, null) || str.StartsWith("D", true, null)) ?
+                        str.StartsWith("W", true, null) ?
+                            AuthorizationMode.Windows :
+                            AuthorizationMode.DefaultWindows :
+                        AuthorizationMode.Basic;
+
+
+                if (connInfo.AuthorizationMode != AuthorizationMode.DefaultWindows)
+                {
+                    Console.Write("Username: ");
+                    connInfo.UserName = Console.ReadLine();
+
+                    connInfo.Password = GetPasswordFromConsole();
+
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("\tUsing " + connInfo.ToString());
+
+                return connInfo;
+            }
         }
 
 
@@ -259,7 +302,7 @@ namespace MyOwnMilestoneTests.Login
         /// </summary>
         /// <param name="connInfo"></param>
         /// <returns></returns> True if successfully logged in
-        static private bool LoginUsingCredentials(ConnInfo connInfo)
+        private static bool LoginUsingCredentials(ConnInfo connInfo)
         {
 
             Guid IntegrationId = new Guid("AA2730FE-50BF-4166-8352-920D590B4C07");
@@ -330,6 +373,21 @@ namespace MyOwnMilestoneTests.Login
 
             Console.WriteLine($"Login succeeded for user: {connInfo.UserName} on server: {loginSettings.Uri}.");
 
+
+            try
+            {
+                VideoOS.Platform.SDK.Environment.Logout(uri);
+
+                Console.WriteLine("Logged out: " + uri.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Internal error when logging out: " + uri.ToString());
+                VideoOS.Platform.SDK.Environment.RemoveServer(uri);
+                return false;
+            }
+
+
             return true;
         }
 
@@ -343,36 +401,18 @@ namespace MyOwnMilestoneTests.Login
         /// <param name="_pwd"></param>
         /// <param name="_auth"></param>
         /// <returns></returns>
-        public bool LoginUsingSampleAsBase(string _url, string _user, string _pwd, AuthorizationMode _auth)
+        public bool LoginUsingSampleAsBase(string[] args)
         {
-            bool logged = false;
+            Console.WriteLine("LoginUsingSampleAsBase");
 
-            // Here just to remember but this is already called in Program.Main(..)
-            //VideoOS.Platform.SDK.Environment.Initialize();
-
+            
             // Notifies a waiting thread that an event has occurred. 
-            AutoResetEvent _resetEvent = new AutoResetEvent(false);
-
-            //if (!_url.StartsWith("http://", true, null) && !_url.StartsWith("https://", true, null)) _url = "http://" + _url;
-            SecureString _securePwd = ConvertToSecureString(_pwd);
-            _securePwd.MakeReadOnly();
+            AutoResetEvent autoResetEvent = new AutoResetEvent(false);
 
 
-            ConnInfo connInfo = GetLoginParams();
+            ConnInfo connInfo = GetLoginParams(args);
 
-            if (LoginUsingCredentials(connInfo))
-            {
-                //if (FindCamera())
-                //{
-                //    GetRes();
-                //    GetDefaultStream();
-                //    GetStreams();
-                //}
-                Console.WriteLine(Environment.NewLine + "Press any key to exit.");
-            }
-
-            Console.ReadKey();
-            Environment.Exit(0);
+            bool logged = LoginUsingCredentials(connInfo);
 
             return logged;
         }
@@ -382,37 +422,49 @@ namespace MyOwnMilestoneTests.Login
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool LoginUsingSampleFromDocumentaX()
+        public bool LoginUsingSampleFromDocumentaX(string[] args)
         {
+
+            Console.WriteLine("LoginUsingSampleFromDocumentaX");
+
             // Here just to remember but this is already called in Program.Main(..)
             //VideoOS.Platform.SDK.Environment.Initialize();
 
             // Notifies a waiting thread that an event has occurred.
             AutoResetEvent _resetEvent = new AutoResetEvent(false);
 
-            ConnInfo connInfo = GetLoginParams();
+            ConnInfo connInfo = GetLoginParams(args);
 
 
             Uri uri = new UriBuilder(connInfo.URL).Uri;
 
 
-            //// This will reuse the Windows credentials you are logged in with
-            //NetworkCredential nc = System.Net.CredentialCache.DefaultNetworkCredentials;
 
-            //// This will use specific Windows credentials
-            //// NetworkCredential nc = new NetworkCredential("username", "password");
+            if (connInfo.AuthorizationMode == AuthorizationMode.Basic)
+            {
+                // You need this to apply "basic" credentials.
+                CredentialCache cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
+                VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
+            }
+            else if(connInfo.AuthorizationMode == AuthorizationMode.DefaultWindows)
+            {
+                // This will reuse the Windows credentials you are logged in with
+                NetworkCredential nc = System.Net.CredentialCache.DefaultNetworkCredentials;
+                VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, nc);
 
-            //VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, nc);
+                // CredentialCache cc = Util.BuildCredentialCache(uri, "", "", "Negotiate");
+                //VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
+            }
+            else if (connInfo.AuthorizationMode == AuthorizationMode.Windows)
+            {
+                // Alternatively, the BuildCredentialCache can also build credential for Windows login ("domain-or-machine-name\username", "password")
+                CredentialCache cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Negotiate");
+                VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
 
-
-            // You need this to apply "basic" credentials.
-            // Below, do AddServer(uri, cc) instead of AddServer(uri, nc)
-            CredentialCache cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
-
-            // Alternatively, the BuildCredentialCache can also build credential for Windows login
-            // CredentialCache cc = Util.BuildCredentialCache(uri, "domain-or-machine-name\username", "password", "Negotiate");
-
-            VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
+                // This will use specific Windows credentials
+                // NetworkCredential nc = new NetworkCredential("username", "password");
+                //VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, nc);
+            }
 
 
             try
@@ -462,8 +514,20 @@ namespace MyOwnMilestoneTests.Login
             {
                 VideoOS.Platform.SDK.Environment.LoadConfiguration(uri);
             }
-            Console.ReadKey();
-            Environment.Exit(0);
+
+            try
+            {
+                VideoOS.Platform.SDK.Environment.Logout(uri);
+
+                Console.WriteLine("Logged out: " + uri.ToString());
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Internal error when logging out: " + uri.ToString());
+                VideoOS.Platform.SDK.Environment.RemoveServer(uri);
+                return false;
+            }
+
 
             return true;
         }

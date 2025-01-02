@@ -152,8 +152,9 @@ namespace MyOwnMilestoneTests.Login
         public override string ToString()
         {
             return 
-                "ConnInfo(URL=" + ServerAddress + ", DomainName=" + DomainName +
-                ", UserName=" + UserName + ", SecureOnly=" + SecureOnly + ", AuthorizationMode=" + AuthorizationMode;
+                "ConnInfo(DomainName=" + DomainName + "\n\tURL=" + URL +
+                "\n\tUserName=" + UserName + "\n\tPassword=" + Password.ToString() +
+                "\n\tSecureOnly=" + SecureOnly + "\n\tAuthorizationMode=" + AuthorizationMode;
 
         }
     }
