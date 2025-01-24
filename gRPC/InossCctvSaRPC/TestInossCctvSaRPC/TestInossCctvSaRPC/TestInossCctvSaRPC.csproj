@@ -17,19 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\cctv_configuration.proto" GrpcServices="Both" />
-    <Protobuf Include="Protos\cctv_operation.proto" GrpcServices="Both" />
-    <Protobuf Include="Protos\cctv_enums.proto" GrpcServices="Both" />
-    <Protobuf Include="Protos\cctv_messages.proto" GrpcServices="Both" />
     <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\test_cctv.proto" GrpcServices="Both" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Efacec.ERAS.Template" Version="3.4.5" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.63.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="8.0.6" />
+    <PackageReference Include="Efacec.ERAS.Template" Version="4.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.67.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.8.6" />
   </ItemGroup>
 

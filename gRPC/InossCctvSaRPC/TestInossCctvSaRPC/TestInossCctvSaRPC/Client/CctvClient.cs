@@ -1,6 +1,6 @@
 ﻿
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.v1;
-using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc;
 using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages.v1;
 using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums.v1;
 using Grpc.Net.Client;
