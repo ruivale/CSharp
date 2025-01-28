@@ -9,14 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\cctv_configuration.proto" />
-    <None Remove="Protos\cctv_enums.proto" />
-    <None Remove="Protos\cctv_messages.proto" />
-    <None Remove="Protos\cctv_operation.proto" />
-    <None Remove="Protos\test_cctv.proto" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
   </ItemGroup>
 
