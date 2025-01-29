@@ -7,7 +7,7 @@ gRPC .Net 8 Console Application
 
 Edit .csproj file (don't know if it's really needed):
     - add <Protobuf> tag (possible GrpcServices [defaults to Both]: Both, Server, Client, None):
-        <ItemGroup> tag  <ItemGroup>
+        <ItemGroup>
             <Protobuf Include="Protos\XPTO.proto" GrpcServices="Both" />
         </ItemGroup>
 

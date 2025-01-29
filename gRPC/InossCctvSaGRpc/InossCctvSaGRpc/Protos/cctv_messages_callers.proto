@@ -1,0 +1,98 @@
+﻿syntax = "proto3";
+package proto;
+
+option csharp_namespace = "Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages.Callers.v1";
+option java_package = "com.efacec.es.trp.efarail.cctv.grpc.messages.Callers.v1";
+
+import "Protos/cctv_messages.proto";
+
+message CallerResponse {
+    oneof response_type {
+        MultipleRequestsResponse multiple_requests_response = 1;
+        RunningSequencesResponse running_sequences_response = 2;
+        Response response = 3;
+        AcknowledgeAlarmsResponse acknowledge_alarms_response = 4;
+        ListSequencesResponse list_sequences_response = 5;
+        SequenceConfigResponse sequence_config_response = 6;
+        ListSequenceFullDataResponse list_sequence_full_data_response = 7;
+        ListMacrosResponse list_macros_response = 8;
+        ListMacrosFullDataResponse list_macros_full_data_response = 9;
+        ListMacroActionParameterResponse list_macro_action_parameter_response = 10;
+        ListMacroActionsResponse list_macro_actions_response = 11;
+        MacroActionConfigurationResponse macro_action_configuration_response =12;
+        MacroConfigurationResponse macro_configuration_response = 13;
+        EquipmentEventReactionsResponse equipment_event_reactions_response = 14;
+        EquipmentEventReactionsConfigurationResponse equipment_event_reactions_configuration_response = 15;
+        SystemEventReactionsResponse system_event_reactions_response = 16;
+        SystemEventReactionsConfigurationResponse system_event_reactions_configuration_response = 17;
+        TimerScheduledEventReactionsResponse timer_scheduled_event_reactions_response = 18;
+        TimerScheduledEventReactionsConfigurationResponse timer_scheduled_event_reactions_configuration_response = 19;
+        CamerasPresetsResponse cameras_presets_response = 20;
+        ListCctvVersionsResponse list_cctv_versions_response = 21;
+        DetailedConnectionsInfoResponse detailed_connections_info_response = 22;
+        CctvConfigResponse cctv_config_response = 23;
+        ListAlarmsResponse list_alarms_response = 24;
+        CamerasPresetsEditionResponse cameras_presets_edition_response = 25;
+        NumericResponse numeric_response = 26;
+        ListSensorAlarmTypesResponse list_sensor_alarm_types_response = 27;
+        ListSensorAlarmSubtypesTagsResponse list_sensor_alarm_subtypes_tags_response = 28;
+        NumericsResponse numerics_response = 29;
+        ListEquipmentsResponse list_equipments_response = 30;
+        EquipmentsGenericStateResponse equipments_generic_state_response = 31;
+        EquipmentsSpecificStateResponse equipments_specific_state_response = 32;
+        EquipmentsConfigurationResponse equipments_configuration_response = 33;
+        CameraPtzfSavePresetsResponse camera_ptzf_save_presets_response = 34;
+        ActuatorOperationsResponse actuator_operations_response = 35;
+        ListMobileCameraAutoHomePositionActivationsResponse list_mobile_camera_auto_home_position_activations_response = 36;
+        MacroOperationsResponse macro_operations_response = 37;
+        
+    }
+}
+
+message CallerRequest {
+    oneof request_type {
+        ListIds list_ids = 1;
+        WorkstationInformation workstation_information = 2;
+        MobileCameraAutoHomePositionActivationsRequest mobile_camera_auto_home_position_activations_request = 3;
+        SequenceConfigRequest sequence_config_request = 4;
+        MacrosRequest macros_request = 5;
+        MacroActionParametersRequest macro_action_parameters_request = 6;
+        MacroActionsRequest macro_actions_request = 7;
+        MacroActionConfigurationRequest macro_action_configuration_request = 8;
+        MacroConfigurationRequest macro_configuration_request = 9;
+        CamerasPresetsRequest cameras_presets_request = 10;
+        EquipmentEventReactionsConfigurationRequest equipment_event_reactions_configuration_request = 11;
+        SystemEventReactionsConfigurationRequest system_event_reactions_configuration_request = 12;
+        TimerScheduledEventReactionsConfigurationRequest timer_scheduled_event_reactions_configuration_request = 13;
+        UserAccessRequest user_access_request = 14;
+        VersionsRequest versions_request = 15;
+        ConnectionsRequest connections_request = 16;
+        AckAlarmsRequest ack_alarms_request = 17;
+        SetAlarmsOnMonitorRequest set_alarms_on_monitor_request = 18;
+        MarkUserAlarmRequest mark_user_alarm_request = 19;
+        MarkUserAlarmEditRequest mark_user_alarm_edit_request = 20;
+        LockUnlockEquipsRequest lock_unlock_equips_request = 21;
+        CamerasPresetsEditionRequest cameras_presetsEdition_request = 22;
+        CameraPtzfSavePresetsRequest camera_ptzf_save_presets_request = 23;
+        ActuatorOperationsRequest actuator_operations_request = 24;
+        StartSequencesRequest start_sequences_request = 25;
+        SequencesOperationRequest sequences_operation_request = 26;
+        RunningSequencesRequest running_sequences_request = 27;
+        MacrosOperationRequest macros_operation_request = 28;
+
+    }
+}
+
+/* Most used Entities (should be with tag <= 15)
+
+ListIds: 12
+WorkstationInformation: 9
+MultipleRequestsResponse: 8
+RunningSequencesResponse: 3
+Response: 2
+AcknowledgeAlarmsResponse: 2
+MobileCameraAutoHomePositionActivationsRequest: 2
+
+All other Request and Response types are used exactly once each.
+*/
+

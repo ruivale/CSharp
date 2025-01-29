@@ -1,4 +1,8 @@
-﻿using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.v1;
+﻿
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Messages.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Enums.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.v1;
+using Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Configuration.v1;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
@@ -12,8 +16,10 @@ namespace InossCctvSaGRpc
     {
 
         static readonly string _protocol = "http://";
-        static readonly string _host = "172.19.181.215";
-//        static readonly string _host = "localhost";
+        
+        //static readonly string _host = "172.19.181.215";
+        static readonly string _host = "localhost";
+        
         static readonly int _portOper = 5555;
         static readonly int _portConfig = 5556;
 
