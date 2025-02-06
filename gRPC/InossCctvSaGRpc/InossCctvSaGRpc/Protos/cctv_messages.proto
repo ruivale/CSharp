@@ -747,7 +747,7 @@ message AckAlarmsRequest {
     WorkstationInformation workstationInfo = 1;
     // The equipment identification.
     google.protobuf.Int64Value equipId = 2;
-    // The list os alarms to acknowledge.
+    // The list os alarms to acknowledge. Normally empty...
     repeated google.protobuf.Int64Value alarmIds = 3;
 }
 
