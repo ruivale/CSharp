@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CB9FE9DC-C40A-46DE-9DE8-FB3D65754AE0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CameraStreamSample</RootNamespace>
+    <AssemblyName>CameraStreamSample</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <PackageReference Include="MilestoneSystems.VideoOS.Platform" Version="*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\CameraStreamSampleAddUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleAddUserControl.Designer.cs">
+      <DependentUpon>CameraStreamSampleAddUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleHelpPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleHelpPage.Designer.cs">
+      <DependentUpon>CameraStreamSampleHelpPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleItemManager.cs" />
+    <Compile Include="Admin\CameraStreamSampleTabPlugin.cs" />
+    <Compile Include="Admin\CameraStreamSampleTabUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleTabUserControl.Designer.cs">
+      <DependentUpon>CameraStreamSampleTabUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleToolsOptionDialogPlugin.cs" />
+    <Compile Include="Admin\CameraStreamSampleToolsOptionDialogUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleToolsOptionDialogUserControl.designer.cs">
+      <DependentUpon>CameraStreamSampleToolsOptionDialogUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Admin\CameraStreamSampleUserControl.Designer.cs">
+      <DependentUpon>CameraStreamSampleUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Background\CameraStreamSampleBackgroundPlugin.cs" />
+    <Compile Include="Client\CameraStreamSamplePropertiesWpfUserControl.xaml.cs">
+      <DependentUpon>CameraStreamSamplePropertiesWpfUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\CameraStreamSampleSettingsPanelPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleSettingsPanelControl.xaml.cs">
+      <DependentUpon>CameraStreamSampleSettingsPanelControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\CameraStreamSampleSidePanelPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleSidePanelWpfUserControl.xaml.cs">
+      <DependentUpon>CameraStreamSampleSidePanelWpfUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\CameraStreamSampleViewItemPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleViewItemManager.cs" />
+    <Compile Include="Client\CameraStreamSampleViewItemToolbarPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleViewItemWpfUserControl.xaml.cs">
+      <DependentUpon>CameraStreamSampleViewItemWpfUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Client\CameraStreamSampleClientAction.cs" />
+    <Compile Include="Client\CameraStreamSampleViewLayout.cs" />
+    <Compile Include="Client\CameraStreamSampleWorkSpacePlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleWorkSpaceToolbarPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleWorkSpaceViewItemManager.cs" />
+    <Compile Include="Client\CameraStreamSampleWorkSpaceViewItemPlugin.cs" />
+    <Compile Include="Client\CameraStreamSampleWorkSpaceViewItemWpfUserControl.xaml.cs">
+      <DependentUpon>CameraStreamSampleWorkSpaceViewItemWpfUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="CameraStreamSampleDefinition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin\CameraStreamSampleAddUserControl.resx">
+      <DependentUpon>CameraStreamSampleAddUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin\CameraStreamSampleTabUserControl.resx">
+      <DependentUpon>CameraStreamSampleTabUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\CameraStreamSampleToolsOptionDialogUserControl.resx">
+      <DependentUpon>CameraStreamSampleToolsOptionDialogUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Admin\CameraStreamSampleHelpPage.resx">
+      <DependentUpon>CameraStreamSampleHelpPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Admin\CameraStreamSampleUserControl.resx">
+      <DependentUpon>CameraStreamSampleUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="plugin.def">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Resources\DummyItem.png" />
+    <Resource Include="Resources\WorkSpaceIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Client\CameraStreamSamplePropertiesWpfUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\CameraStreamSampleSettingsPanelControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Client\CameraStreamSampleSidePanelWpfUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\CameraStreamSampleViewItemWpfUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Client\CameraStreamSampleWorkSpaceViewItemWpfUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
