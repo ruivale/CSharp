@@ -9,17 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\cctv.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Efacec.ERAS.Template" Version="4.2.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
     <PackageReference Include="Grpc.AspNetCore.Web" Version="2.67.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.8.6" />
   </ItemGroup>
-
+        
+        <ItemGroup>
+            <Protobuf Include="Protos\test_cctv.proto" GrpcServices="Both" />
+        </ItemGroup>
+        
   <ItemGroup>
     <None Update="IDLs\services\EventConsumer.idl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

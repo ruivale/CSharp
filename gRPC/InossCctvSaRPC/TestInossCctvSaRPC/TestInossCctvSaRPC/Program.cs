@@ -2,6 +2,7 @@ using Google.Api;
 using Microsoft.OpenApi.Models;
 using Microsoft.Win32;
 using Test.Com.Efacec.ES.Efarail.Cctv.Grpc.Operation.Services;
+using Microsoft.AspNetCore.Grpc.JsonTranscoding;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,9 +41,9 @@ app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
 
 
 // Specifies that the endpoints.MapGrpcService<CctvServiceTests>()
-app.MapGrpcService<CctvServiceTests>().EnableGrpcWeb();
+//app.MapGrpcService<CctvServiceTests>().EnableGrpcWeb();
 // Specifies that the endpoints.MapGrpcService<CctvService>()
-//app.MapGrpcService<CctvService>().EnableGrpcWeb();
+app.MapGrpcService<Com.Efacec.ES.TRP.Efarail.Cctv.Grpc.Operation.Services.CctvOperationServerImpl>().EnableGrpcWeb();
 
 
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");

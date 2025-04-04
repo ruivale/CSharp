@@ -1,5 +1,4 @@
 
-/**
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Sample from:
@@ -23,7 +22,7 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 
-import "protos/cctv_enums.proto";
+
 
 //package test.com.efacec.es.efarail.cctv.grpc.operation;
 
@@ -104,4 +103,3 @@ message VersionsReply {
 
 
 
-*/

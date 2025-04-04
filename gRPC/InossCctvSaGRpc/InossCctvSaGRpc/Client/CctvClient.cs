@@ -17,8 +17,8 @@ namespace InossCctvSaGRpc
 
         static readonly string _protocol = "http://";
 
-        //static readonly string _host = "172.19.181.215";
-        static readonly string _host = "localhost";
+        static readonly string _host = "172.19.181.215";
+        //static readonly string _host = "localhost";
 
         static readonly int _portOper = 5555;
         static readonly int _portConfig = 5556;

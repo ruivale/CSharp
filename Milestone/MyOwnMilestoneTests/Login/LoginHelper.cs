@@ -24,6 +24,7 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 using System.IO;
 using System.Security;
 using VideoOS.Platform.Login;
+using VideoOS.Platform.Util.ImageServer;
 
 
 
@@ -371,7 +372,11 @@ namespace MyOwnMilestoneTests.Login
                 return false;
             }
 
-            Console.WriteLine($"Login succeeded for user: {connInfo.UserName} on server: {loginSettings.Uri}.");
+            // Logged in...
+            Console.WriteLine($"Login succeeded for user: {connInfo.UserName} on server: {loginSettings.Uri}" +
+                $"\n\tToken: {loginSettings.Token}. TokenTime2Live: {loginSettings.TokenTimeToLive}" +
+                $"\n\tUser(Name: {loginSettings.UserInformation.Name} SIDs: {string.Join(", ", loginSettings.UserInformation.AllSids)})");
+            
 
 
             try
@@ -390,7 +395,6 @@ namespace MyOwnMilestoneTests.Login
 
             return true;
         }
-
 
 
         /// <summary>
@@ -437,7 +441,6 @@ namespace MyOwnMilestoneTests.Login
 
 
             Uri uri = new UriBuilder(connInfo.URL).Uri;
-
 
 
             if (connInfo.AuthorizationMode == AuthorizationMode.Basic)

@@ -6,7 +6,7 @@ CctvClient cctvClient = new CctvClient();
 ////////////////////////////////////////////////////////////////////////////
 // Operation
 //
-//cctvClient.GetVersions();
+cctvClient.GetVersions();
 //cctvClient.GetAllEquipments();
 //cctvClient.GetDetailedConnectionsInfo();
 //cctvClient.AckAlarms();
@@ -32,9 +32,9 @@ CctvClient cctvClient = new CctvClient();
 //cctvClient.GetAgentNetworkConfigById();
 //cctvClient.CamerasPresetEdition();
 //cctvClient.ExecSequenceConfiguration();
-cctvClient.GetMacrosConfiguration();
-cctvClient.GetMacroActions();
-cctvClient.GetMacrosActionParameters();
+//cctvClient.GetMacrosConfiguration();
+//cctvClient.GetMacroActions();
+//cctvClient.GetMacrosActionParameters();
 
 
 

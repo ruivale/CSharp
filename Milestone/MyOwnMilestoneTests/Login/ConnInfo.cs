@@ -153,7 +153,7 @@ namespace MyOwnMilestoneTests.Login
         {
             return 
                 "ConnInfo(DomainName=" + DomainName + "\n\tURL=" + URL +
-                "\n\tUserName=" + UserName + "\n\tPassword=" + Password.ToString() +
+                "\n\tUserName=" + UserName + //"\n\tPassword=" + Password.ToString() +
                 "\n\tSecureOnly=" + SecureOnly + "\n\tAuthorizationMode=" + AuthorizationMode;
 
         }
