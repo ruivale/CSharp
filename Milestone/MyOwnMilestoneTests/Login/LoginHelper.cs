@@ -306,6 +306,9 @@ namespace MyOwnMilestoneTests.Login
         private static bool LoginUsingCredentials(ConnInfo connInfo)
         {
 
+            // From MIP SDK Samples Component VideoWallController
+            //Guid IntegrationId = new Guid("E89D6DCC-250A-487B-8698-4371966AA9DF");
+
             Guid IntegrationId = new Guid("AA2730FE-50BF-4166-8352-920D590B4C07");
             const string IntegrationName = "Just logging in...";
             const string Version = "1.0";
@@ -326,13 +329,13 @@ namespace MyOwnMilestoneTests.Login
             switch (connInfo.AuthorizationMode)
             {
                 case AuthorizationMode.DefaultWindows:
-                    cc = Util.BuildCredentialCache(uri, "", "", "Negotiate");
+                    cc = VideoOS.Platform.Login.Util.BuildCredentialCache(uri, "", "", "Negotiate");
                     break;
                 case AuthorizationMode.Windows:
-                    cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Negotiate");
+                    cc = VideoOS.Platform.Login.Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Negotiate");
                     break;
                 case AuthorizationMode.Basic:
-                    cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
+                    cc = VideoOS.Platform.Login.Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
                     break;
             }
 
@@ -364,7 +367,7 @@ namespace MyOwnMilestoneTests.Login
 
 
             LoginSettings loginSettings = LoginSettingsCache.GetLoginSettings(uri.DnsSafeHost);
-            
+
             if (loginSettings == null)
             {
                 Console.WriteLine($"Login not succeeded for user: {connInfo.UserName} on server: {uri.DnsSafeHost}.");
@@ -446,7 +449,7 @@ namespace MyOwnMilestoneTests.Login
             if (connInfo.AuthorizationMode == AuthorizationMode.Basic)
             {
                 // You need this to apply "basic" credentials.
-                CredentialCache cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
+                CredentialCache cc = VideoOS.Platform.Login.Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Basic");
                 VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
             }
             else if(connInfo.AuthorizationMode == AuthorizationMode.DefaultWindows)
@@ -461,7 +464,7 @@ namespace MyOwnMilestoneTests.Login
             else if (connInfo.AuthorizationMode == AuthorizationMode.Windows)
             {
                 // Alternatively, the BuildCredentialCache can also build credential for Windows login ("domain-or-machine-name\username", "password")
-                CredentialCache cc = Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Negotiate");
+                CredentialCache cc = VideoOS.Platform.Login.Util.BuildCredentialCache(uri, connInfo.UserName, connInfo.Password, "Negotiate");
                 VideoOS.Platform.SDK.Environment.AddServer(connInfo.SecureOnly, uri, cc);
 
                 // This will use specific Windows credentials
@@ -511,9 +514,9 @@ namespace MyOwnMilestoneTests.Login
             // No exception thrown means success.
             // Loading the configuration Items may take time. If you wish, you may force a load now.
             // If you don't load the Items explicitly, they will be loaded automatically when needed.
-            bool IfeelLikeLoadingNow = true;
+            bool IFeelLikeLoadingNow = true;
 
-            if (IfeelLikeLoadingNow)
+            if (IFeelLikeLoadingNow)
             {
                 VideoOS.Platform.SDK.Environment.LoadConfiguration(uri);
             }
