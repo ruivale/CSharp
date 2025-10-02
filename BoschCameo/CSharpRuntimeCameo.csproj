@@ -83,14 +83,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bosch.VideoSDK.AxCameoLib">
-      <HintPath>..\..\Interop\Bosch.VideoSDK.AxCameoLib.dll</HintPath>
+      <HintPath>.\Bosch.VideoSDK.AxCameoLib.dll</HintPath>
     </Reference>
     <Reference Include="Bosch.VideoSDK.CameoLib">
-      <HintPath>..\..\Interop\Bosch.VideoSDK.CameoLib.dll</HintPath>
+      <HintPath>.\Bosch.VideoSDK.CameoLib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Bosch.VideoSDK.GCALib">
-      <HintPath>..\..\Interop\Bosch.VideoSDK.GCALib.dll</HintPath>
+      <HintPath>.\Bosch.VideoSDK.GCALib.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="CodersLab.Windows.Controls.TreeView">
