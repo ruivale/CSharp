@@ -5,7 +5,7 @@ namespace CSharpRuntimeCameo
 {
     public class Log
     {
-        public const long L_MAX_LOG_FILE_SIZE_IN_BYTES = 5000000000; // +/- 500 Mb
+        public const long L_MAX_LOG_FILE_SIZE_IN_BYTES = 5000000000 * 2; // +/- 1 GB
         public const string LOGFILENAME = "Log.dat";
         public const string LOGFILENAMEHTTP = "LogMessages.dat";
         string stFl;
@@ -104,13 +104,28 @@ namespace CSharpRuntimeCameo
                 {
                     stLastError = stLog;
                 }
-                
-                StreamWriter SW = File.AppendText(stFile);
-                SW.WriteLine(DateTime.Now + " - " + stLog);
-                SW.Close();
-                SW.Dispose();
 
-                return true;
+                CheckFileSize();
+
+                
+                if (stLog != null && stLog.Length > 0 && stLog[0] == '\n')
+                {
+                    StreamWriter SW = File.AppendText(stFile);
+                    SW.WriteLine(stLog);
+                    SW.Close();
+                    SW.Dispose();
+                    return true;
+                }
+                else if (stLog != null && stLog.Length > 0)
+                {
+                    StreamWriter SW = File.AppendText(stFile);
+                    SW.WriteLine(DateTime.Now + " - " + stLog);
+                    SW.Close();
+                    SW.Dispose();
+                    return true;
+                }
+
+                return false;
             }
             catch
             {
@@ -128,6 +143,8 @@ namespace CSharpRuntimeCameo
         {
             try
             {
+                CheckFileSize();
+
                 StreamWriter SW = File.AppendText(stFile);
                 SW.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + " - " + stLog);
                 SW.Close();
@@ -138,6 +155,20 @@ namespace CSharpRuntimeCameo
             catch
             {
                 return false;
+            }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void CheckFileSize()
+        {
+            FileInfo file = new FileInfo(Log.LOGFILENAME);
+
+            if (file.Length > L_MAX_LOG_FILE_SIZE_IN_BYTES)
+            {
+                file.Delete();
             }
         }
     }

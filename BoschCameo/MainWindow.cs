@@ -1,6 +1,9 @@
 ﻿using Bosch.VideoSDK;
+using Bosch.VideoSDK.AxCameoLib;
+using Bosch.VideoSDK.Device;
 using Bosch.VideoSDK.GCALib;
 using Bosch.VideoSDK.Live;
+using CSharpRuntimeCameo;
 using CSharpRuntimeCameo.network;
 using System;
 using System.Collections.Generic;
@@ -11,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TCameoMainWindow
@@ -57,6 +61,11 @@ namespace TCameoMainWindow
 		}
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Load(object sender, EventArgs e)
 		{
 			m_axCameo = new Bosch.VideoSDK.AxCameoLib.AxCameo();
@@ -64,8 +73,14 @@ namespace TCameoMainWindow
 			m_axCameo.Dock = DockStyle.Fill;
 			m_cameo = (Bosch.VideoSDK.CameoLib.Cameo)m_axCameo.GetOcx();
 			
-			m_deviceConnector.ConnectResult += new Bosch.VideoSDK.GCALib._IDeviceConnectorEvents_ConnectResultEventHandler(DeviceConnector_ConnectResult);
-			
+			m_deviceConnector.ConnectResult += 
+                new Bosch.VideoSDK.GCALib._IDeviceConnectorEvents_ConnectResultEventHandler(DeviceConnectorEvents_ConnectResultEventHandler);
+
+            m_axCameo.VideoStatus += 
+                new Bosch.VideoSDK.AxCameoLib._ICameoEvents_VideoStatusEventHandler(CameoEvents_VideoStatusEventHandler);
+            m_axCameo.InformationChanged += 
+                new Bosch.VideoSDK.AxCameoLib._ICameoEvents_InformationChangedEventHandler(CameoEvents_InformationChangedEventHandler);
+
             comboBoxProgID.SelectedIndex = 0;
             comboBoxStreamEncoder.SelectedIndex = 0;
             comboBoxStreamProtocol.SelectedIndex = 0;   
@@ -83,31 +98,59 @@ namespace TCameoMainWindow
                 IHardwareDecodingProperties ihdp = (IHardwareDecodingProperties)core;
 				this.checkBoxHWAcceleration.Checked = ihdp.HardwareDecodingEnabled;
 			}
-            catch (Exception)
+            catch (Exception exc)
             {
-				MessageBox.Show(this, "Cannot determine SDK HW acceleration mode.");
+                Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                        "Cannot determine SDK HW acceleration mode. Msg: " + exc.Message+"\n"+exc.StackTrace); 
+                MessageBox.Show(this, "Cannot determine SDK HW acceleration mode.");
 			}
 
 			this.checkBoxHWAcceleration.Enabled = false;
 		}
 
-		private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if ((m_state == State.Connecting) || (m_state == State.Disconnecting))
 				e.Cancel = true;
 		}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			m_deviceConnector.ConnectResult -= new Bosch.VideoSDK.GCALib._IDeviceConnectorEvents_ConnectResultEventHandler(DeviceConnector_ConnectResult);
+			m_deviceConnector.ConnectResult -= 
+                new Bosch.VideoSDK.GCALib._IDeviceConnectorEvents_ConnectResultEventHandler(
+                    DeviceConnectorEvents_ConnectResultEventHandler);
+
 			if (m_state == State.Connected)
 			{
-				m_deviceProxy.ConnectionStateChanged -= new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(DeviceProxy_ConnectionStateChanged);
+				m_deviceProxy.ConnectionStateChanged -= 
+                    new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(
+                        DeviceProxyEvents_ConnectionStateChangedEventHandler);
 				m_deviceProxy.Disconnect();
 			}
+
 			m_axCameo.Dispose();
 		}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		private void ButtonConnect_Click(object sender, EventArgs e)
 		{
 			if (m_state == State.Disconnected)
@@ -118,8 +161,11 @@ namespace TCameoMainWindow
 					IHardwareDecodingProperties ihdp = (IHardwareDecodingProperties)core;
 
 					Console.WriteLine("IHardwareDecodingProperties.isHardwareDecodingEnabled? " + ihdp.HardwareDecodingEnabled);
+                    Log.WriteLog(
+                            Application.StartupPath + @"\" + Log.LOGFILENAME,
+                            "IHardwareDecodingProperties.isHardwareDecodingEnabled ? " + ihdp.HardwareDecodingEnabled);
 
-					this.Text = textBoxUrl.Text + " (HWAcceleraX? "+ ihdp.HardwareDecodingEnabled + ")";
+                    this.Text = textBoxUrl.Text + " (HWAcceleraX? "+ ihdp.HardwareDecodingEnabled + ")";
 
 					m_state = State.Connecting;
 
@@ -136,9 +182,12 @@ namespace TCameoMainWindow
                     this.SetCompsState(false);
 
                 }
-                catch (Exception ex)
+                catch (Exception exc)
 				{
-        			MessageBox.Show(this, "Cannot connect to "+ this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
+                    Log.WriteLog(
+                            Application.StartupPath + @"\" + Log.LOGFILENAME,
+                            "Cannot connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ") Msg: " + exc.Message + "\n" + exc.StackTrace);
+                    MessageBox.Show(this, "Cannot connect to "+ this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
 
                     m_state = State.Disconnected;
 				}
@@ -181,7 +230,7 @@ namespace TCameoMainWindow
         /// <param name="connectResult"></param>
         /// <param name="url"></param>
         /// <param name="deviceProxy"></param>
-		private void DeviceConnector_ConnectResult(Bosch.VideoSDK.Device.ConnectResultEnum connectResult, string url, Bosch.VideoSDK.Device.DeviceProxy deviceProxy)
+		private void DeviceConnectorEvents_ConnectResultEventHandler(Bosch.VideoSDK.Device.ConnectResultEnum connectResult, string url, Bosch.VideoSDK.Device.DeviceProxy deviceProxy)
 		{
 			bool success = false;
 
@@ -199,9 +248,12 @@ namespace TCameoMainWindow
 						m_cameo.SetVideoStream(session.GetVideoStream());
 						pc.Play(100);
 					}
-					catch (Exception ex)
+					catch (Exception exc)
 					{
-						MessageBox.Show(this, "Failed to render file video stream...");
+                        Log.WriteLog(
+                                Application.StartupPath + @"\" + Log.LOGFILENAME,
+                                "Failed to render file video stream. Msg: " + exc.Message + "\n" + exc.StackTrace);
+                        MessageBox.Show(this, "Failed to render file video stream...");
 						success = false;
 					}
 				}
@@ -219,10 +271,21 @@ namespace TCameoMainWindow
                             deviceProxy.VideoInputs[nVdoInput].Stream.Protocol =
                                 (StreamingProtocolEnum)Enum.GetValues(typeof(StreamingProtocolEnum)).GetValue(comboBoxStreamProtocol.SelectedIndex);
 
+
+                            deviceProxy.VideoInputs[nVdoInput].Stream.ConnectionStateChanged +=
+                                new Bosch.VideoSDK.GCALib._IDataStreamEvents_ConnectionStateChangedEventHandler(
+                                    DataStreamEvents_ConnectionStateChangedEventHandler);
+                            deviceProxy.VideoInputs[nVdoInput].Stream.Disconnected += 
+                                new Bosch.VideoSDK.GCALib._IDataStreamEvents_DisconnectedEventHandler(
+                                    DataStreamEvents_DisconnectedEventHandler);
+
                             m_cameo.SetVideoStream(deviceProxy.VideoInputs[nVdoInput].Stream);
 						}
-						catch (Exception ex)
+						catch (Exception exc)
 						{
+                            Log.WriteLog(
+                                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                                    "Failed to render video stream. Msg: " + exc.Message + "\n" + exc.StackTrace);
                             MessageBox.Show(this, "Failed to render video stream...");
 							success = false;
                             this.SetCompsState(true);
@@ -234,7 +297,9 @@ namespace TCameoMainWindow
 			if (success)
 			{
 				m_deviceProxy = deviceProxy;
-				m_deviceProxy.ConnectionStateChanged += new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(DeviceProxy_ConnectionStateChanged);
+				m_deviceProxy.ConnectionStateChanged += 
+                    new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(
+                        DeviceProxyEvents_ConnectionStateChangedEventHandler);
 				m_state = State.Connected;
 			}
 			else
@@ -245,18 +310,89 @@ namespace TCameoMainWindow
 				}
 
 				m_state = State.Disconnected;
-				MessageBox.Show(this, "Failed to connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
+
+                Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                         "Failed to connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
+
+                MessageBox.Show(this, "Failed to connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
             }
 
 			UpdateGUI();
 		}
 
-		private void DeviceProxy_ConnectionStateChanged(object eventSource, Bosch.VideoSDK.Device.ConnectResultEnum state)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pDataStream"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void DataStreamEvents_DisconnectedEventHandler(DataStream pDataStream)
+        {
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "DataStreamEvents_DisconnectedEventHandler: " + GetPrintableDataStream(pDataStream));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pDataStream"></param>
+        /// <param name="State"></param>
+        private void DataStreamEvents_ConnectionStateChangedEventHandler(DataStream pDataStream, ConnectResultEnum state)
+        {
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "DataStreamEvents_ConnectionStateChangedEventHandler: " + 
+                        GetPrintableDataStream(pDataStream) + " State:" + state);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pDataStream"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        private string GetPrintableDataStream(DataStream pDataStream)
+        {
+            if(pDataStream == null)
+            {
+                return "DataStream is null";
+            }   
+
+            StringBuilder sb = new StringBuilder("DataStream(");
+            sb.Append("coding:" + pDataStream.Coding);
+            sb.Append(" encoder:" + pDataStream.Encoder);
+            sb.Append(" keyframemode:" + pDataStream.KeyFrameMode);
+            sb.Append(" mediatype:" + pDataStream.MediaType);
+            sb.Append(" Multicast?" + pDataStream.Multicast);
+            sb.Append(" Protocol:" + pDataStream.Protocol);
+
+            return sb.Append(")").ToString();
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventSource"></param>
+        /// <param name="state"></param>
+        private void DeviceProxyEvents_ConnectionStateChangedEventHandler(object eventSource, ConnectResultEnum state)
 		{
-			if (state == Bosch.VideoSDK.Device.ConnectResultEnum.creConnectionTerminated)
+
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "DeviceProxy_ConnectionStateChanged: " + state);
+
+            if (state == ConnectResultEnum.creConnectionTerminated)
 			{
 				m_cameo.SetVideoStream(null);
-				m_deviceProxy.ConnectionStateChanged -= new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(DeviceProxy_ConnectionStateChanged);
+				m_deviceProxy.ConnectionStateChanged -= 
+                    new Bosch.VideoSDK.GCALib._IDeviceProxyEvents_ConnectionStateChangedEventHandler(
+                        DeviceProxyEvents_ConnectionStateChangedEventHandler);
 				m_deviceProxy = null;
 				m_state = State.Disconnected;
 
@@ -264,17 +400,94 @@ namespace TCameoMainWindow
 			}
 		}
 
-		private void TextBoxUrl_KeyDown(object sender, KeyEventArgs e)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="vdoStatusEvt"></param>
+        private void CameoEvents_VideoStatusEventHandler(object sender, _ICameoEvents_VideoStatusEvent vdoStatusEvt)
+        {
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "AxCameo_VideoStatus: VideoStatusEvent(" + 
+                    vdoStatusEvt.status.ToString() + " p1:"+vdoStatusEvt.param1+" p2:"+vdoStatusEvt.param2+")");
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="infoChangedEvt"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void CameoEvents_InformationChangedEventHandler(object sender, _ICameoEvents_InformationChangedEvent infoChangedEvt)
+        {
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "AxCameo_InformationChanged: " + GetPrintableString(infoChangedEvt));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="infoChangedEvt"></param>
+        /// <returns></returns>
+        private string GetPrintableString(_ICameoEvents_InformationChangedEvent infoChangedEvt)
+        {
+            if(infoChangedEvt == null || infoChangedEvt.info == null)
+            {
+                return "InformationChangedEvent or InformationChangedEvent.info is null";
+
+            }
+            StringBuilder sb = new StringBuilder("InformationChangedEvent(");
+
+            sb.Append("name:\"" + infoChangedEvt.info.CameraName);
+            sb.Append("\" coding:" + infoChangedEvt.info.Coding);
+            sb.Append(" discontinuity:" + infoChangedEvt.info.Discontinuity);
+            sb.Append(" time:" + infoChangedEvt.info.Time);
+            sb.Append(" authstt:" + infoChangedEvt.info.AuthenticationStatus);
+            sb.Append(" cmprssrtio:" + infoChangedEvt.info.CompressionRatio);
+            sb.Append(" device:" + infoChangedEvt.info.DeviceName);
+            sb.Append(" flags:" + infoChangedEvt.info.Flags);
+            sb.Append(" mac:" + infoChangedEvt.info.MacAddress);
+            sb.Append(" zone:" + infoChangedEvt.info.TimeZoneOffset);
+            sb.Append(" uid:" + infoChangedEvt.info.UniqueID);
+
+            return sb.Append(")").ToString();
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBoxUrl_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (((e.KeyCode == Keys.Return) || (e.KeyCode == Keys.Enter)) && bttConnect.Enabled)
-				ButtonConnect_Click(this, EventArgs.Empty);
+            if (((e.KeyCode == Keys.Return) || (e.KeyCode == Keys.Enter)) && bttConnect.Enabled)
+            {
+                ButtonConnect_Click(this, EventArgs.Empty);
+            }
 		}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 		private void TextBoxUrl_TextChanged(object sender, EventArgs e)
 		{
 			UpdateGUI();
 		}
 
+
+        /// <summary>
+        /// 
+        /// </summary>
 		private void UpdateGUI()
 		{
 			if (m_state == State.Disconnected)

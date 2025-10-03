@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Bosch.VideoSDK;
+using Bosch.VideoSDK.GCALib;
+using CSharpRuntimeCameo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-
-using Bosch.VideoSDK;
-using Bosch.VideoSDK.GCALib;
 
 namespace TCameoMainWindow
 {
@@ -16,6 +16,14 @@ namespace TCameoMainWindow
 		[STAThread]
 		static void Main()
 		{
+
+
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "\n\n\n\n");
+            Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "Bosch Cameo start...");
 
             bool isHwAccelerationEnabled = false;
 
