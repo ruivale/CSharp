@@ -50,6 +50,8 @@ namespace TCameoMainWindow
             this.ttCBSE = new System.Windows.Forms.ToolTip(this.components);
             this.labelCamActive = new System.Windows.Forms.Label();
             this.labelProgId = new System.Windows.Forms.Label();
+            this.labelMulticast = new System.Windows.Forms.Label();
+            this.comboBoxMulticast = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // textBoxUrl
@@ -97,7 +99,7 @@ namespace TCameoMainWindow
             "GCA.Divar700.DeviceProxy",
             "GCA.DVR5000.DeviceProxy",
             "GCA.DiBos.DeviceProxy"});
-            this.comboBoxProgID.Location = new System.Drawing.Point(443, 69);
+            this.comboBoxProgID.Location = new System.Drawing.Point(556, 69);
             this.comboBoxProgID.Name = "comboBoxProgID";
             this.comboBoxProgID.Size = new System.Drawing.Size(160, 21);
             this.comboBoxProgID.TabIndex = 3;
@@ -215,17 +217,42 @@ namespace TCameoMainWindow
             // 
             this.labelProgId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelProgId.AutoSize = true;
-            this.labelProgId.Location = new System.Drawing.Point(396, 72);
+            this.labelProgId.Location = new System.Drawing.Point(509, 72);
             this.labelProgId.Name = "labelProgId";
             this.labelProgId.Size = new System.Drawing.Size(41, 13);
             this.labelProgId.TabIndex = 12;
             this.labelProgId.Text = "ProgId:";
+            // 
+            // labelMulticast
+            // 
+            this.labelMulticast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelMulticast.AutoSize = true;
+            this.labelMulticast.Location = new System.Drawing.Point(387, 72);
+            this.labelMulticast.Name = "labelMulticast";
+            this.labelMulticast.Size = new System.Drawing.Size(52, 13);
+            this.labelMulticast.TabIndex = 14;
+            this.labelMulticast.Text = "Multicast:";
+            // 
+            // comboBoxMulticast
+            // 
+            this.comboBoxMulticast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxMulticast.FormattingEnabled = true;
+            this.comboBoxMulticast.Items.AddRange(new object[] {
+            "False",
+            "True"});
+            this.comboBoxMulticast.Location = new System.Drawing.Point(442, 69);
+            this.comboBoxMulticast.Name = "comboBoxMulticast";
+            this.comboBoxMulticast.Size = new System.Drawing.Size(45, 21);
+            this.comboBoxMulticast.TabIndex = 13;
+            this.ttCBSP.SetToolTip(this.comboBoxMulticast, "Stream protocol");
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 733);
+            this.Controls.Add(this.labelMulticast);
+            this.Controls.Add(this.comboBoxMulticast);
             this.Controls.Add(this.labelProgId);
             this.Controls.Add(this.labelCamActive);
             this.Controls.Add(this.labelStreamProtocol);
@@ -271,6 +298,8 @@ namespace TCameoMainWindow
         private ToolTip ttCBSE;
         private Label labelCamActive;
         private Label labelProgId;
+        private Label labelMulticast;
+        private ComboBox comboBoxMulticast;
     }
 }
 

@@ -21,15 +21,16 @@ namespace TCameoMainWindow
 {
 	public partial class MainWindow : Form
 	{
-		private enum HRESULT : uint
-		{
-			S_OK = 0,
-			E_FAIL = 0x80004005,
-			E_UNEXPECTED = 0x8000FFFF,
-			E_NOTIMPL = 0x80004001,
-			E_INVALIDARG = 0x80070057,
-			IgnoreAndFixLater = 0xFFFFFFFF
-		};
+        public enum HRESULT : uint
+        {
+            S_OK = 0,
+            E_FAIL = 0x80004005,
+            E_UNEXPECTED = 0x8000FFFF,
+            E_NOTIMPL = 0x80004001,
+            E_INVALIDARG = 0x80070057,
+            Other = 0xFFFFFFFE,
+            IgnoreAndFixLater = 0xFFFFFFFF
+        };
 
 		private enum State
 		{
@@ -85,6 +86,7 @@ namespace TCameoMainWindow
             comboBoxStreamEncoder.SelectedIndex = 0;
             comboBoxStreamProtocol.SelectedIndex = 0;   
             comboBoxVideoInput.SelectedIndex = 0;   
+            comboBoxMulticast.SelectedIndex = 0;
 
             UpdateGUI();
 
@@ -230,7 +232,10 @@ namespace TCameoMainWindow
         /// <param name="connectResult"></param>
         /// <param name="url"></param>
         /// <param name="deviceProxy"></param>
-		private void DeviceConnectorEvents_ConnectResultEventHandler(Bosch.VideoSDK.Device.ConnectResultEnum connectResult, string url, Bosch.VideoSDK.Device.DeviceProxy deviceProxy)
+		private void DeviceConnectorEvents_ConnectResultEventHandler(
+                Bosch.VideoSDK.Device.ConnectResultEnum connectResult, 
+                string url, 
+                Bosch.VideoSDK.Device.DeviceProxy deviceProxy)
 		{
 			bool success = false;
 
@@ -268,9 +273,21 @@ namespace TCameoMainWindow
                             int nVdoInput = comboBoxVideoInput.SelectedIndex + 1;
 
                             deviceProxy.VideoInputs[nVdoInput].Stream.Encoder = comboBoxStreamEncoder.SelectedIndex;
+                            int iEncoderSet = deviceProxy.VideoInputs[nVdoInput].Stream.Encoder;
+
+                            CodingEnum coding = deviceProxy.VideoInputs[nVdoInput].Stream.Coding;
+
                             deviceProxy.VideoInputs[nVdoInput].Stream.Protocol =
                                 (StreamingProtocolEnum)Enum.GetValues(typeof(StreamingProtocolEnum)).GetValue(comboBoxStreamProtocol.SelectedIndex);
+                            StreamingProtocolEnum streamingProtocol = deviceProxy.VideoInputs[nVdoInput].Stream.Protocol;
 
+                            deviceProxy.VideoInputs[nVdoInput].Stream.Multicast = this.comboBoxMulticast.SelectedIndex == 1; // 0: False; 1: True;
+                            bool isMulticast = deviceProxy.VideoInputs[nVdoInput].Stream.Multicast;
+
+                            Log.WriteLog(
+                                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                                    $"Setting Cameo DataStream(VdoInput: {nVdoInput}, Encoder: {iEncoderSet}, " +
+                                        $"Coding: {coding}, Multicast: {isMulticast}, Protocol: {streamingProtocol})");
 
                             deviceProxy.VideoInputs[nVdoInput].Stream.ConnectionStateChanged +=
                                 new Bosch.VideoSDK.GCALib._IDataStreamEvents_ConnectionStateChangedEventHandler(
@@ -283,6 +300,8 @@ namespace TCameoMainWindow
 						}
 						catch (Exception exc)
 						{
+                            HRESULT hr = CheckException(exc, "{0}: Failed to set datastream encoder and/or coding and/or protocol!", url);
+
                             Log.WriteLog(
                                     Application.StartupPath + @"\" + Log.LOGFILENAME,
                                     "Failed to render video stream. Msg: " + exc.Message + "\n" + exc.StackTrace);
@@ -410,8 +429,9 @@ namespace TCameoMainWindow
         {
             Log.WriteLog(
                     Application.StartupPath + @"\" + Log.LOGFILENAME,
-                    "AxCameo_VideoStatus: VideoStatusEvent(" + 
-                    vdoStatusEvt.status.ToString() + " p1:"+vdoStatusEvt.param1+" p2:"+vdoStatusEvt.param2+")");
+                    "AxCameo_VideoStatus: VideoStatusEvent(" +                         
+                        "\"" + vdoStatusEvt.status.ToString() +
+                        "\"(" + ((int)vdoStatusEvt.status) + "), p1: " +vdoStatusEvt.param1+", p2: "+vdoStatusEvt.param2+")");
         }
 
 
@@ -571,6 +591,105 @@ namespace TCameoMainWindow
             {
                 this.labelCamActive.Text = "Camera: ...";
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exc"></param>
+        /// <param name="format"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static HRESULT CheckException(Exception exc, string format, params object[] args)
+        {
+            string message = string.Format(format, args) + ": " + exc.Message;
+            
+            Log.WriteLog(Application.StartupPath + @"\" + Log.LOGFILENAME, message);
+
+            if (exc.GetType() == typeof(System.Runtime.InteropServices.COMException))
+            {
+                uint errorCode = (uint)((System.Runtime.InteropServices.COMException)exc).ErrorCode;
+
+                if (errorCode == (uint)HRESULT.E_FAIL)
+                {
+                    Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                        "E_FAIL exception must be handled in application at runtime.");
+
+                    return HRESULT.E_FAIL;
+                }
+                else if (errorCode == (uint)HRESULT.E_UNEXPECTED)
+                {
+                    Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                        "E_UNEXPECTED exception must be resolved in application code.");
+                }
+            }
+            else if (exc.GetType() == typeof(System.NotImplementedException))
+            {
+                Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME,
+                    "E_NOTIMPL exception will be handled in application at runtime.");
+
+                return HRESULT.E_NOTIMPL;
+            }
+            else if (exc.GetType() == typeof(System.ArgumentException))
+            {
+                Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME, 
+                    "E_INVALIDARG exception must be resolved in application code.");
+            }
+
+            if (MessageBox.Show(message + "\n\nTerminate application?", "Unexpected Exception", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+            {
+                Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME, 
+                    "Terminating application after unexpected exception. Issue has to be resolved either in application code or in VideoSDK code.");
+                
+                throw exc;
+            }
+            else
+            {
+                Log.WriteLog(
+                    Application.StartupPath + @"\" + Log.LOGFILENAME, 
+                    "Ignoring unexpected exception. Issue has to be resolved either in application code or in VideoSDK code.");
+
+                return HRESULT.IgnoreAndFixLater;
+            }
+        }
+
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static HRESULT GetHRESULT(Exception e)
+        {
+            if (e.GetType() == typeof(System.Runtime.InteropServices.COMException))
+            {
+                uint errorCode = (uint)((System.Runtime.InteropServices.COMException)e).ErrorCode;
+            
+                if (errorCode == (uint)HRESULT.E_FAIL)
+                {
+                    return HRESULT.E_FAIL;
+                }
+                else if (errorCode == (uint)HRESULT.E_UNEXPECTED)
+                {
+                    return HRESULT.E_UNEXPECTED;
+                }
+            }
+            else if (e.GetType() == typeof(System.NotImplementedException))
+            {
+                return HRESULT.E_NOTIMPL;
+            }
+            else if (e.GetType() == typeof(System.ArgumentException))
+            {
+                return HRESULT.E_INVALIDARG;
+            }
+
+            return HRESULT.Other;
         }
     }
 }
