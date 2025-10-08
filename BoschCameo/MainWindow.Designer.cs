@@ -43,22 +43,20 @@ namespace TCameoMainWindow
             this.labelStreamEncoder = new System.Windows.Forms.Label();
             this.comboBoxStreamEncoder = new System.Windows.Forms.ComboBox();
             this.labelStreamProtocol = new System.Windows.Forms.Label();
-            this.ttCBHWA = new System.Windows.Forms.ToolTip(this.components);
-            this.ttBttCam = new System.Windows.Forms.ToolTip(this.components);
-            this.ttCBSP = new System.Windows.Forms.ToolTip(this.components);
-            this.ttCBVI = new System.Windows.Forms.ToolTip(this.components);
-            this.ttCBSE = new System.Windows.Forms.ToolTip(this.components);
+            this.checkBoxHttp = new System.Windows.Forms.CheckBox();
+            this.checkBoxHttps = new System.Windows.Forms.CheckBox();
+            this.comboBoxCoding = new System.Windows.Forms.ComboBox();
             this.labelCamActive = new System.Windows.Forms.Label();
             this.labelProgId = new System.Windows.Forms.Label();
-            this.labelMulticast = new System.Windows.Forms.Label();
-            this.comboBoxMulticast = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxMulticast = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxUrl
             // 
             this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUrl.Location = new System.Drawing.Point(14, 41);
+            this.textBoxUrl.Location = new System.Drawing.Point(354, 15);
             this.textBoxUrl.Name = "textBoxUrl";
             this.textBoxUrl.Size = new System.Drawing.Size(363, 20);
             this.textBoxUrl.TabIndex = 0;
@@ -99,9 +97,9 @@ namespace TCameoMainWindow
             "GCA.Divar700.DeviceProxy",
             "GCA.DVR5000.DeviceProxy",
             "GCA.DiBos.DeviceProxy"});
-            this.comboBoxProgID.Location = new System.Drawing.Point(556, 69);
+            this.comboBoxProgID.Location = new System.Drawing.Point(582, 69);
             this.comboBoxProgID.Name = "comboBoxProgID";
-            this.comboBoxProgID.Size = new System.Drawing.Size(160, 21);
+            this.comboBoxProgID.Size = new System.Drawing.Size(134, 21);
             this.comboBoxProgID.TabIndex = 3;
             // 
             // checkBoxHWAcceleration
@@ -114,7 +112,6 @@ namespace TCameoMainWindow
             this.checkBoxHWAcceleration.TabIndex = 0;
             this.checkBoxHWAcceleration.Text = "HW Acceleration (read-only after initialization [to change the selection, a resta" +
     "rt is needed])";
-            this.ttCBHWA.SetToolTip(this.checkBoxHWAcceleration, "Can only be set prior to initialization");
             // 
             // buttonCam
             // 
@@ -124,7 +121,6 @@ namespace TCameoMainWindow
             this.buttonCam.Size = new System.Drawing.Size(186, 23);
             this.buttonCam.TabIndex = 4;
             this.buttonCam.Text = "Select &camera";
-            this.ttBttCam.SetToolTip(this.buttonCam, "Select a camera");
             this.buttonCam.UseVisualStyleBackColor = true;
             this.buttonCam.Click += new System.EventHandler(this.ButtonCam_Click);
             // 
@@ -134,14 +130,11 @@ namespace TCameoMainWindow
             this.comboBoxStreamProtocol.FormattingEnabled = true;
             this.comboBoxStreamProtocol.Items.AddRange(new object[] {
             "UDP",
-            "TCP",
-            "Direct",
-            "TCP Transcoded"});
-            this.comboBoxStreamProtocol.Location = new System.Drawing.Point(296, 69);
+            "TCP"});
+            this.comboBoxStreamProtocol.Location = new System.Drawing.Point(253, 69);
             this.comboBoxStreamProtocol.Name = "comboBoxStreamProtocol";
-            this.comboBoxStreamProtocol.Size = new System.Drawing.Size(81, 21);
+            this.comboBoxStreamProtocol.Size = new System.Drawing.Size(49, 21);
             this.comboBoxStreamProtocol.TabIndex = 5;
-            this.ttCBSP.SetToolTip(this.comboBoxStreamProtocol, "Stream protocol");
             // 
             // comboBoxVideoInput
             // 
@@ -156,7 +149,6 @@ namespace TCameoMainWindow
             this.comboBoxVideoInput.Name = "comboBoxVideoInput";
             this.comboBoxVideoInput.Size = new System.Drawing.Size(52, 21);
             this.comboBoxVideoInput.TabIndex = 6;
-            this.ttCBVI.SetToolTip(this.comboBoxVideoInput, "Device video input");
             // 
             // labelVdoInput
             // 
@@ -172,7 +164,7 @@ namespace TCameoMainWindow
             // 
             this.labelStreamEncoder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStreamEncoder.AutoSize = true;
-            this.labelStreamEncoder.Location = new System.Drawing.Point(117, 72);
+            this.labelStreamEncoder.Location = new System.Drawing.Point(110, 72);
             this.labelStreamEncoder.Name = "labelStreamEncoder";
             this.labelStreamEncoder.Size = new System.Drawing.Size(50, 13);
             this.labelStreamEncoder.TabIndex = 9;
@@ -188,21 +180,65 @@ namespace TCameoMainWindow
             "2",
             "3",
             "4"});
-            this.comboBoxStreamEncoder.Location = new System.Drawing.Point(173, 69);
+            this.comboBoxStreamEncoder.Location = new System.Drawing.Point(166, 69);
             this.comboBoxStreamEncoder.Name = "comboBoxStreamEncoder";
-            this.comboBoxStreamEncoder.Size = new System.Drawing.Size(50, 21);
+            this.comboBoxStreamEncoder.Size = new System.Drawing.Size(32, 21);
             this.comboBoxStreamEncoder.TabIndex = 8;
-            this.ttCBSE.SetToolTip(this.comboBoxStreamEncoder, "Stream encoder");
             // 
             // labelStreamProtocol
             // 
             this.labelStreamProtocol.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelStreamProtocol.AutoSize = true;
-            this.labelStreamProtocol.Location = new System.Drawing.Point(241, 72);
+            this.labelStreamProtocol.Location = new System.Drawing.Point(199, 72);
             this.labelStreamProtocol.Name = "labelStreamProtocol";
             this.labelStreamProtocol.Size = new System.Drawing.Size(49, 13);
             this.labelStreamProtocol.TabIndex = 10;
             this.labelStreamProtocol.Text = "Protocol:";
+            // 
+            // checkBoxHttp
+            // 
+            this.checkBoxHttp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxHttp.Location = new System.Drawing.Point(354, 41);
+            this.checkBoxHttp.Name = "checkBoxHttp";
+            this.checkBoxHttp.Size = new System.Drawing.Size(136, 20);
+            this.checkBoxHttp.TabIndex = 15;
+            this.checkBoxHttp.Text = "Prefix URL with http://";
+            this.checkBoxHttp.Click += new System.EventHandler(this.checkBoxHttp_Click);
+            // 
+            // checkBoxHttps
+            // 
+            this.checkBoxHttps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxHttps.Location = new System.Drawing.Point(512, 41);
+            this.checkBoxHttps.Name = "checkBoxHttps";
+            this.checkBoxHttps.Size = new System.Drawing.Size(139, 20);
+            this.checkBoxHttps.TabIndex = 16;
+            this.checkBoxHttps.Text = "Prefix URL with https://";
+            this.checkBoxHttps.Click += new System.EventHandler(this.checkBoxHttps_Click);
+            // 
+            // comboBoxCoding
+            // 
+            this.comboBoxCoding.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxCoding.FormattingEnabled = true;
+            this.comboBoxCoding.Items.AddRange(new object[] {
+            "ceMPEG4",
+            "ceMPEG2",
+            "ceWavelet",
+            "ceG711",
+            "ceG726",
+            "ceH264",
+            "ceJPEG",
+            "ceMPEGAudio",
+            "ceL16",
+            "ceAAC",
+            "ceUncompressedAudio",
+            "ceH265",
+            "Auto"});
+            this.comboBoxCoding.Location = new System.Drawing.Point(354, 69);
+            this.comboBoxCoding.Name = "comboBoxCoding";
+            this.comboBoxCoding.Size = new System.Drawing.Size(87, 21);
+            this.comboBoxCoding.TabIndex = 17;
             // 
             // labelCamActive
             // 
@@ -217,42 +253,42 @@ namespace TCameoMainWindow
             // 
             this.labelProgId.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelProgId.AutoSize = true;
-            this.labelProgId.Location = new System.Drawing.Point(509, 72);
+            this.labelProgId.Location = new System.Drawing.Point(538, 72);
             this.labelProgId.Name = "labelProgId";
             this.labelProgId.Size = new System.Drawing.Size(41, 13);
             this.labelProgId.TabIndex = 12;
             this.labelProgId.Text = "ProgId:";
             // 
-            // labelMulticast
+            // label1
             // 
-            this.labelMulticast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelMulticast.AutoSize = true;
-            this.labelMulticast.Location = new System.Drawing.Point(387, 72);
-            this.labelMulticast.Name = "labelMulticast";
-            this.labelMulticast.Size = new System.Drawing.Size(52, 13);
-            this.labelMulticast.TabIndex = 14;
-            this.labelMulticast.Text = "Multicast:";
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(308, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Coding:";
             // 
-            // comboBoxMulticast
+            // checkBoxMulticast
             // 
-            this.comboBoxMulticast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxMulticast.FormattingEnabled = true;
-            this.comboBoxMulticast.Items.AddRange(new object[] {
-            "False",
-            "True"});
-            this.comboBoxMulticast.Location = new System.Drawing.Point(442, 69);
-            this.comboBoxMulticast.Name = "comboBoxMulticast";
-            this.comboBoxMulticast.Size = new System.Drawing.Size(45, 21);
-            this.comboBoxMulticast.TabIndex = 13;
-            this.ttCBSP.SetToolTip(this.comboBoxMulticast, "Stream protocol");
+            this.checkBoxMulticast.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBoxMulticast.Location = new System.Drawing.Point(469, 70);
+            this.checkBoxMulticast.Name = "checkBoxMulticast";
+            this.checkBoxMulticast.Size = new System.Drawing.Size(72, 20);
+            this.checkBoxMulticast.TabIndex = 19;
+            this.checkBoxMulticast.Text = "Multicast";
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 733);
-            this.Controls.Add(this.labelMulticast);
-            this.Controls.Add(this.comboBoxMulticast);
+            this.Controls.Add(this.checkBoxMulticast);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxCoding);
+            this.Controls.Add(this.checkBoxHttps);
+            this.Controls.Add(this.checkBoxHttp);
             this.Controls.Add(this.labelProgId);
             this.Controls.Add(this.labelCamActive);
             this.Controls.Add(this.labelStreamProtocol);
@@ -291,15 +327,13 @@ namespace TCameoMainWindow
         private System.Windows.Forms.Label labelStreamEncoder;
         private System.Windows.Forms.ComboBox comboBoxStreamEncoder;
         private System.Windows.Forms.Label labelStreamProtocol;
-        private ToolTip ttCBHWA;
-        private ToolTip ttBttCam;
-        private ToolTip ttCBSP;
-        private ToolTip ttCBVI;
-        private ToolTip ttCBSE;
         private Label labelCamActive;
         private Label labelProgId;
-        private Label labelMulticast;
-        private ComboBox comboBoxMulticast;
+        private CheckBox checkBoxHttp;
+        private CheckBox checkBoxHttps;
+        private Label label1;
+        private ComboBox comboBoxCoding;
+        private CheckBox checkBoxMulticast;
     }
 }
 

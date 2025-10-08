@@ -86,7 +86,10 @@ namespace TCameoMainWindow
             comboBoxStreamEncoder.SelectedIndex = 0;
             comboBoxStreamProtocol.SelectedIndex = 0;   
             comboBoxVideoInput.SelectedIndex = 0;   
-            comboBoxMulticast.SelectedIndex = 0;
+            checkBoxMulticast.Checked = false;
+            checkBoxHttp.Checked = false;
+            checkBoxHttps.Checked = false;
+            comboBoxCoding.SelectedIndex = comboBoxCoding.Items.Count - 1; // last is "Default"  
 
             UpdateGUI();
 
@@ -172,14 +175,29 @@ namespace TCameoMainWindow
 					m_state = State.Connecting;
 
 
+                    string strUrl =
+                        this.checkBoxHttp.Checked ?
+                                "http://" :
+                                this.checkBoxHttps.Checked ?
+                                    "https://" :
+                                    string.Empty;
+
                     if (this.myObjectSelected != null && this.myObjectSelected.FullUrl.Length > 0)
                     {
-                        m_deviceConnector.ConnectAsync(this.myObjectSelected.FullUrl, comboBoxProgID.Text);
+                        strUrl += this.myObjectSelected.FullUrl;
+
+                        m_deviceConnector.ConnectAsync(strUrl, comboBoxProgID.Text);
                     }
                     else
                     {
+                        strUrl += textBoxUrl.Text;
+
                         m_deviceConnector.ConnectAsync(textBoxUrl.Text, comboBoxProgID.Text);
                     }
+
+                    Log.WriteLog(
+                            Application.StartupPath + @"\" + Log.LOGFILENAME,
+                            $"Trying to ConnectAsync({strUrl}, {comboBoxProgID.Text})...");
 
                     this.SetCompsState(false);
 
@@ -223,6 +241,8 @@ namespace TCameoMainWindow
             this.comboBoxStreamProtocol.Enabled = state;
             this.comboBoxVideoInput.Enabled = state;
             this.textBoxUrl.Enabled = state;
+            this.comboBoxCoding.Enabled = state;
+            this.checkBoxMulticast.Enabled = state;
         }
 
 
@@ -272,17 +292,40 @@ namespace TCameoMainWindow
                         {
                             int nVdoInput = comboBoxVideoInput.SelectedIndex + 1;
 
+                            // Encoder
                             deviceProxy.VideoInputs[nVdoInput].Stream.Encoder = comboBoxStreamEncoder.SelectedIndex;
                             int iEncoderSet = deviceProxy.VideoInputs[nVdoInput].Stream.Encoder;
 
+
+                            // Coding
+                            if (comboBoxCoding.SelectedIndex < comboBoxCoding.Items.Count - 1) // last is "Default"
+                            {
+                                try
+                                {
+                                    deviceProxy.VideoInputs[nVdoInput].Stream.Coding =
+                                        (CodingEnum)Enum.GetValues(typeof(CodingEnum)).GetValue(comboBoxCoding.SelectedIndex);
+                                }
+                                catch (Exception exc)
+                                {
+                                    Log.WriteLog(
+                                            Application.StartupPath + @"\" + Log.LOGFILENAME,
+                                            "Failed to set DataStream.Coding to "+ comboBoxCoding.SelectedValue +
+                                            ". Msg: " + exc.Message + "\n" + exc.StackTrace);
+                                }
+                            }
                             CodingEnum coding = deviceProxy.VideoInputs[nVdoInput].Stream.Coding;
 
+
+                            // Protocol
                             deviceProxy.VideoInputs[nVdoInput].Stream.Protocol =
                                 (StreamingProtocolEnum)Enum.GetValues(typeof(StreamingProtocolEnum)).GetValue(comboBoxStreamProtocol.SelectedIndex);
                             StreamingProtocolEnum streamingProtocol = deviceProxy.VideoInputs[nVdoInput].Stream.Protocol;
 
-                            deviceProxy.VideoInputs[nVdoInput].Stream.Multicast = this.comboBoxMulticast.SelectedIndex == 1; // 0: False; 1: True;
+
+                            // Multicast    
+                            deviceProxy.VideoInputs[nVdoInput].Stream.Multicast = this.checkBoxMulticast.Checked;
                             bool isMulticast = deviceProxy.VideoInputs[nVdoInput].Stream.Multicast;
+
 
                             Log.WriteLog(
                                     Application.StartupPath + @"\" + Log.LOGFILENAME,
@@ -305,7 +348,9 @@ namespace TCameoMainWindow
                             Log.WriteLog(
                                     Application.StartupPath + @"\" + Log.LOGFILENAME,
                                     "Failed to render video stream. Msg: " + exc.Message + "\n" + exc.StackTrace);
+
                             MessageBox.Show(this, "Failed to render video stream...");
+
 							success = false;
                             this.SetCompsState(true);
                         }
@@ -335,6 +380,8 @@ namespace TCameoMainWindow
                          "Failed to connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
 
                 MessageBox.Show(this, "Failed to connect to " + this.labelCamActive.Text + " (" + this.textBoxUrl.Text + ")");
+
+                this.SetCompsState(true);
             }
 
 			UpdateGUI();
@@ -382,15 +429,24 @@ namespace TCameoMainWindow
             }   
 
             StringBuilder sb = new StringBuilder("DataStream(");
-            sb.Append("coding:" + pDataStream.Coding);
-            sb.Append(" encoder:" + pDataStream.Encoder);
-            sb.Append(" keyframemode:" + pDataStream.KeyFrameMode);
-            sb.Append(" mediatype:" + pDataStream.MediaType);
-            sb.Append(" Multicast?" + pDataStream.Multicast);
-            sb.Append(" Protocol:" + pDataStream.Protocol);
+
+            try
+            {
+                sb.Append("coding:" + pDataStream.Coding);
+                sb.Append(" encoder:" + pDataStream.Encoder);
+                sb.Append(" keyframemode:" + pDataStream.KeyFrameMode);
+                sb.Append(" mediatype:" + pDataStream.MediaType);
+                sb.Append(" Multicast?" + pDataStream.Multicast);
+                sb.Append(" Protocol:" + pDataStream.Protocol);
+            }
+            catch (Exception exc)
+            {
+                Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                        "Failed to obtain Datastream info. Msg: " + exc.Message + "\n" + exc.StackTrace);
+            }
 
             return sb.Append(")").ToString();
-
         }
 
 
@@ -445,7 +501,7 @@ namespace TCameoMainWindow
         {
             Log.WriteLog(
                     Application.StartupPath + @"\" + Log.LOGFILENAME,
-                    "AxCameo_InformationChanged: " + GetPrintableString(infoChangedEvt));
+                    "AxCameo_InformationChanged: " + GetPrintableInfoChangedEvent(infoChangedEvt));
         }
 
 
@@ -454,7 +510,7 @@ namespace TCameoMainWindow
         /// </summary>
         /// <param name="infoChangedEvt"></param>
         /// <returns></returns>
-        private string GetPrintableString(_ICameoEvents_InformationChangedEvent infoChangedEvt)
+        private string GetPrintableInfoChangedEvent(_ICameoEvents_InformationChangedEvent infoChangedEvt)
         {
             if(infoChangedEvt == null || infoChangedEvt.info == null)
             {
@@ -463,17 +519,29 @@ namespace TCameoMainWindow
             }
             StringBuilder sb = new StringBuilder("InformationChangedEvent(");
 
-            sb.Append("name:\"" + infoChangedEvt.info.CameraName);
-            sb.Append("\" coding:" + infoChangedEvt.info.Coding);
-            sb.Append(" discontinuity:" + infoChangedEvt.info.Discontinuity);
-            sb.Append(" time:" + infoChangedEvt.info.Time);
-            sb.Append(" authstt:" + infoChangedEvt.info.AuthenticationStatus);
-            sb.Append(" cmprssrtio:" + infoChangedEvt.info.CompressionRatio);
-            sb.Append(" device:" + infoChangedEvt.info.DeviceName);
-            sb.Append(" flags:" + infoChangedEvt.info.Flags);
-            sb.Append(" mac:" + infoChangedEvt.info.MacAddress);
-            sb.Append(" zone:" + infoChangedEvt.info.TimeZoneOffset);
-            sb.Append(" uid:" + infoChangedEvt.info.UniqueID);
+            try
+            {
+                CodingEnum coding =
+                    (CodingEnum)Enum.GetValues(typeof(CodingEnum)).GetValue(infoChangedEvt.info.Coding);
+
+                sb.Append("name:\"" + infoChangedEvt.info.CameraName);
+                sb.Append("\" coding:" + coding +"(" + infoChangedEvt.info.Coding + ")");
+                sb.Append(" discontinuity:" + infoChangedEvt.info.Discontinuity);
+                sb.Append(" time:" + infoChangedEvt.info.Time);
+                sb.Append(" authstt:" + infoChangedEvt.info.AuthenticationStatus);
+                sb.Append(" cmprssrtio:" + infoChangedEvt.info.CompressionRatio);
+                sb.Append(" device:" + infoChangedEvt.info.DeviceName);
+                sb.Append(" flags:" + infoChangedEvt.info.Flags);
+                sb.Append(" mac:" + infoChangedEvt.info.MacAddress);
+                sb.Append(" zone:" + infoChangedEvt.info.TimeZoneOffset);
+                sb.Append(" uid:" + infoChangedEvt.info.UniqueID);
+            }
+            catch (Exception exc)
+            {
+                Log.WriteLog(
+                        Application.StartupPath + @"\" + Log.LOGFILENAME,
+                        "Failed to obtain ICameoEvents_InformationChangedEvent info. Msg: " + exc.Message + "\n" + exc.StackTrace);
+            }
 
             return sb.Append(")").ToString();
 
@@ -690,6 +758,16 @@ namespace TCameoMainWindow
             }
 
             return HRESULT.Other;
+        }
+
+        private void checkBoxHttp_Click(object sender, EventArgs e)
+        {
+            this.checkBoxHttps.Checked = false;
+        }
+
+        private void checkBoxHttps_Click(object sender, EventArgs e)
+        {
+            this.checkBoxHttp.Checked = false;  
         }
     }
 }
